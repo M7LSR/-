@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>阅见序章 · 初版风格预测</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-900: #0B4F3B;
+    --green-700: #0F6B4F;
+    --green-500: #1E7A5A;
+    --green-200: #BFDCCD;
+    --green-100: #DCEBE3;
+    --green-050: #EEF4EF;
+    --paper-000: #FFFFFF;
+    --paper-050: #F7F8F4;
+    --paper-100: #F4F6F0;
+    --ink-900: #111814;
+    --ink-600: #67706B;
+    --ink-400: #8A938E;
+    --amber-500: #C98A12;
+    --violet-500: #7C6BC4;
+    --red-600: #C0392B;
+
+    --color-bg: var(--paper-100);
+    --color-surface: var(--paper-000);
+    --color-brand: var(--green-700);
+    --color-brand-deep: var(--green-900);
+    --color-brand-soft: var(--green-100);
+    --color-text: var(--ink-900);
+    --color-text-secondary: var(--ink-600);
+    --color-text-tertiary: var(--ink-400);
+    --color-border: rgba(15, 107, 79, .12);
+
+    --radius-card: 20px;
+    --radius-inner: 12px;
+    --radius-pill: 999px;
+
+    --shadow-card: 0 8px 24px rgba(17, 24, 20, .06);
+    --shadow-fab: 0 6px 18px rgba(15, 107, 79, .28), 0 0 0 8px rgba(220, 235, 227, .55);
+
+    --font-sans: "PingFang SC", "HarmonyOS Sans SC", "Microsoft YaHei", "Noto Sans SC", system-ui, -apple-system, sans-serif;
+    --font-display: "Outfit", var(--font-sans);
+    --font-num: "Outfit", "Fira Sans", ui-monospace, sans-serif;
+
+    --ease: cubic-bezier(.22, .61, .36, 1);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 0 0 96px;
+    font-family: var(--font-sans);
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    background-image:
+      linear-gradient(to right, rgba(15, 107, 79, .06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(15, 107, 79, .06) 1px, transparent 1px);
+    background-size: 24px 24px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { width: min(1080px, calc(100% - 48px)); margin: 0 auto; }
+
+  /* ---------- Hero ---------- */
+  .hero { padding: 56px 0 40px; }
+
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 12px 6px 10px;
+    background: var(--green-100);
+    color: var(--green-900);
+    border-radius: var(--radius-pill);
+    font-size: 11px; font-weight: 600; letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+  .eyebrow::before {
+    content: ""; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--green-700);
+  }
+
+  h1 {
+    margin: 20px 0 0;
+    font-size: clamp(30px, 4vw, 44px);
+    line-height: 1.2;
+    font-weight: 700;
+    letter-spacing: -.02em;
+  }
+  h1 .accent { color: var(--color-brand); }
+
+  .rule { width: 40px; height: 2px; background: var(--green-700); border-radius: 1px; margin: 16px 0 18px; }
+
+  .lede {
+    max-width: 640px; margin: 0;
+    font-size: 14px; line-height: 1.7; color: var(--color-text-secondary);
+  }
+
+  .facts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+  .fact {
+    font-size: 12.5px; padding: 6px 12px;
+    background: var(--paper-000); border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill); color: var(--color-text-secondary);
+  }
+  .fact b { color: var(--color-text); font-weight: 600; }
+
+  /* ---------- Block ---------- */
+  .block { margin-top: 56px; }
+  .block-head { margin-bottom: 20px; }
+  .block-no {
+    font-family: var(--font-num);
+    font-size: 11px; font-weight: 600; letter-spacing: .12em;
+    color: var(--color-text-tertiary);
+  }
+  .block h2 {
+    margin: 8px 0 6px;
+    font-size: 20px; line-height: 1.35; font-weight: 700; letter-spacing: -.01em;
+  }
+  .block-head p { margin: 0; font-size: 13px; line-height: 1.65; color: var(--color-text-secondary); }
+
+  /* ---------- Swatches ---------- */
+  .swatches {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+    gap: 12px;
+  }
+  .swatch {
+    background: var(--paper-000);
+    border-radius: var(--radius-inner);
+    padding: 8px;
+    box-shadow: var(--shadow-card);
+  }
+  .swatch .chip {
+    height: 52px; border-radius: 8px;
+    border: 1px solid rgba(17, 24, 20, .06);
+  }
+  .swatch .meta { padding: 8px 4px 2px; }
+  .swatch .name { display: block; font-size: 11.5px; font-weight: 600; }
+  .swatch .hex {
+    display: block; margin-top: 2px;
+    font-family: var(--font-num); font-size: 11px;
+    color: var(--color-text-secondary); letter-spacing: .02em;
+  }
+  .swatch .note { display: block; margin-top: 4px; font-size: 10.5px; color: var(--color-text-secondary); }
+
+  /* ---------- Type ---------- */
+  .type-list {
+    background: var(--paper-000);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+    padding: 8px 20px;
+  }
+  .type-row {
+    display: grid;
+    grid-template-columns: 1fr 220px;
+    align-items: baseline;
+    gap: 24px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .type-row:last-child { border-bottom: 0; }
+  .type-meta b { display: block; font-size: 12px; font-weight: 600; letter-spacing: .02em; }
+  .type-meta span { display: block; margin-top: 3px; font-size: 11px; color: var(--color-text-secondary); }
+
+  .t-display { font-family: var(--font-display); font-size: 40px; line-height: 1.1; font-weight: 600; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+  .t-display .unit { font-size: 14px; font-weight: 400; color: var(--color-text-secondary); margin-left: 4px; }
+  .t-h1 { font-size: 22px; line-height: 1.3; font-weight: 700; letter-spacing: -.02em; }
+  .t-h1 .accent { color: var(--color-brand); }
+  .t-h2 { font-size: 17px; line-height: 1.4; font-weight: 600; letter-spacing: -.01em; }
+  .t-body { font-size: 14px; line-height: 1.6; font-weight: 400; }
+  .t-caption { font-size: 12.5px; line-height: 1.5; font-weight: 400; color: var(--color-text-secondary); }
+  .t-overline { font-size: 11px; line-height: 1.4; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--color-text-secondary); }
+
+  /* ---------- Components grid ---------- */
+  .demos {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .demo {
+    background: var(--paper-000);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+    padding: 16px;
+    min-width: 0;
+  }
+  .demo.wide { grid-column: 1 / -1; }
+  .demo-label {
+    font-family: var(--font-num);
+    font-size: 10.5px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--color-text-tertiary);
+    margin-bottom: 14px;
+  }
+  .demo-body { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .demo-body.stack { display: block; }
+  .demo-body.col { flex-direction: column; align-items: stretch; }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    height: 40px; padding: 0 18px;
+    border-radius: var(--radius-pill);
+    font-family: inherit; font-size: 13px; font-weight: 500;
+    border: 1px solid transparent; cursor: pointer;
+    transition: background .18s var(--ease), color .18s var(--ease), transform .12s var(--ease), border-color .18s var(--ease);
+  }
+  .btn-primary { background: var(--green-700); color: #fff; }
+  .btn-primary:hover { background: var(--green-900); }
+  .btn-primary:active { transform: scale(.97); }
+  .btn-ghost { background: transparent; color: var(--green-700); border-color: rgba(15, 107, 79, .35); }
+  .btn-ghost:hover { background: var(--green-050); }
+  .btn-soft { background: var(--green-100); color: var(--green-900); }
+  .btn-soft:hover { background: var(--green-200); }
+  .btn-text {
+    height: auto; padding: 6px 2px; background: none; border: 0;
+    color: var(--green-700); font-size: 13px; font-weight: 500;
+    border-radius: 6px;
+  }
+  .btn-text:hover { color: var(--green-900); }
+  .btn:focus-visible, .btn-text:focus-visible, .seat:focus-visible, .tab:focus-visible {
+    outline: 2px solid var(--green-700); outline-offset: 2px;
+  }
+
+  /* Data card */
+  .card {
+    background: var(--paper-000);
+    border-radius: var(--radius-card);
+    padding: 16px;
+    border: 1px solid var(--color-border);
+  }
+  .card-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .card-title { font-size: 17px; font-weight: 600; letter-spacing: -.01em; }
+  .card-sub { margin-top: 4px; font-size: 12.5px; color: var(--color-text-secondary); line-height: 1.5; }
+  .card-link { font-size: 13px; font-weight: 500; color: var(--green-700); text-decoration: none; display: inline-flex; align-items: center; gap: 4px; }
+  .card-link:hover { color: var(--green-900); }
+
+  .stat { display: flex; align-items: baseline; gap: 6px; margin-top: 14px; }
+  .stat .num { font-family: var(--font-display); font-size: 40px; line-height: 1; font-weight: 600; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+  .stat .unit { font-size: 13px; color: var(--color-text-secondary); }
+
+  /* Bar chart */
+  .bars { display: flex; align-items: flex-end; gap: 8px; height: 84px; margin-top: 16px; }
+  .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; height: 100%; justify-content: flex-end; }
+  .bar { width: 6px; border-radius: 3px; background: var(--green-500); transition: background .18s var(--ease); }
+  .bar.today { background: var(--green-700); }
+  .bar-col:hover .bar { background: var(--green-900); }
+  .bar-day { font-size: 10.5px; color: var(--color-text-secondary); font-variant-numeric: tabular-nums; }
+
+  /* Week strip */
+  .week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+  .day {
+    text-align: center; padding: 8px 0 7px; border-radius: var(--radius-inner);
+    border: 1px solid transparent;
+  }
+  .day .dname { font-size: 11px; color: var(--color-text-secondary); }
+  .day .dnum { margin-top: 3px; font-family: var(--font-num); font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .day.active { background: var(--green-700); }
+  .day.active .dname { color: rgba(255, 255, 255, .78); }
+  .day.active .dnum { color: #fff; }
+
+  /* Seat map */
+  .legend { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 14px; }
+  .legend-item { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--color-text-secondary); }
+  .seat-key { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+  .seat-key.online { background: var(--green-500); }
+  .seat-key.away { background: var(--amber-500); clip-path: polygon(0 0, 72% 0, 100% 28%, 100% 100%, 0 100%); }
+  .seat-key.left { border: 1.5px solid var(--ink-400); }
+  .seat-key.booked { background: repeating-linear-gradient(45deg, var(--violet-500) 0 2px, rgba(124, 107, 196, .3) 2px 5px); }
+
+  .seat-wrap { overflow-x: auto; padding: 4px 0 8px; }
+  .seat-map {
+    display: grid;
+    grid-template-columns: repeat(12, 22px);
+    gap: 8px;
+    justify-content: center;
+    min-width: 360px;
+    background: var(--paper-050);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-inner);
+    padding: 14px 12px;
+  }
+  .seat {
+    width: 22px; height: 22px; padding: 0;
+    border: 0; border-radius: 3px; cursor: pointer;
+    background: var(--green-500);
+    transition: transform .12s var(--ease), opacity .18s var(--ease);
+  }
+  .seat:hover { transform: scale(1.14); }
+  .seat[data-state="away"] { background: var(--amber-500); clip-path: polygon(0 0, 72% 0, 100% 28%, 100% 100%, 0 100%); }
+  .seat[data-state="left"] { background: transparent; box-shadow: inset 0 0 0 1.5px var(--ink-400); }
+  .seat[data-state="booked"] { background: repeating-linear-gradient(45deg, var(--violet-500) 0 2px, rgba(124, 107, 196, .3) 2px 5px); }
+  .seat[aria-pressed="true"] { outline: 2px solid var(--green-900); outline-offset: 2px; }
+
+  .seat-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 12px; font-size: 12.5px; color: var(--color-text-secondary); }
+  .seat-foot b { color: var(--color-text); font-family: var(--font-num); font-weight: 600; }
+
+  /* Chat */
+  .chat { display: flex; flex-direction: column; gap: 10px; }
+  .bubble {
+    max-width: 78%; padding: 10px 14px;
+    font-size: 13px; line-height: 1.55;
+  }
+  .bubble.bot {
+    background: var(--paper-050); border: 1px solid var(--color-border);
+    color: var(--color-text); border-radius: 14px 14px 14px 4px;
+  }
+  .bubble.me {
+    align-self: flex-end; background: var(--green-700); color: #fff;
+    border-radius: 14px 14px 4px 14px;
+  }
+
+  /* Empty state */
+  .empty { text-align: center; padding: 10px 0 4px; }
+  .empty .e-title { font-size: 17px; font-weight: 600; letter-spacing: -.01em; }
+  .empty .e-desc { margin: 6px auto 12px; max-width: 280px; font-size: 12.5px; line-height: 1.6; color: var(--color-text-secondary); }
+
+  /* Tab bar */
+  .tabbar-shell { display: flex; justify-content: center; }
+  .tabbar {
+    position: relative;
+    width: 340px; height: 64px;
+    background: var(--paper-000);
+    border-radius: 22px;
+    box-shadow: var(--shadow-card);
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    align-items: center;
+    padding: 0 6px;
+  }
+  .tab {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+    height: 52px; border: 0; background: none; cursor: pointer; border-radius: 12px;
+    color: var(--ink-400); font-family: inherit;
+  }
+  .tab span { font-size: 10.5px; color: var(--color-text-secondary); }
+  .tab.active { color: var(--green-700); }
+  .tab.active span { color: var(--green-700); font-weight: 600; }
+  .tab svg { width: 22px; height: 22px; }
+  .tab.fab-slot { visibility: hidden; }
+  .fab {
+    position: absolute; left: 50%; top: 50%;
+    transform: translate(-50%, -62%);
+    width: 56px; height: 56px; border-radius: 50%;
+    border: 0; cursor: pointer;
+    background: var(--green-700); color: #fff;
+    box-shadow: var(--shadow-fab);
+    display: flex; align-items: center; justify-content: center;
+    transition: transform .16s var(--ease), background .16s var(--ease);
+  }
+  .fab:hover { background: var(--green-900); transform: translate(-50%, -62%) scale(1.04); }
+  .fab:active { transform: translate(-50%, -62%) scale(.97); }
+  .fab:focus-visible { outline: 2px solid var(--green-900); outline-offset: 4px; }
+
+  /* Contrast comparison */
+  .compare { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .cmp {
+    background: var(--paper-000); border-radius: var(--radius-card);
+    padding: 18px; box-shadow: var(--shadow-card);
+    border-top: 3px solid transparent;
+  }
+  .cmp.bad { border-top-color: var(--red-600); }
+  .cmp.good { border-top-color: var(--green-700); }
+  .cmp .tag { font-family: var(--font-num); font-size: 10.5px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
+  .cmp.bad .tag { color: var(--red-600); }
+  .cmp.good .tag { color: var(--green-700); }
+  .cmp .sample-lg { margin-top: 12px; font-size: 15px; line-height: 1.6; }
+  .cmp .sample-sm { margin-top: 6px; font-size: 12.5px; line-height: 1.5; }
+  .cmp .ratio { margin-top: 12px; font-family: var(--font-num); font-size: 12px; color: var(--color-text-secondary); }
+
+  /* Footer */
+  .foot { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--color-border); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 12px; color: var(--color-text-secondary); }
+  .foot code { font-family: var(--font-num); }
+
+  /* Motion */
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: rise .45s var(--ease) both;
+      animation-delay: calc(var(--i, 0) * 40ms);
+    }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  }
+
+  @media (max-width: 860px) {
+    .demos, .compare { grid-template-columns: 1fr; }
+    .type-row { grid-template-columns: 1fr; gap: 8px; }
+    .type-meta { display: flex; gap: 10px; align-items: baseline; }
+    .type-meta span { margin-top: 0; }
+  }
+  @media (max-width: 520px) {
+    .wrap { width: calc(100% - 32px); }
+    .hero { padding: 36px 0 28px; }
+    .seat-map { grid-template-columns: repeat(12, 18px); gap: 6px; min-width: 300px; }
+    .seat { width: 18px; height: 18px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero reveal" style="--i:0">
+    <span class="eyebrow">Design Token v1.0</span>
+    <h1>阅见序章<span class="accent"> · 初版风格预测</span></h1>
+    <div class="rule"></div>
+    <p class="lede">
+      这一页把 MASTER.md 里的抽象规则变成可对比的实物：色板、字号层级、按钮、卡片、座位状态、底部导航。
+      第一眼确认「颜色对不对、字够不够像」，再决定是否进入页面开发。
+    </p>
+    <div class="facts">
+      <span class="fact">骨架 <b>Swiss Style</b></span>
+      <span class="fact">主色 <b>#0F6B4F</b></span>
+      <span class="fact">画幅 <b>390 × 844</b></span>
+      <span class="fact">栅格 <b>24px</b></span>
+      <span class="fact">技术 <b>纯 HTML / CSS</b></span>
+    </div>
+  </header>
+
+  <!-- 01 色板 -->
+  <section class="block" id="colors">
+    <div class="block-head reveal" style="--i:1">
+      <span class="block-no">01 / COLORS</span>
+      <h2>色板与语义层</h2>
+      <p>品牌绿是全场唯一强调色；辅助灰已从原型的 <code>#8A938E</code>（3.16:1）修正为 <code>#67706B</code>（5.11:1）。</p>
+    </div>
+    <div class="swatches reveal" style="--i:2">
+      <div class="swatch"><div class="chip" style="background:#0B4F3B"></div><div class="meta"><span class="name">green-900</span><span class="hex">#0B4F3B</span><span class="note">按下态 / 深块</span></div></div>
+      <div class="swatch"><div class="chip" style="background:#0F6B4F"></div><div class="meta"><span class="name">green-700</span><span class="hex">#0F6B4F</span><span class="note">品牌主色</span></div></div>
+      <div class="swatch"><div class="chip" style="background:#1E7A5A"></div><div class="meta"><span class="name">green-500</span><span class="hex">#1E7A5A</span><span class="note">在线 / 图表</span></div></div>
+      <div class="swatch"><div class="chip" style="background:#BFDCCD"></div><div class="meta"><span class="name">green-200</span><span class="hex">#BFDCCD</span><span class="note">悬停底色</span></div></div>
+      <div class="swatch"><div class="chip" style="background:#DCEBE3"></div><div class="meta"><span class="name">green-100</span><span class="hex">#DCEBE3</span><span class="note">标签 / 光晕</span></div></div>
+      <div class="swatch"><div class="chip" style="background:#EEF4EF"></div><div class="meta"><span class="name">green-050</span><span class="hex">#EEF4EF</span><span class="note">极浅底</span></div></div>
+
+      <div class="swatch"><div class="chip" style="background:#111814"></div><div class="meta"><span class="name">ink-900</span><span class="hex">#111814</span><span class="note">主文字</span></div></div>
+      <div class="swatch"><div class="chip" style="background:#67706B"></div><div class="meta"><span class="name">ink-600</span><span class="hex">#67706B</span><span class="note">辅助文字</span></div></div>
+      <div class="swatch"><div class="chip" style="background:#8A938E"></div><div class="meta"><span class="name">ink-400</span><span class="hex">#8A938E</span><span class="note">仅装饰</span></div></div>
+      <div class="swatch"><div class="chip" style="background:#F4F6F0"></div><div class="meta"><span class="name">paper-100</span><span class="hex">#F4F6F0</span><span class="note">页面底</span></div></div>
+      <div class="swatch"><div class="chip" style="background:#FFFFFF"></div><div class="meta"><span class="name">paper-000</span><span class="hex">#FFFFFF</span><span class="note">卡片</span></div></div>
+      <div class="swatch"><div class="chip" style="background:#C98A12"></div><div class="meta"><span class="name">amber-500</span><span class="hex">#C98A12</span><span class="note">暂时离开</span></div></div>
+      <div class="swatch"><div class="chip" style="background:#7C6BC4"></div><div class="meta"><span class="name">violet-500</span><span class="hex">#7C6BC4</span><span class="note">预约中</span></div></div>
+      <div class="swatch"><div class="chip" style="background:#C0392B"></div><div class="meta"><span class="name">red-600</span><span class="hex">#C0392B</span><span class="note">破坏性操作</span></div></div>
+    </div>
+  </section>
+
+  <!-- 02 字体 -->
+  <section class="block" id="type">
+    <div class="block-head reveal" style="--i:3">
+      <span class="block-no">02 / TYPOGRAPHY</span>
+      <h2>字体层级</h2>
+      <p>中文人文无衬线 + 数字几何无衬线（Outfit）。全站不使用衬线体，数字统一 <code>tabular-nums</code>。</p>
+    </div>
+    <div class="type-list reveal" style="--i:4">
+      <div class="type-row">
+        <div class="t-display">0.0<span class="unit">小时</span></div>
+        <div class="type-meta"><b>Display</b><span>40 / 1.1 / 600 · 核心数字</span></div>
+      </div>
+      <div class="type-row">
+        <div class="t-h1">我的账号<span class="accent">与学习足迹</span></div>
+        <div class="type-meta"><b>H1</b><span>22 / 1.3 / 700 · 双色标题</span></div>
+      </div>
+      <div class="type-row">
+        <div class="t-h2">图书馆座位空位平面图</div>
+        <div class="type-meta"><b>H2</b><span>17 / 1.4 / 600 · 卡片标题</span></div>
+      </div>
+      <div class="type-row">
+        <div class="t-body">实时更新 · 双指缩放 · 双击小格看位置详情</div>
+        <div class="type-meta"><b>Body</b><span>14 / 1.6 / 400 · 正文</span></div>
+      </div>
+      <div class="type-row">
+        <div class="t-caption">2026/11/9 - 11/15 · 第 11 周 · 共 0 节课</div>
+        <div class="type-meta"><b>Caption</b><span>12.5 / 1.5 / 400 · 辅助</span></div>
+      </div>
+      <div class="type-row">
+        <div class="t-overline">Study Stats · 学习统计</div>
+        <div class="type-meta"><b>Overline</b><span>11 / 1.4 / 600 · 小标签</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 组件 -->
+  <section class="block" id="components">
+    <div class="block-head reveal" style="--i:5">
+      <span class="block-no">03 / COMPONENTS</span>
+      <h2>组件实物</h2>
+      <p>圆角 20px、阴影极淡、间距统一。所有可点击元素带焦点态，按压有 <code>scale(.97)</code> 反馈。</p>
+    </div>
+
+    <div class="demos">
+
+      <div class="demo reveal" style="--i:6">
+        <div class="demo-label">PillButton · 主 / 次 / 浅 / 文字</div>
+        <div class="demo-body">
+          <button class="btn btn-primary">进入图书馆</button>
+          <button class="btn btn-ghost">重置</button>
+          <button class="btn btn-soft">扫码</button>
+          <button class="btn-text">查看全部 →</button>
+        </div>
+      </div>
+
+      <div class="demo reveal" style="--i:7">
+        <div class="demo-label">DataCard · 账号</div>
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <div class="card-title">2026010 学生端</div>
+              <div class="card-sub">校园座位与课表助手 · 今日未入馆</div>
+            </div>
+            <a class="card-link" href="#">设置 ›</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="demo reveal" style="--i:8">
+        <div class="demo-label">StatNumber + MiniBarChart</div>
+        <div class="stat"><span class="num">0.0</span><span class="unit">小时</span></div>
+        <div class="t-caption" style="margin-top:6px">本周在图书馆的专注时长</div>
+        <div class="bars" role="list">
+          <div class="bar-col" role="listitem" aria-label="周一 0 小时"><div class="bar" style="height:3px"></div><span class="bar-day">一</span></div>
+          <div class="bar-col" role="listitem" aria-label="周二 0 小时"><div class="bar" style="height:3px"></div><span class="bar-day">二</span></div>
+          <div class="bar-col" role="listitem" aria-label="周三 0 小时"><div class="bar" style="height:3px"></div><span class="bar-day">三</span></div>
+          <div class="bar-col" role="listitem" aria-label="周四 0 小时"><div class="bar" style="height:3px"></div><span class="bar-day">四</span></div>
+          <div class="bar-col" role="listitem" aria-label="周五 0 小时"><div class="bar" style="height:3px"></div><span class="bar-day">五</span></div>
+          <div class="bar-col" role="listitem" aria-label="周六 0 小时"><div class="bar" style="height:3px"></div><span class="bar-day">六</span></div>
+          <div class="bar-col" role="listitem" aria-label="周日 0 小时"><div class="bar today" style="height:3px"></div><span class="bar-day">日</span></div>
+        </div>
+      </div>
+
+      <div class="demo reveal" style="--i:9">
+        <div class="demo-label">WeekStrip · 周条</div>
+        <div class="week">
+          <div class="day"><div class="dname">周一</div><div class="dnum">9</div></div>
+          <div class="day active"><div class="dname">周二</div><div class="dnum">10</div></div>
+          <div class="day"><div class="dname">周三</div><div class="dnum">11</div></div>
+          <div class="day"><div class="dname">周四</div><div class="dnum">12</div></div>
+          <div class="day"><div class="dname">周五</div><div class="dnum">13</div></div>
+          <div class="day"><div class="dname">周六</div><div class="dnum">14</div></div>
+          <div class="day"><div class="dname">周日</div><div class="dnum">15</div></div>
+        </div>
+        <div class="t-caption" style="margin-top:12px">← 左右滑动换周 → · 日期跳转</div>
+      </div>
+
+      <div class="demo reveal" style="--i:10">
+        <div class="demo-label">ChatBubble · 小阅</div>
+        <div class="chat">
+          <div class="bubble bot">你好，我是小阅，有什么可以帮你？找座位、查课表、反馈问题，或者发张图片给我都行。</div>
+          <div class="bubble me">帮我看看三楼靠窗还有空位吗</div>
+        </div>
+      </div>
+
+      <div class="demo reveal" style="--i:11">
+        <div class="demo-label">EmptyState · 空状态三段式</div>
+        <div class="empty">
+          <div class="e-title">还没有课表</div>
+          <div class="e-desc">点右上角「+ 添加」，可手动录入或从课表截图一键识别。</div>
+          <button class="btn btn-soft">+ 添加课程</button>
+        </div>
+      </div>
+
+      <div class="demo wide reveal" style="--i:12">
+        <div class="demo-label">SeatMap · 座位平面图（含状态双编码）</div>
+        <div class="legend">
+          <span class="legend-item"><i class="seat-key online"></i>在线</span>
+          <span class="legend-item"><i class="seat-key away"></i>暂时离开</span>
+          <span class="legend-item"><i class="seat-key left"></i>离开</span>
+          <span class="legend-item"><i class="seat-key booked"></i>预约中</span>
+        </div>
+        <div class="seat-wrap">
+          <div class="seat-map" id="seatMap" aria-label="图书馆座位平面图示意"></div>
+        </div>
+        <div class="seat-foot">
+          <span>F2 · 靠窗 · 最深处</span>
+          <span>空位 <b>54</b> / 72</span>
+        </div>
+      </div>
+
+      <div class="demo wide reveal" style="--i:13">
+        <div class="demo-label">TabBar · 底部导航 + 中央 FAB</div>
+        <div class="tabbar-shell">
+          <nav class="tabbar" aria-label="主导航">
+            <button class="tab active" aria-current="page">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1z"/></svg>
+              <span>首页</span>
+            </button>
+            <button class="tab">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></svg>
+              <span>座位</span>
+            </button>
+            <button class="tab fab-slot" tabindex="-1" aria-hidden="true"><span>小阅</span></button>
+            <button class="tab">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 9h16M8 3v4M16 3v4"/></svg>
+              <span>课表</span>
+            </button>
+            <button class="tab">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.4 3.1-6 7-6s7 2.6 7 6"/></svg>
+              <span>我的</span>
+            </button>
+            <button class="fab" aria-label="打开小阅 AI 助手">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H9l-4 3v-4.2A7.5 7.5 0 0 1 12.5 4 7.5 7.5 0 0 1 20 11.5Z"/><path d="M9 11.5h.01M12.5 11.5h.01M16 11.5h.01"/></svg>
+            </button>
+          </nav>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 04 对比 -->
+  <section class="block" id="contrast">
+    <div class="block-head reveal" style="--i:14">
+      <span class="block-no">04 / CONTRAST FIX</span>
+      <h2>一处必须修正的对比度</h2>
+      <p>原型里的辅助灰在白卡上只有 3.16:1，Web 端必须加深，否则说明文字全部踩 WCAG AA 红线。</p>
+    </div>
+    <div class="compare">
+      <div class="cmp bad reveal" style="--i:15">
+        <div class="tag">原型的 #8A938E</div>
+        <div class="sample-lg" style="color:#8A938E">本周在图书馆的专注时长</div>
+        <div class="sample-sm" style="color:#8A938E">校园座位与课表助手 · 今日未入馆</div>
+        <div class="ratio">对比度 3.16:1 · 未达标</div>
+      </div>
+      <div class="cmp good reveal" style="--i:16">
+        <div class="tag">修正为 #67706B</div>
+        <div class="sample-lg" style="color:#67706B">本周在图书馆的专注时长</div>
+        <div class="sample-sm" style="color:#67706B">校园座位与课表助手 · 今日未入馆</div>
+        <div class="ratio">对比度 5.11:1 · 达标</div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <span>依据 <code>初版风格预测/MASTER.md</code> · ui-ux-pro-max 检索结论</span>
+    <span>Swiss Style · Flat + Micro-interactions · Phosphor Outline</span>
+  </footer>
+
+</div>
+
+<script>
+  (function () {
+    var map = document.getElementById('seatMap');
+    var pattern = ['online', 'online', 'online', 'left', 'online', 'away', 'online', 'online', 'booked', 'online', 'online', 'left'];
+    var labels = { online: '在线', away: '暂时离开', left: '离开', booked: '预约中' };
+    var counts = { online: 0, away: 0, left: 0, booked: 0 };
+
+    for (var i = 0; i < 72; i++) {
+      var state = pattern[i % pattern.length];
+      counts[state]++;
+      var seat = document.createElement('button');
+      seat.type = 'button';
+      seat.className = 'seat';
+      seat.dataset.state = state;
+      seat.setAttribute('aria-pressed', 'false');
+      seat.setAttribute('aria-label', 'F2-' + String(i + 1).padStart(2, '0') + ' ' + labels[state]);
+      seat.addEventListener('click', function () {
+        var on = this.getAttribute('aria-pressed') === 'true';
+        this.setAttribute('aria-pressed', on ? 'false' : 'true');
+      });
+      map.appendChild(seat);
+    }
+
+    var foot = document.querySelector('.seat-foot b');
+    if (foot) foot.textContent = String(counts.online);
+  })();
+</script>
+</body>
+</html>

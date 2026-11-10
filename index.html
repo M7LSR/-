@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>阅见序章 · 首页</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/home.css">
+</head>
+<body>
+
+<main class="stage">
+  <div class="phone">
+
+    <div class="notch" aria-hidden="true"></div>
+
+    <header class="statusbar">
+      <span class="clock" id="clock">19:27</span>
+      <span class="status-icons" aria-hidden="true">
+        <svg viewBox="0 0 20 14"><path d="M1.5 11h2.2M6 8.2h2.2M10.5 5.4h2.2M15 2.6h2.2"/></svg>
+        <svg viewBox="0 0 16 12"><path d="M1.2 4.4a10 10 0 0 1 13.6 0M3.8 7a6.4 6.4 0 0 1 8.4 0M6.5 9.6a2.5 2.5 0 0 1 3 0"/><circle cx="8" cy="10.9" r="1" fill="currentColor" stroke="none"/></svg>
+        <svg viewBox="0 0 26 12"><rect x="1" y="1" width="21" height="10" rx="3"/><rect x="3.2" y="3.2" width="15" height="5.6" rx="1.4" fill="currentColor" stroke="none"/><path d="M23.8 4.2v3.6a2.2 2.2 0 0 0 0-3.6Z" fill="currentColor" stroke="none"/></svg>
+      </span>
+    </header>
+
+    <div class="appbar">
+      <div class="brand">
+        <span class="brand-dot" aria-hidden="true"></span>
+        阅见序章
+      </div>
+      <div class="capsule" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><circle cx="6" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="18" cy="12" r="1.4" fill="currentColor" stroke="none"/></svg>
+        <span class="capsule-split"></span>
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="6.5"/><circle cx="12" cy="12" r="2.2"/></svg>
+      </div>
+    </div>
+
+    <section class="content">
+
+      <div class="greet reveal" style="--i:0">
+        <div class="greet-main">
+          <p class="date"><span id="dateLine">11月10日 周二 · 晚上好</span></p>
+          <h1 class="greet-title">开始今天的<span class="accent">自习时光</span></h1>
+          <div class="rule"></div>
+        </div>
+        <span class="role-pill">学生端</span>
+      </div>
+
+      <article class="card seat-card reveal" style="--i:1">
+        <header class="card-head">
+          <h2 class="card-title">我的座位</h2>
+          <a class="card-link" href="#" data-toast="座位详情页正在开发中">进入
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </header>
+
+        <div class="seat-empty">
+          <div class="seat-illust" aria-hidden="true">
+            <svg viewBox="0 0 64 64">
+              <path d="M18 38V22a4 4 0 0 1 4-4h20a4 4 0 0 1 4 4v16"/>
+              <path d="M14 38h36a3 3 0 0 1 3 3v5"/>
+              <path d="M18 46v6M46 46v6"/>
+              <path d="M24 26h16"/>
+            </svg>
+          </div>
+          <p class="empty-title">暂无座位</p>
+          <p class="empty-desc">当前状态：空闲 · 入馆后扫码即可就座</p>
+          <button class="btn btn-primary" type="button" data-toast="座位预约功能正在开发中">去选座位</button>
+        </div>
+
+        <div class="tip-row">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 14.4 9l6 .5-4.5 4 1.4 5.9L12 16.3 6.7 19.4 8.1 13.5 3.6 9.5l6-.5Z"/></svg>
+          <span>今日建议 · 保持座位整洁</span>
+        </div>
+      </article>
+
+      <article class="card course-card reveal" style="--i:2">
+        <header class="card-head">
+          <h2 class="card-title">我的课表</h2>
+          <a class="card-link" href="#" data-toast="课表页正在开发中">查看全部
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </header>
+
+        <div class="course-empty">
+          <div class="course-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 9.5h17M8 2.8v4M16 2.8v4"/></svg>
+          </div>
+          <div class="course-text">
+            <p class="empty-title small">今天没有课程安排</p>
+            <p class="empty-desc" id="courseMeta">11月10日 · 周二 · 共 0 节</p>
+          </div>
+        </div>
+      </article>
+
+    </section>
+
+    <nav class="tabbar" aria-label="主导航">
+      <button class="tab active" type="button" aria-current="page">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1Z"/></svg>
+        <span>首页</span>
+      </button>
+      <button class="tab" type="button" data-toast="图书馆座位页正在开发中">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></svg>
+        <span>座位</span>
+      </button>
+      <button class="tab fab-slot" type="button" tabindex="-1" aria-hidden="true"><span>小阅</span></button>
+      <button class="tab" type="button" data-toast="课表页正在开发中">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 9h16M8 3v4M16 3v4"/></svg>
+        <span>课表</span>
+      </button>
+      <button class="tab" type="button" data-toast="个人中心页正在开发中">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.4 3.1-6 7-6s7 2.6 7 6"/></svg>
+        <span>我的</span>
+      </button>
+      <button class="fab" type="button" aria-label="打开小阅 AI 助手" data-toast="小阅 AI 助手正在开发中">
+        <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H9l-4 3v-4.2A7.5 7.5 0 0 1 12.5 4 7.5 7.5 0 0 1 20 11.5Z"/><path d="M9 11.5h.01M12.5 11.5h.01M16 11.5h.01"/></svg>
+      </button>
+    </nav>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  </div>
+</main>
+
+<script src="js/app.js"></script>
+</body>
+</html>

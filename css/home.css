@@ -1,0 +1,140 @@
+.greet {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 2px 18px;
+}
+
+.greet-main { min-width: 0; }
+
+.date {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--color-text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.greet-title {
+  margin: 6px 0 0;
+  font-size: 22px;
+  line-height: 1.3;
+  font-weight: 700;
+  letter-spacing: -.02em;
+}
+
+.greet-title .accent { color: var(--green-700); }
+
+.greet .rule { margin-top: 12px; }
+
+.role-pill {
+  flex: none;
+  margin-top: 2px;
+  padding: 5px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--green-100);
+  color: var(--green-900);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: .02em;
+}
+
+.seat-card {
+  padding-bottom: 14px;
+}
+
+.seat-empty {
+  margin-top: 12px;
+  padding: 18px 16px 16px;
+  border: 1.5px dashed rgba(15, 107, 79, .24);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.seat-illust {
+  width: 52px;
+  height: 52px;
+  margin-bottom: 10px;
+  color: var(--green-200);
+}
+.seat-illust svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.seat-empty .empty-desc { max-width: 220px; }
+
+.seat-empty .btn { margin-top: 14px; }
+
+.tip-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  padding: 9px 12px;
+  border-radius: 12px;
+  background: var(--green-050);
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--green-900);
+}
+.tip-row svg {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: var(--green-700);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.course-card { margin-top: 12px; }
+
+.course-empty {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+  padding: 14px;
+  border-radius: 14px;
+  background: var(--paper-050);
+  border: 1px solid var(--color-border);
+}
+
+.course-icon {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: var(--paper-000);
+  border: 1px solid var(--color-border);
+  display: grid;
+  place-items: center;
+  color: var(--green-700);
+}
+.course-icon svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.course-text { min-width: 0; }
+
+@media (max-width: 360px) {
+  .greet-title { font-size: 20px; }
+  .role-pill { display: none; }
+}
