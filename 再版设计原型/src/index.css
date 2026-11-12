@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    margin: 0;
+    background-color: #0a0a0a;
+    color: #ffffff;
+    font-family: 'PingFang SC', 'HarmonyOS Sans SC', 'Microsoft YaHei',
+      system-ui, -apple-system, 'Segoe UI', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overscroll-behavior: none;
+  }
+
+  button {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+.chart-glow .recharts-radar-polygon {
+  filter: drop-shadow(0 0 6px rgba(255, 92, 0, 0.45));
+}
+
+.chart-glow .recharts-area-curve {
+  filter: drop-shadow(0 0 6px rgba(255, 92, 0, 0.5));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

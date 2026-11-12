@@ -1,0 +1,50 @@
+export const LIBRARY_FILTERS = ['全部', '课堂笔记', '课件PPT', '速记备忘']
+
+export const LIBRARY_FILES = [
+  {
+    id: 'f1',
+    name: '微观经济学_第3章.pptx',
+    ext: 'PPTX',
+    category: '课件PPT',
+    time: '昨天 14:30',
+    size: '8.6 MB',
+    icon: 'ppt',
+    recent: true,
+  },
+  {
+    id: 'f2',
+    name: '高数课堂速记.mp3',
+    ext: 'MP3',
+    category: '速记备忘',
+    time: '今天 09:15',
+    size: '12.4 MB',
+    icon: 'audio',
+  },
+  {
+    id: 'f3',
+    name: '宏观经济学 课堂笔记.pdf',
+    ext: 'PDF',
+    category: '课堂笔记',
+    time: '11月10日',
+    size: '2.1 MB',
+    icon: 'pdf',
+  },
+  {
+    id: 'f4',
+    name: '英语听力原文.png',
+    ext: 'PNG',
+    category: '课堂笔记',
+    time: '11月08日',
+    size: '1.8 MB',
+    icon: 'image',
+  },
+  {
+    id: 'f5',
+    name: '作业要求_课程设计.pdf',
+    ext: 'PDF',
+    category: '课堂笔记',
+    time: '11月06日',
+    size: '640 KB',
+    icon: 'pdf',
+  },
+]
