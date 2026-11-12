@@ -607,9 +607,6 @@ function HomePage({ onNavigate }) {
 
       <header className="relative z-10 flex shrink-0 items-start justify-between px-5 pb-3 pt-2">
         <div>
-          <p className="text-[8.5px] uppercase tracking-[0.26em] text-accent/70">
-            AI Learning Butler
-          </p>
           <h1 className="mt-1 text-[22px] font-semibold tracking-tight text-white">
             AI 学业管家
           </h1>
@@ -817,9 +814,6 @@ function HubPage({ notify }) {
         <div className="flex items-center gap-3">
           <AgentRing />
           <div className="min-w-0 flex-1">
-            <p className="text-[8.5px] uppercase tracking-[0.24em] text-accent/60">
-              AI Companion · Agents 协同中
-            </p>
             <h1 className="mt-1 text-[22px] font-semibold tracking-tight text-white">
               Planner Hub
             </h1>
@@ -1070,9 +1064,6 @@ function ChecklistPage() {
           <div className="relative">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-[8.5px] uppercase tracking-[0.24em] text-accent/65">
-                  Study Checklist
-                </p>
                 <h1 className="mt-1 text-[22px] font-semibold tracking-tight text-white">
                   学习任务
                 </h1>
@@ -1207,9 +1198,6 @@ function GapPage({ onNavigate, notify }) {
 
       <main className="screen-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-5 pb-44">
         <section className="animate-rise-in">
-          <p className="text-[8.5px] uppercase tracking-[0.24em] text-accent/65">
-            Idle Gap
-          </p>
           <h1 className="mt-1.5 text-[26px] font-semibold leading-tight tracking-tight text-white">
             您有 45 分钟的
             <br />
@@ -1456,9 +1444,6 @@ function LibraryPage({ notify }) {
       <header className="relative z-10 shrink-0 px-5 pb-2 pt-1">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-[8.5px] uppercase tracking-[0.24em] text-accent/65">
-              Knowledge Base
-            </p>
             <h1 className="mt-1 text-[20px] font-semibold tracking-tight text-white">
               资料知识库
             </h1>
@@ -1599,9 +1584,6 @@ function SeatPage({ notify }) {
 
       <header className="relative z-10 flex shrink-0 items-start justify-between px-5 pb-2 pt-1">
         <div>
-          <p className="text-[8.5px] uppercase tracking-[0.24em] text-accent/65">
-            Seat Agent
-          </p>
           <h1 className="mt-1 text-[20px] font-semibold tracking-tight text-white">
             图书馆 3楼
           </h1>

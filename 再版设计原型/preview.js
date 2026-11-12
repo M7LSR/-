@@ -695,9 +695,7 @@ function HomePage({
     time: "9:41"
   }), /*#__PURE__*/React.createElement("header", {
     className: "relative z-10 flex shrink-0 items-start justify-between px-5 pb-3 pt-2"
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("p", {
-    className: "text-[8.5px] uppercase tracking-[0.26em] text-accent/70"
-  }, "AI Learning Butler"), /*#__PURE__*/React.createElement("h1", {
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h1", {
     className: "mt-1 text-[22px] font-semibold tracking-tight text-white"
   }, "AI \u5B66\u4E1A\u7BA1\u5BB6")), /*#__PURE__*/React.createElement("div", {
     className: "flex gap-2"
@@ -900,9 +898,7 @@ function HubPage({
     className: "flex items-center gap-3"
   }, /*#__PURE__*/React.createElement(AgentRing, null), /*#__PURE__*/React.createElement("div", {
     className: "min-w-0 flex-1"
-  }, /*#__PURE__*/React.createElement("p", {
-    className: "text-[8.5px] uppercase tracking-[0.24em] text-accent/60"
-  }, "AI Companion \xB7 Agents \u534F\u540C\u4E2D"), /*#__PURE__*/React.createElement("h1", {
+  }, /*#__PURE__*/React.createElement("h1", {
     className: "mt-1 text-[22px] font-semibold tracking-tight text-white"
   }, "Planner Hub")), /*#__PURE__*/React.createElement("button", {
     type: "button",
@@ -1085,9 +1081,7 @@ function ChecklistPage() {
     className: "relative"
   }, /*#__PURE__*/React.createElement("div", {
     className: "flex items-center justify-between"
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("p", {
-    className: "text-[8.5px] uppercase tracking-[0.24em] text-accent/65"
-  }, "Study Checklist"), /*#__PURE__*/React.createElement("h1", {
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h1", {
     className: "mt-1 text-[22px] font-semibold tracking-tight text-white"
   }, "\u5B66\u4E60\u4EFB\u52A1")), /*#__PURE__*/React.createElement("span", {
     className: "flex items-center gap-1 text-[9px] text-white/35"
@@ -1189,9 +1183,7 @@ function GapPage({
     className: "screen-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-5 pb-44"
   }, /*#__PURE__*/React.createElement("section", {
     className: "animate-rise-in"
-  }, /*#__PURE__*/React.createElement("p", {
-    className: "text-[8.5px] uppercase tracking-[0.24em] text-accent/65"
-  }, "Idle Gap"), /*#__PURE__*/React.createElement("h1", {
+  }, /*#__PURE__*/React.createElement("h1", {
     className: "mt-1.5 text-[26px] font-semibold leading-tight tracking-tight text-white"
   }, "\u60A8\u6709 45 \u5206\u949F\u7684", /*#__PURE__*/React.createElement("br", null), "\u7A7A\u7A97\u65F6\u95F4"), /*#__PURE__*/React.createElement("p", {
     className: "mt-2 text-[10px] text-white/40"
@@ -1408,9 +1400,7 @@ function LibraryPage({
     className: "relative z-10 shrink-0 px-5 pb-2 pt-1"
   }, /*#__PURE__*/React.createElement("div", {
     className: "flex items-center justify-between"
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("p", {
-    className: "text-[8.5px] uppercase tracking-[0.24em] text-accent/65"
-  }, "Knowledge Base"), /*#__PURE__*/React.createElement("h1", {
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h1", {
     className: "mt-1 text-[20px] font-semibold tracking-tight text-white"
   }, "\u8D44\u6599\u77E5\u8BC6\u5E93")), /*#__PURE__*/React.createElement("span", {
     className: "flex items-center gap-1 rounded-full border border-accent/20 bg-accent/10 px-2 py-1 text-[8px] text-accent"
@@ -1512,9 +1502,7 @@ function SeatPage({
     time: "9:41"
   }), /*#__PURE__*/React.createElement("header", {
     className: "relative z-10 flex shrink-0 items-start justify-between px-5 pb-2 pt-1"
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("p", {
-    className: "text-[8.5px] uppercase tracking-[0.24em] text-accent/65"
-  }, "Seat Agent"), /*#__PURE__*/React.createElement("h1", {
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h1", {
     className: "mt-1 text-[20px] font-semibold tracking-tight text-white"
   }, "\u56FE\u4E66\u9986 3\u697C")), /*#__PURE__*/React.createElement("button", {
     type: "button",
