@@ -15,7 +15,7 @@
 
   body {
     margin: 0;
-    background-color: #0a0a0a;
+    background-color: #080808;
     color: #ffffff;
     font-family: 'PingFang SC', 'HarmonyOS Sans SC', 'Microsoft YaHei',
       system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -27,6 +27,10 @@
   button {
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
+  }
+
+  ::selection {
+    background: rgba(255, 122, 0, 0.3);
   }
 }
 
@@ -49,12 +53,22 @@
   }
 }
 
-.chart-glow .recharts-radar-polygon {
-  filter: drop-shadow(0 0 6px rgba(255, 92, 0, 0.45));
+.screen-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.16) transparent;
 }
 
-.chart-glow .recharts-area-curve {
-  filter: drop-shadow(0 0 6px rgba(255, 92, 0, 0.5));
+.screen-scroll::-webkit-scrollbar {
+  width: 2px;
+}
+
+.screen-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.screen-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
 }
 
 @media (prefers-reduced-motion: reduce) {

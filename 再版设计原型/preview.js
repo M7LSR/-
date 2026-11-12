@@ -5,141 +5,446 @@ const {
   useCallback
 } = React;
 const {
+  Home,
   Armchair,
-  ArrowUp,
-  BatteryFull,
-  BookOpen,
-  CalendarDays,
-  Check,
-  ChevronDown,
-  ChevronRight,
-  Clock3,
-  FileText,
-  Image: ImageIcon,
-  LayoutGrid,
-  ListChecks,
-  MapPin,
-  Mic,
+  TrendingUp,
+  Fingerprint,
   MoreHorizontal,
-  Plug,
-  Plus,
-  Presentation,
-  Search,
-  Signal,
   SlidersHorizontal,
   Sparkles,
+  BookOpen,
+  ListChecks,
+  Clock3,
+  ChevronRight,
+  ChevronDown,
+  ArrowUp,
+  ArrowDown,
+  ArrowRight,
+  Plus,
+  Search,
+  Mic,
+  FileText,
+  Image: ImageIcon,
+  Presentation,
+  MapPin,
+  Wifi,
+  Plug,
   Sun,
   VolumeX,
-  Wand2,
-  Wifi,
-  X
+  Check,
+  X,
+  CalendarDays,
+  BatteryFull,
+  Signal,
+  Play,
+  Target,
+  Bell,
+  ShieldCheck,
+  Info,
+  Flame,
+  Library,
+  GraduationCap
 } = window.LucideReact;
-const {
-  Area,
-  AreaChart,
-  CartesianGrid,
-  PolarAngleAxis,
-  PolarGrid,
-  PolarRadiusAxis,
-  Radar,
-  RadarChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis
-} = window.Recharts;
-const currentSlot = {
-  date: '11月12日 周三',
-  now: '13:41',
-  gap: {
-    start: '13:46',
-    end: '14:30',
-    minutes: 45,
-    leftPercent: 37.5,
-    widthPercent: 36.7,
-    nowPercent: 34.2
+const CARD = 'border border-white/10 bg-white/[0.05] backdrop-blur-xl shadow-glass';
+const NAV_ITEMS = [{
+  id: 'home',
+  label: '首页',
+  icon: Home
+}, {
+  id: 'seat',
+  label: '订座',
+  icon: Armchair
+}, {
+  id: 'analytics',
+  label: '分析',
+  icon: TrendingUp
+}, {
+  id: 'profile',
+  label: '我的',
+  icon: Fingerprint
+}];
+const SCHEDULE = [{
+  time: '09:30',
+  title: '数学复盘'
+}, {
+  time: '14:00',
+  title: '英语听力'
+}, {
+  time: '19:00',
+  title: '项目研讨'
+}];
+const QUICK_LINKS = [{
+  id: 'hub',
+  label: 'Planner Hub',
+  note: '多智能体对话',
+  icon: Sparkles
+}, {
+  id: 'checklist',
+  label: '任务清单',
+  note: '3 / 5 完成',
+  icon: ListChecks
+}, {
+  id: 'gap',
+  label: '空窗规划',
+  note: '45 分钟空窗',
+  icon: Clock3
+}, {
+  id: 'library',
+  label: '资料库',
+  note: 'RAG 语义检索',
+  icon: BookOpen
+}];
+const DATES = [{
+  day: '一',
+  date: '21'
+}, {
+  day: '二',
+  date: '22'
+}, {
+  day: '三',
+  date: '23'
+}, {
+  day: '四',
+  date: '24'
+}, {
+  day: '五',
+  date: '25'
+}, {
+  day: '六',
+  date: '26'
+}, {
+  day: '日',
+  date: '27'
+}];
+const AGENT_TAGS = ['Scheduling', 'RAG Tutor', 'Seat Agent'];
+const TASKS = [{
+  id: 1,
+  title: '复习微观经济学第3章',
+  tag: 'RAG伴学',
+  done: false,
+  minutes: 25
+}, {
+  id: 2,
+  title: '整理课堂笔记',
+  tag: '预习',
+  done: true,
+  minutes: 40
+}, {
+  id: 3,
+  title: '完成课后习题',
+  tag: '练习',
+  done: true,
+  minutes: 30
+}, {
+  id: 4,
+  title: '背诵四级单词',
+  tag: '复习',
+  done: true,
+  minutes: 20,
+  hidden: true
+}, {
+  id: 5,
+  title: '预习高数下册',
+  tag: '预习',
+  done: false,
+  minutes: 45,
+  hidden: true
+}];
+const LIBRARY_FILES = [{
+  id: 'n1',
+  title: '宏观经济学 课堂笔记',
+  type: 'PDF',
+  date: '2025-11-10',
+  icon: 'pdf',
+  hot: true,
+  lines: 2
+}, {
+  id: 'n2',
+  title: '营销案例 PPT 框架',
+  type: 'PPTX',
+  date: '2025-11-08',
+  icon: 'ppt',
+  lines: 3
+}, {
+  id: 'n3',
+  title: '英语听力速记',
+  type: 'MP3',
+  date: '2025-11-05',
+  icon: 'audio',
+  lines: 1
+}, {
+  id: 'n4',
+  title: '高数错题整理',
+  type: 'PNG',
+  date: '2025-11-03',
+  icon: 'image',
+  lines: 2
+}, {
+  id: 'n5',
+  title: '课后作业要求',
+  type: 'PDF',
+  date: '2025-11-01',
+  icon: 'pdf',
+  lines: 3
+}];
+const FILE_ICONS = {
+  pdf: FileText,
+  ppt: Presentation,
+  audio: Mic,
+  image: ImageIcon
+};
+const STATS = [{
+  label: '总学习时长',
+  value: '28.6h',
+  note: '+18%'
+}, {
+  label: '完成任务数',
+  value: '126个',
+  note: '+12'
+}, {
+  label: '履约率',
+  value: '94%',
+  note: '+6%'
+}, {
+  label: '专注度',
+  value: '92%',
+  note: '+18%'
+}];
+const PROFILE_ITEMS = [{
+  label: '学习目标',
+  icon: Target
+}, {
+  label: '提醒设置',
+  icon: Bell
+}, {
+  label: '账号与安全',
+  icon: ShieldCheck
+}, {
+  label: '关于知行',
+  icon: Info
+}];
+const SEAT_DOTS = Array.from({
+  length: 6
+}, (_, row) => Array.from({
+  length: 8
+}, (_, col) => ({
+  x: 38 + col * 34,
+  y: 76 + row * 14
+}))).flat();
+const MINI_BAR_OPTION = {
+  animationDuration: 700,
+  grid: {
+    left: 0,
+    right: 0,
+    top: 4,
+    bottom: 0
   },
-  recommendation: {
-    course: '微观经济学',
-    chapter: '第 3 章',
-    topic: '边际效用与消费者均衡',
-    minutes: 25,
-    mastered: 62,
-    library: '附近图书馆有空座',
-    walkMinutes: 6
+  xAxis: {
+    type: 'category',
+    show: false,
+    data: ['一', '二', '三', '四', '五', '六', '日']
   },
-  ticks: [{
-    label: '13:00',
-    position: 0
-  }, {
-    label: '13:45',
-    position: 37.5
-  }, {
-    label: '14:30',
-    position: 74.2
-  }, {
-    label: '15:00',
-    position: 100
+  yAxis: {
+    type: 'value',
+    show: false
+  },
+  series: [{
+    type: 'bar',
+    data: [3.2, 4.1, 2.8, 4.6, 3.9, 5.4, 4.6],
+    barWidth: 5,
+    itemStyle: {
+      borderRadius: [3, 3, 0, 0],
+      color: {
+        type: 'linear',
+        x: 0,
+        y: 0,
+        x2: 0,
+        y2: 1,
+        colorStops: [{
+          offset: 0,
+          color: '#FF7A00'
+        }, {
+          offset: 1,
+          color: 'rgba(255,122,0,0.12)'
+        }]
+      }
+    },
+    showBackground: true,
+    backgroundStyle: {
+      color: 'rgba(255,255,255,0.05)',
+      borderRadius: [3, 3, 0, 0]
+    }
   }]
 };
-const toastMessages = {
-  booked: {
-    title: '已为您预约图书馆 A区 12号座位',
-    detail: '13:50 前到馆 · 座位保留 20 分钟'
+const RADAR_OPTION = {
+  animationDuration: 900,
+  radar: {
+    center: ['50%', '52%'],
+    radius: '62%',
+    splitNumber: 4,
+    indicator: [{
+      name: '专注',
+      max: 100
+    }, {
+      name: '理解',
+      max: 100
+    }, {
+      name: '节奏',
+      max: 100
+    }, {
+      name: '履约',
+      max: 100
+    }, {
+      name: '记忆',
+      max: 100
+    }, {
+      name: '自律',
+      max: 100
+    }],
+    axisName: {
+      color: 'rgba(255,255,255,0.55)',
+      fontSize: 9
+    },
+    splitLine: {
+      lineStyle: {
+        color: 'rgba(255,255,255,0.08)'
+      }
+    },
+    splitArea: {
+      areaStyle: {
+        color: ['rgba(255,255,255,0.01)', 'rgba(255,255,255,0.03)']
+      }
+    },
+    axisLine: {
+      lineStyle: {
+        color: 'rgba(255,255,255,0.08)'
+      }
+    }
   },
-  custom: {
-    title: '已进入自定义规划',
-    detail: '可按你的节奏调整任务与时长'
-  }
+  series: [{
+    type: 'radar',
+    data: [{
+      value: [92, 78, 86, 94, 72, 81]
+    }],
+    symbol: 'circle',
+    symbolSize: 4,
+    lineStyle: {
+      color: '#FF7A00',
+      width: 2,
+      shadowBlur: 12,
+      shadowColor: 'rgba(255,122,0,0.5)'
+    },
+    itemStyle: {
+      color: '#FF7A00'
+    },
+    areaStyle: {
+      color: 'rgba(255,122,0,0.18)'
+    }
+  }]
 };
-const {
-  now,
-  date,
-  gap,
-  recommendation,
-  ticks
-} = currentSlot;
-function PhoneShell({
-  children
-}) {
-  return /*#__PURE__*/React.createElement("div", {
-    className: "relative flex min-h-screen w-full items-start justify-center overflow-x-hidden overflow-y-auto bg-ink-900 sm:px-6 sm:py-8"
-  }, /*#__PURE__*/React.createElement("div", {
-    "aria-hidden": "true",
-    className: "pointer-events-none absolute inset-0 hidden sm:block",
-    style: {
-      backgroundImage: 'radial-gradient(ellipse 62% 52% at 50% 36%, rgba(255,92,0,0.10), transparent 65%), linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px)',
-      backgroundSize: '100% 100%, 64px 64px, 64px 64px',
-      maskImage: 'radial-gradient(ellipse at center, black 18%, transparent 76%)',
-      WebkitMaskImage: 'radial-gradient(ellipse at center, black 18%, transparent 76%)'
+const AREA_OPTION = {
+  animationDuration: 900,
+  grid: {
+    left: 6,
+    right: 8,
+    top: 20,
+    bottom: 4,
+    containLabel: true
+  },
+  tooltip: {
+    trigger: 'axis',
+    backgroundColor: 'rgba(20,18,16,0.94)',
+    borderColor: 'rgba(255,122,0,0.35)',
+    borderWidth: 1,
+    padding: [8, 10],
+    textStyle: {
+      color: '#fff',
+      fontSize: 10
+    },
+    axisPointer: {
+      lineStyle: {
+        color: 'rgba(255,122,0,0.45)'
+      }
     }
-  }), /*#__PURE__*/React.createElement("div", {
-    className: "relative z-10 w-full max-w-[390px]"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "relative mx-auto flex h-screen w-full flex-col overflow-hidden bg-ink-900 sm:h-[844px] sm:rounded-[46px] sm:border sm:border-white/10 sm:shadow-shell"
-  }, /*#__PURE__*/React.createElement("div", {
-    "aria-hidden": "true",
-    className: "pointer-events-none absolute -top-28 left-1/2 h-72 w-[130%] -translate-x-1/2",
-    style: {
-      background: 'radial-gradient(ellipse at center, rgba(255,92,0,0.16), transparent 68%)'
+  },
+  xAxis: {
+    type: 'category',
+    boundaryGap: false,
+    data: ['一', '二', '三', '四', '五', '六', '日'],
+    axisLine: {
+      show: false
+    },
+    axisTick: {
+      show: false
+    },
+    axisLabel: {
+      color: 'rgba(255,255,255,0.4)',
+      fontSize: 9
     }
-  }), /*#__PURE__*/React.createElement("div", {
-    "aria-hidden": "true",
-    className: "pointer-events-none absolute inset-x-0 bottom-0 h-56",
-    style: {
-      background: 'radial-gradient(ellipse at bottom, rgba(255,92,0,0.07), transparent 72%)'
+  },
+  yAxis: {
+    type: 'value',
+    min: 0,
+    max: 6,
+    interval: 2,
+    axisLine: {
+      show: false
+    },
+    axisTick: {
+      show: false
+    },
+    axisLabel: {
+      color: 'rgba(255,255,255,0.3)',
+      fontSize: 8,
+      formatter: '{value}h'
+    },
+    splitLine: {
+      lineStyle: {
+        color: 'rgba(255,255,255,0.06)',
+        type: 'dashed'
+      }
     }
-  }), /*#__PURE__*/React.createElement("div", {
-    className: "relative z-10 flex h-full min-h-0 flex-col"
-  }, children)), /*#__PURE__*/React.createElement("p", {
-    className: "mt-4 hidden text-center text-[9px] uppercase tracking-[0.34em] text-white/20 sm:block"
-  }, "Zhixing \xB7 Study Companion")));
-}
+  },
+  series: [{
+    type: 'line',
+    smooth: true,
+    symbol: 'circle',
+    symbolSize: 5,
+    data: [3.2, 4.1, 2.8, 4.6, 3.9, 5.4, 4.6],
+    lineStyle: {
+      color: '#FF7A00',
+      width: 2.5,
+      shadowBlur: 14,
+      shadowColor: 'rgba(255,122,0,0.55)'
+    },
+    itemStyle: {
+      color: '#FF7A00',
+      borderColor: '#0A0A0A',
+      borderWidth: 2
+    },
+    areaStyle: {
+      color: {
+        type: 'linear',
+        x: 0,
+        y: 0,
+        x2: 0,
+        y2: 1,
+        colorStops: [{
+          offset: 0,
+          color: 'rgba(255,122,0,0.38)'
+        }, {
+          offset: 1,
+          color: 'rgba(255,122,0,0)'
+        }]
+      }
+    }
+  }]
+};
 function StatusBar({
-  time
+  time = '9:41'
 }) {
   return /*#__PURE__*/React.createElement("div", {
-    className: "flex shrink-0 items-center justify-between px-6 pb-1 pt-3 text-[11px] text-white/80"
+    className: "flex shrink-0 items-center justify-between px-6 pb-1 pt-3 text-[11px] text-white/85"
   }, /*#__PURE__*/React.createElement("span", {
     className: "tabular font-medium tracking-wide"
   }, time), /*#__PURE__*/React.createElement("div", {
@@ -158,17 +463,34 @@ function StatusBar({
     "aria-hidden": "true"
   })));
 }
+function AgentRing({
+  size = 'md',
+  className = ''
+}) {
+  const box = size === 'lg' ? 'h-12 w-12' : size === 'sm' ? 'h-6 w-6' : 'h-9 w-9';
+  const inner = size === 'lg' ? 'inset-[8px]' : size === 'sm' ? 'inset-[5px]' : 'inset-[7px]';
+  return /*#__PURE__*/React.createElement("span", {
+    className: `relative grid ${box} shrink-0 place-items-center ${className}`
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "absolute inset-0 animate-breathe rounded-full border border-accent/40 shadow-[0_0_20px_rgba(255,122,0,0.28)]"
+  }), /*#__PURE__*/React.createElement("span", {
+    className: `absolute ${inner} rounded-full border border-accent/25`
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_10px_rgba(255,122,0,0.9)]"
+  }));
+}
 function Toast({
   message,
   onClose
 }) {
   if (!message) return null;
   return /*#__PURE__*/React.createElement("div", {
+    key: message.id,
     className: "absolute inset-x-4 top-3 z-50 animate-toast-in",
     role: "status",
     "aria-live": "polite"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "relative overflow-hidden rounded-2xl border border-accent/25 bg-[#171310]/92 px-4 py-3 shadow-[0_18px_50px_rgba(0,0,0,0.7)] backdrop-blur-xl"
+    className: "relative overflow-hidden rounded-2xl border border-accent/30 bg-[#141210]/92 px-4 py-3 shadow-[0_18px_50px_rgba(0,0,0,0.7)] backdrop-blur-xl"
   }, /*#__PURE__*/React.createElement("div", {
     className: "flex items-start gap-3"
   }, /*#__PURE__*/React.createElement("span", {
@@ -198,597 +520,81 @@ function Toast({
     className: "block h-full animate-toast-bar bg-accent"
   }))));
 }
-function IdleGapPage({
-  onOpenPages,
-  onBookSeat
-}) {
-  const [toast, setToast] = useState(null);
-  const timerRef = useRef(null);
-  const showToast = useCallback(message => {
-    if (timerRef.current) window.clearTimeout(timerRef.current);
-    setToast({
-      id: Date.now(),
-      ...message
-    });
-    timerRef.current = window.setTimeout(() => setToast(null), 3200);
-  }, []);
-  useEffect(() => {
-    return () => {
-      if (timerRef.current) window.clearTimeout(timerRef.current);
-    };
-  }, []);
+function MistLayer() {
   return /*#__PURE__*/React.createElement("div", {
-    className: "relative flex h-full min-h-0 flex-col"
-  }, /*#__PURE__*/React.createElement(Toast, {
-    key: toast ? toast.id : 'no-toast',
-    message: toast,
-    onClose: () => setToast(null)
-  }), /*#__PURE__*/React.createElement(StatusBar, {
-    time: now
-  }), /*#__PURE__*/React.createElement("header", {
-    className: "flex shrink-0 items-center justify-between px-6 pb-1 pt-2"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "flex items-center gap-2 text-[11px] text-white/40"
-  }, /*#__PURE__*/React.createElement(CalendarDays, {
-    size: 13,
-    strokeWidth: 1.5,
-    "aria-hidden": "true"
-  }), /*#__PURE__*/React.createElement("span", null, date)), /*#__PURE__*/React.createElement("button", {
-    type: "button",
-    onClick: onOpenPages,
-    "aria-label": "\u5207\u6362\u9875\u9762",
-    className: "grid h-8 w-8 place-items-center rounded-full border border-white/10 bg-white/[0.04] text-white/50 transition-colors active:bg-white/10"
-  }, /*#__PURE__*/React.createElement(LayoutGrid, {
-    size: 15,
-    strokeWidth: 1.5,
-    "aria-hidden": "true"
-  }))), /*#__PURE__*/React.createElement("main", {
-    className: "no-scrollbar min-h-0 flex-1 overflow-y-auto px-6 pb-6 pt-6"
-  }, /*#__PURE__*/React.createElement("section", {
-    className: "animate-rise-in"
-  }, /*#__PURE__*/React.createElement("p", {
-    className: "text-[10px] uppercase tracking-[0.34em] text-accent/70"
-  }, "Idle Gap"), /*#__PURE__*/React.createElement("h1", {
-    className: "mt-2.5 text-[32px] font-semibold leading-none tracking-tight text-white"
-  }, "\u7A7A\u7A97\u65F6\u95F4"), /*#__PURE__*/React.createElement("p", {
-    className: "mt-3 text-[13px] leading-5 text-white/45"
-  }, "\u60A8\u6709", ' ', /*#__PURE__*/React.createElement("span", {
-    className: "tabular font-medium text-white/85"
-  }, "45 \u5206\u949F"), ' ', "\u7A7A\u7A97\uFF0CAI \u5DF2\u4E3A\u4F60\u5339\u914D\u9644\u8FD1\u5B66\u4E60\u8D44\u6E90")), /*#__PURE__*/React.createElement("section", {
-    className: "mt-6 animate-rise-in",
-    style: {
-      animationDelay: '90ms'
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "rounded-[26px] border border-white/10 bg-white/[0.045] p-5 backdrop-blur-xl"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "flex items-start justify-between"
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("p", {
-    className: "text-[10px] uppercase tracking-[0.18em] text-white/35"
-  }, "\u73B0\u5728"), /*#__PURE__*/React.createElement("p", {
-    className: "mt-1 text-[22px] font-medium leading-none text-white tabular"
-  }, now)), /*#__PURE__*/React.createElement("span", {
-    className: "rounded-full border border-accent/25 bg-accent/10 px-2.5 py-1 text-[10px] text-accent"
-  }, "5 \u5206\u949F\u540E\u4E0B\u8BFE")), /*#__PURE__*/React.createElement("div", {
-    className: "relative mt-8"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "absolute top-0 -translate-x-1/2 whitespace-nowrap rounded-full border border-accent/20 bg-accent/10 px-2.5 py-1 text-[10px] tracking-wide text-accent",
-    style: {
-      left: `${gap.leftPercent + gap.widthPercent / 2}%`
-    }
-  }, "\u7A7A\u95F2 ", gap.minutes, " \u5206\u949F \xB7 ", gap.start, "\u2013", gap.end), /*#__PURE__*/React.createElement("div", {
-    className: "relative h-[10px] rounded-full bg-white/[0.06]"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "absolute inset-y-0 left-0 w-[37.5%] rounded-full bg-white/[0.12]"
-  }), /*#__PURE__*/React.createElement("div", {
-    className: "absolute inset-y-0 animate-breathe rounded-full bg-gradient-to-r from-accent via-[#FF6A14] to-accent-soft shadow-[0_0_26px_rgba(255,92,0,0.55)]",
-    style: {
-      left: `${gap.leftPercent}%`,
-      width: `${gap.widthPercent}%`
-    }
-  }), /*#__PURE__*/React.createElement("div", {
-    className: "absolute -top-[5px] h-5 w-[2px] -translate-x-1/2 rounded-full bg-white/55",
-    style: {
-      left: `${gap.nowPercent}%`
-    }
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "absolute -top-1 left-1/2 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-white ring-2 ring-ink-900"
-  }))), /*#__PURE__*/React.createElement("div", {
-    className: "relative mt-2.5 h-4 text-[10px] text-white/30 tabular"
-  }, ticks.map(tick => /*#__PURE__*/React.createElement("span", {
-    key: tick.label,
-    className: tick.position === 0 ? 'absolute left-0' : tick.position === 100 ? 'absolute right-0' : 'absolute -translate-x-1/2',
-    style: tick.position === 0 || tick.position === 100 ? undefined : {
-      left: `${tick.position}%`
-    }
-  }, tick.label)))))), /*#__PURE__*/React.createElement("section", {
-    className: "mt-4 animate-rise-in",
-    style: {
-      animationDelay: '180ms'
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "relative overflow-hidden rounded-[26px] border border-white/10 bg-white/[0.045] p-5 backdrop-blur-xl"
-  }, /*#__PURE__*/React.createElement("div", {
     "aria-hidden": "true",
-    className: "pointer-events-none absolute -right-12 -top-14 h-40 w-40 rounded-full",
-    style: {
-      background: 'radial-gradient(circle, rgba(255,92,0,0.20), transparent 70%)'
-    }
+    className: "pointer-events-none absolute inset-x-0 top-0 z-0 h-64"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "absolute inset-0 bg-gradient-to-b from-white/[0.16] via-white/[0.05] to-transparent blur-2xl"
   }), /*#__PURE__*/React.createElement("div", {
-    className: "relative flex items-center gap-3"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "grid h-9 w-9 shrink-0 place-items-center rounded-xl border border-accent/25 bg-accent/10 text-accent shadow-[0_0_22px_rgba(255,92,0,0.18)]"
-  }, /*#__PURE__*/React.createElement(Sparkles, {
-    size: 17,
-    strokeWidth: 1.5,
-    "aria-hidden": "true"
-  })), /*#__PURE__*/React.createElement("div", {
-    className: "min-w-0"
-  }, /*#__PURE__*/React.createElement("h2", {
-    className: "text-[15px] font-medium tracking-tight text-white"
-  }, "AI \u667A\u80FD\u63A8\u8350\u89C4\u5212"), /*#__PURE__*/React.createElement("p", {
-    className: "mt-0.5 text-[11px] text-white/35"
-  }, "\u57FA\u4E8E\u8BFE\u8868\u7A7A\u6863\u4E0E\u7AE0\u8282\u638C\u63E1\u5EA6\u751F\u6210")), /*#__PURE__*/React.createElement("span", {
-    className: "ml-auto shrink-0 rounded-full border border-white/10 bg-white/[0.04] px-2 py-1 text-[9px] tracking-wide text-white/40"
-  }, "\u667A\u80FD\u5339\u914D")), /*#__PURE__*/React.createElement("div", {
-    className: "relative mt-5 flex items-start gap-3"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-white/[0.05] text-white/55"
-  }, /*#__PURE__*/React.createElement(BookOpen, {
-    size: 15,
-    strokeWidth: 1.5,
-    "aria-hidden": "true"
-  })), /*#__PURE__*/React.createElement("div", {
-    className: "min-w-0 flex-1"
-  }, /*#__PURE__*/React.createElement("p", {
-    className: "text-[17px] font-medium leading-6 tracking-tight text-white"
-  }, "\u590D\u4E60", recommendation.course, " \xB7 ", recommendation.chapter), /*#__PURE__*/React.createElement("p", {
-    className: "mt-0.5 text-[11.5px] text-white/40"
-  }, recommendation.topic)), /*#__PURE__*/React.createElement("span", {
-    className: "shrink-0 rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1 text-[11px] text-white/70 tabular"
-  }, recommendation.minutes, " \u5206\u949F")), /*#__PURE__*/React.createElement("div", {
-    className: "relative mt-5"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "flex items-center justify-between text-[10px] text-white/35"
-  }, /*#__PURE__*/React.createElement("span", null, "\u4E13\u6CE8\u65F6\u6BB5"), /*#__PURE__*/React.createElement("span", {
-    className: "tabular"
-  }, recommendation.minutes, " / ", gap.minutes, " min")), /*#__PURE__*/React.createElement("div", {
-    className: "mt-2 h-1 overflow-hidden rounded-full bg-white/[0.07]"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "h-full rounded-full bg-gradient-to-r from-accent to-accent-soft shadow-[0_0_12px_rgba(255,92,0,0.5)]",
-    style: {
-      width: `${recommendation.minutes / gap.minutes * 100}%`
-    }
-  }))), /*#__PURE__*/React.createElement("div", {
-    className: "relative mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-white/[0.07] pt-3.5 text-[11px]"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "inline-flex items-center gap-1.5 text-accent"
-  }, /*#__PURE__*/React.createElement(MapPin, {
-    size: 13,
-    strokeWidth: 1.5,
-    "aria-hidden": "true"
-  }), recommendation.library), /*#__PURE__*/React.createElement("span", {
-    className: "ml-auto inline-flex items-center gap-0.5 text-white/30"
-  }, "\u6B65\u884C ", recommendation.walkMinutes, " \u5206\u949F", /*#__PURE__*/React.createElement(ChevronRight, {
-    size: 12,
-    strokeWidth: 1.5,
-    "aria-hidden": "true"
-  }))), /*#__PURE__*/React.createElement("div", {
-    className: "relative mt-3 rounded-xl border border-white/[0.06] bg-black/20 px-3 py-2.5"
-  }, /*#__PURE__*/React.createElement("p", {
-    className: "text-[10.5px] leading-4 text-white/35"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "text-accent/80"
-  }, "\u51B3\u7B56\u4F9D\u636E"), /*#__PURE__*/React.createElement("span", {
-    className: "mx-2 text-white/15"
-  }, "/"), "\u8BFE\u8868\u7A7A\u6863 ", gap.minutes, " \u5206\u949F \xB7 \u7B2C 3 \u7AE0\u638C\u63E1\u5EA6", ' ', recommendation.mastered, "% \xB7 \u6B65\u884C", ' ', recommendation.walkMinutes, " \u5206\u949F"))))), /*#__PURE__*/React.createElement("footer", {
-    className: "relative z-20 shrink-0 border-t border-white/[0.06] bg-gradient-to-t from-ink-900 via-ink-900/95 to-ink-900/70 px-6 pt-4 backdrop-blur-xl",
-    style: {
-      paddingBottom: 'max(20px, env(safe-area-inset-bottom))'
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "flex gap-3"
-  }, /*#__PURE__*/React.createElement("button", {
-    type: "button",
-    onClick: onBookSeat,
-    className: "flex h-[54px] flex-1 items-center justify-center gap-2 rounded-full bg-accent text-[14px] font-semibold text-black shadow-glow transition-transform active:scale-[0.985]"
-  }, /*#__PURE__*/React.createElement(Wand2, {
-    size: 16,
-    strokeWidth: 1.8,
-    "aria-hidden": "true"
-  }), "\u4E00\u952E\u89C4\u5212\u5E76\u8BA2\u5EA7"), /*#__PURE__*/React.createElement("button", {
-    type: "button",
-    onClick: () => showToast(toastMessages.custom),
-    className: "flex h-[54px] w-[112px] shrink-0 items-center justify-center gap-1.5 rounded-full border border-white/15 bg-white/[0.04] text-[13px] text-white/70 transition-transform active:scale-[0.985] active:bg-white/[0.08]"
-  }, /*#__PURE__*/React.createElement(SlidersHorizontal, {
-    size: 14,
-    strokeWidth: 1.5,
-    "aria-hidden": "true"
-  }), "\u81EA\u5B9A\u4E49")), /*#__PURE__*/React.createElement("p", {
-    className: "mt-2.5 text-center text-[9px] tracking-wide text-white/25"
-  }, "\u5EA7\u4F4D\u7531\u56FE\u4E66\u9986\u5B9E\u65F6\u7CFB\u7EDF\u9501\u5B9A \xB7 \u6F14\u793A\u6570\u636E")));
+    className: "absolute -top-28 left-1/2 h-56 w-[120%] -translate-x-1/2 rounded-full bg-white/[0.10] blur-3xl"
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"
+  }));
 }
-const SEAT_ROWS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
-const AVAILABLE_KEYS = new Set(['0-9', '1-8', '1-9', '2-9', '3-8', '4-9', '5-9', '6-8', '7-9', '8-8', '9-9', '2-3', '2-4', '3-3', '4-4', '5-5', '6-4', '0-4', '1-6', '2-7', '3-5', '4-2', '5-8', '6-6', '7-4', '8-6', '9-2', '1-1', '3-7', '4-7', '5-2', '7-7', '8-1']);
-const PLUG_KEYS = new Set(['0-4', '1-6', '2-7', '3-5', '4-2', '5-8', '6-6', '7-4', '8-6', '9-2']);
-const SEATS = SEAT_ROWS.flatMap((row, r) => Array.from({
-  length: 10
-}, (_, c) => {
-  const recommended = r === 0 && c === 1;
-  const key = `${r}-${c}`;
-  const available = recommended || AVAILABLE_KEYS.has(key);
-  return {
-    id: recommended ? 'A-12' : `${row}-${c + 1}`,
-    key,
-    recommended,
-    available,
-    window: c >= 8,
-    plug: PLUG_KEYS.has(key),
-    quiet: r >= 2 && r <= 6 && c >= 2 && c <= 5
-  };
-}));
-const SEAT_FILTERS = [{
-  id: 'window',
-  label: '靠窗',
-  icon: Sun
-}, {
-  id: 'plug',
-  label: '插座',
-  icon: Plug
-}, {
-  id: 'quiet',
-  label: '安静区',
-  icon: VolumeX
-}];
-const PROTOTYPE_PAGES = [{
-  id: 'gap',
-  label: '空窗规划',
-  en: 'Idle Gap'
-}, {
-  id: 'seat',
-  label: '智能订座',
-  en: 'Seat Booking'
-}, {
-  id: 'tasks',
-  label: '任务待办',
-  en: 'Study Checklist'
-}, {
-  id: 'hub',
-  label: 'AI 对话舱',
-  en: 'Planner Hub'
-}, {
-  id: 'analytics',
-  label: '学情分析',
-  en: 'Analytics'
-}, {
-  id: 'library',
-  label: '资料库',
-  en: 'Knowledge Base'
-}];
-function SeatBookingPage({
-  onOpenPages
+function PhoneShell({
+  children
 }) {
-  const [selectedId, setSelectedId] = useState('A-12');
-  const [filters, setFilters] = useState([]);
-  const [toast, setToast] = useState(null);
-  const timerRef = useRef(null);
-  const showToast = useCallback(message => {
-    if (timerRef.current) window.clearTimeout(timerRef.current);
-    setToast({
-      id: Date.now(),
-      ...message
-    });
-    timerRef.current = window.setTimeout(() => setToast(null), 3200);
-  }, []);
-  useEffect(() => {
-    return () => {
-      if (timerRef.current) window.clearTimeout(timerRef.current);
-    };
-  }, []);
-  const selectedSeat = SEATS.find(seat => seat.id === selectedId) || null;
-  const toggleFilter = id => {
-    setFilters(prev => prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]);
-  };
-  const toggleSeat = seat => {
-    if (!seat.available) return;
-    setSelectedId(prev => prev === seat.id ? null : seat.id);
-  };
-  const matchesFilters = seat => {
-    if (filters.length === 0) return true;
-    if (filters.includes('window') && !seat.window) return false;
-    if (filters.includes('plug') && !seat.plug) return false;
-    if (filters.includes('quiet') && !seat.quiet) return false;
-    return true;
-  };
-  const confirmBooking = () => {
-    if (!selectedSeat) return;
-    showToast({
-      title: '预约成功',
-      detail: `${selectedSeat.id} 座位 · 图书馆 3楼 · 13:46–14:30`
-    });
-  };
   return /*#__PURE__*/React.createElement("div", {
-    className: "relative flex h-full min-h-0 flex-col"
-  }, /*#__PURE__*/React.createElement(Toast, {
-    key: toast ? toast.id : 'no-toast',
-    message: toast,
-    onClose: () => setToast(null)
-  }), /*#__PURE__*/React.createElement(StatusBar, {
-    time: "13:41"
-  }), /*#__PURE__*/React.createElement("main", {
-    className: "no-scrollbar min-h-0 flex-1 overflow-y-auto px-5 pb-6"
-  }, /*#__PURE__*/React.createElement("header", {
-    className: "sticky top-0 z-20 -mx-5 border-b border-white/[0.06] bg-ink-900/85 px-5 pb-3 pt-2 backdrop-blur-xl"
+    className: "relative flex min-h-screen w-full items-start justify-center overflow-x-hidden overflow-y-auto bg-night-950 sm:px-6 sm:py-8"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "flex items-center justify-between"
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-    className: "flex items-center gap-1.5 text-[9px] uppercase tracking-[0.22em] text-white/30"
-  }, /*#__PURE__*/React.createElement(MapPin, {
-    size: 11,
-    strokeWidth: 1.5,
-    "aria-hidden": "true"
-  }), "Library \xB7 3F"), /*#__PURE__*/React.createElement("h1", {
-    className: "mt-1 text-[24px] font-semibold leading-none tracking-tight text-white"
-  }, "\u56FE\u4E66\u9986 3\u697C")), /*#__PURE__*/React.createElement("div", {
-    className: "flex items-center gap-2"
-  }, /*#__PURE__*/React.createElement("button", {
-    type: "button",
-    onClick: onOpenPages,
-    "aria-label": "\u5207\u6362\u9875\u9762",
-    className: "grid h-8 w-8 place-items-center rounded-full border border-white/10 bg-white/[0.04] text-white/50 transition-colors active:bg-white/10"
-  }, /*#__PURE__*/React.createElement(LayoutGrid, {
-    size: 15,
-    strokeWidth: 1.5,
-    "aria-hidden": "true"
-  })), /*#__PURE__*/React.createElement("span", {
-    className: "grid h-8 w-8 place-items-center rounded-full border border-accent/25 bg-accent/10 text-accent"
-  }, /*#__PURE__*/React.createElement(Armchair, {
-    size: 15,
-    strokeWidth: 1.5,
-    "aria-hidden": "true"
-  }))))), /*#__PURE__*/React.createElement("section", {
-    className: "mt-4 animate-rise-in"
+    className: "relative z-10 w-full max-w-[390px]"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "relative overflow-hidden rounded-[26px] border border-white/10 bg-white/[0.045] p-4 backdrop-blur-xl"
+    className: "relative mx-auto flex h-screen w-full flex-col overflow-hidden bg-night-900 sm:h-[844px] sm:rounded-[46px] sm:border sm:border-white/10 sm:shadow-shell"
   }, /*#__PURE__*/React.createElement("div", {
-    "aria-hidden": "true",
-    className: "pointer-events-none absolute -right-10 -top-12 h-36 w-36 rounded-full",
-    style: {
-      background: 'radial-gradient(circle, rgba(255,92,0,0.16), transparent 70%)'
-    }
+    className: "absolute inset-0 bg-gradient-to-b from-[#2A2A2A] via-[#121212] to-[#0A0A0A]"
+  }), /*#__PURE__*/React.createElement(MistLayer, null), /*#__PURE__*/React.createElement("div", {
+    className: "absolute inset-x-0 bottom-0 h-56 bg-[radial-gradient(ellipse_at_bottom,rgba(255,122,0,0.08),transparent_70%)]"
   }), /*#__PURE__*/React.createElement("div", {
-    className: "relative flex items-center justify-between"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "flex items-center gap-1.5 text-[10px] text-white/40"
-  }, /*#__PURE__*/React.createElement(LayoutGrid, {
-    size: 12,
-    strokeWidth: 1.5,
-    "aria-hidden": "true"
-  }), "10 \xD7 10 \u5EA7\u4F4D\u56FE"), /*#__PURE__*/React.createElement("div", {
-    className: "flex items-center gap-3 text-[9px] text-white/30"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "inline-flex items-center gap-1"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "h-1.5 w-1.5 rounded-full bg-white/[0.15]"
-  }), "\u5360\u7528"), /*#__PURE__*/React.createElement("span", {
-    className: "inline-flex items-center gap-1"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "h-1.5 w-1.5 rounded-full bg-white/35"
-  }), "\u53EF\u7528"), /*#__PURE__*/React.createElement("span", {
-    className: "inline-flex items-center gap-1"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_8px_rgba(255,92,0,0.8)]"
-  }), "\u63A8\u8350"))), /*#__PURE__*/React.createElement("div", {
-    className: "relative mt-3.5 rounded-[18px] border border-white/[0.06] bg-black/20 p-1.5"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "grid grid-cols-10 gap-[2px]"
-  }, SEATS.map(seat => {
-    const selected = selectedSeat && selectedSeat.id === seat.id;
-    const matched = matchesFilters(seat);
+    className: "relative z-10 flex h-full min-h-0 flex-col"
+  }, children)), /*#__PURE__*/React.createElement("p", {
+    className: "mt-4 hidden text-center text-[9px] uppercase tracking-[0.34em] text-white/20 sm:block"
+  }, "Zhixing \xB7 Study Companion")));
+}
+function BottomNav({
+  active,
+  onChange
+}) {
+  return /*#__PURE__*/React.createElement("nav", {
+    className: "absolute inset-x-4 bottom-4 z-40 flex items-center gap-1 rounded-[24px] border border-white/10 bg-black/45 px-2 py-2 shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur-2xl"
+  }, NAV_ITEMS.map(item => {
+    const Icon = item.icon;
+    const isActive = active === item.id;
     return /*#__PURE__*/React.createElement("button", {
-      key: seat.key,
+      key: item.id,
       type: "button",
-      disabled: !seat.available,
-      onClick: () => toggleSeat(seat),
-      "aria-label": `${seat.id}${seat.recommended ? ' 推荐座位' : seat.available ? ' 可用座位' : ' 已占用'}`,
-      "aria-pressed": selected,
-      className: "group relative grid h-[22px] place-items-center rounded-[5px] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 disabled:cursor-default"
-    }, selected ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("span", {
-      className: "absolute inset-[8%] rounded-full bg-accent/20 blur-[3px]"
-    }), /*#__PURE__*/React.createElement("span", {
-      className: "relative h-[9px] w-[9px] rounded-full bg-accent shadow-[0_0_12px_rgba(255,92,0,0.9)]"
-    })) : seat.recommended ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("span", {
-      className: "absolute inset-[10%] animate-breathe rounded-full border border-accent/45"
-    }), /*#__PURE__*/React.createElement("span", {
-      className: "relative h-[9px] w-[9px] rounded-full bg-accent shadow-[0_0_12px_rgba(255,92,0,0.7)]"
-    })) : seat.available ? /*#__PURE__*/React.createElement("span", {
-      className: `h-[7px] w-[7px] rounded-full bg-white/35 transition-all group-hover:bg-white/60 ${filters.length && !matched ? 'opacity-25' : ''} ${filters.length && matched ? 'ring-2 ring-accent/40 ring-offset-2 ring-offset-[#0E0E0E]' : ''}`
-    }) : /*#__PURE__*/React.createElement("span", {
-      className: "h-[6px] w-[6px] rounded-full bg-white/[0.13]"
-    }));
-  }))), /*#__PURE__*/React.createElement("p", {
-    className: "relative mt-3 text-center text-[9px] tracking-wide text-white/25"
-  }, "\u70B9\u51FB\u6D45\u8272\u5EA7\u4F4D\u5207\u6362\u9009\u62E9 \xB7 \u6A59\u8272\u4E3A AI \u63A8\u8350"))), /*#__PURE__*/React.createElement("div", {
-    className: "no-scrollbar mt-3.5 flex gap-2 overflow-x-auto pb-1"
-  }, SEAT_FILTERS.map(filter => {
-    const active = filters.includes(filter.id);
-    const FilterIcon = filter.icon;
-    return /*#__PURE__*/React.createElement("button", {
-      key: filter.id,
-      type: "button",
-      onClick: () => toggleFilter(filter.id),
-      "aria-pressed": active,
-      className: `inline-flex shrink-0 items-center gap-1.5 rounded-full border px-3.5 py-2 text-[11px] transition-colors ${active ? 'border-accent/45 bg-accent/10 text-accent' : 'border-white/10 bg-white/[0.03] text-white/45'}`
-    }, /*#__PURE__*/React.createElement(FilterIcon, {
-      size: 13,
+      onClick: () => onChange(item.id),
+      className: `relative flex flex-1 flex-col items-center gap-1 rounded-2xl py-1.5 transition-colors ${isActive ? 'text-accent' : 'text-white/30'}`
+    }, /*#__PURE__*/React.createElement(Icon, {
+      size: 18,
       strokeWidth: 1.5,
       "aria-hidden": "true"
-    }), filter.label, active ? /*#__PURE__*/React.createElement(Check, {
-      size: 10,
-      strokeWidth: 2,
-      "aria-hidden": "true"
+    }), /*#__PURE__*/React.createElement("span", {
+      className: "text-[8px]"
+    }, item.label), isActive ? /*#__PURE__*/React.createElement("span", {
+      className: "absolute -top-0.5 h-1 w-1 rounded-full bg-accent shadow-[0_0_8px_rgba(255,122,0,0.8)]"
     }) : null);
-  })), /*#__PURE__*/React.createElement("section", {
-    className: "mt-4 animate-rise-in",
-    style: {
-      animationDelay: '90ms'
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    className: `relative overflow-hidden rounded-[26px] border p-5 backdrop-blur-xl transition-colors ${selectedSeat ? 'border-accent/30 bg-accent/[0.055]' : 'border-white/10 bg-white/[0.045]'}`
-  }, /*#__PURE__*/React.createElement("div", {
-    "aria-hidden": "true",
-    className: "pointer-events-none absolute -right-10 -top-12 h-32 w-32 rounded-full",
-    style: {
-      background: 'radial-gradient(circle, rgba(255,92,0,0.14), transparent 70%)'
-    }
-  }), /*#__PURE__*/React.createElement("div", {
-    className: "relative flex items-start justify-between"
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-    className: "flex items-center gap-2"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "text-[9px] uppercase tracking-[0.24em] text-accent/75"
-  }, "Seat"), selectedSeat && selectedSeat.recommended ? /*#__PURE__*/React.createElement("span", {
-    className: "rounded-full border border-accent/25 bg-accent/10 px-2 py-0.5 text-[9px] text-accent"
-  }, "AI \u63A8\u8350") : null), /*#__PURE__*/React.createElement("h2", {
-    className: "mt-1.5 text-[28px] font-semibold leading-none tracking-tight text-white"
-  }, selectedSeat ? selectedSeat.id : '未选择', /*#__PURE__*/React.createElement("span", {
-    className: "ml-1.5 text-[11px] font-normal tracking-normal text-white/35"
-  }, "\u5EA7\u4F4D")), /*#__PURE__*/React.createElement("p", {
-    className: "mt-2 text-[11px] text-white/35"
-  }, selectedSeat ? '图书馆 3 楼 · AI 推荐自习位' : '点击上方浅色座位进行选择')), /*#__PURE__*/React.createElement("span", {
-    className: `grid h-12 w-12 place-items-center rounded-2xl border ${selectedSeat ? 'border-accent/25 bg-accent/10 text-accent shadow-[0_0_22px_rgba(255,92,0,0.16)]' : 'border-white/10 bg-black/20 text-white/25'}`
-  }, /*#__PURE__*/React.createElement(Armchair, {
-    size: 22,
-    strokeWidth: 1.5,
-    "aria-hidden": "true"
-  }))), /*#__PURE__*/React.createElement("div", {
-    className: "relative mt-4 grid grid-cols-4 gap-1.5"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "flex flex-col items-center gap-1 rounded-xl border border-white/[0.06] bg-black/15 py-2"
-  }, /*#__PURE__*/React.createElement(Wifi, {
-    size: 14,
-    strokeWidth: 1.5,
-    className: "text-accent",
-    "aria-hidden": "true"
-  }), /*#__PURE__*/React.createElement("span", {
-    className: "text-[9px] text-white/55"
-  }, "WiFi")), /*#__PURE__*/React.createElement("div", {
-    className: "flex flex-col items-center gap-1 rounded-xl border border-white/[0.06] bg-black/15 py-2"
-  }, /*#__PURE__*/React.createElement(Plug, {
-    size: 14,
-    strokeWidth: 1.5,
-    className: "text-accent",
-    "aria-hidden": "true"
-  }), /*#__PURE__*/React.createElement("span", {
-    className: "text-[9px] text-white/55"
-  }, "\u63D2\u5EA7")), /*#__PURE__*/React.createElement("div", {
-    className: "flex flex-col items-center gap-1 rounded-xl border border-white/[0.06] bg-black/15 py-2"
-  }, /*#__PURE__*/React.createElement(Sun, {
-    size: 14,
-    strokeWidth: 1.5,
-    className: "text-white/40",
-    "aria-hidden": "true"
-  }), /*#__PURE__*/React.createElement("span", {
-    className: "text-[9px] text-white/55"
-  }, "\u9760\u7A97")), /*#__PURE__*/React.createElement("div", {
-    className: "flex flex-col items-center gap-1 rounded-xl border border-white/[0.06] bg-black/15 py-2"
-  }, /*#__PURE__*/React.createElement(VolumeX, {
-    size: 14,
-    strokeWidth: 1.5,
-    className: "text-white/40",
-    "aria-hidden": "true"
-  }), /*#__PURE__*/React.createElement("span", {
-    className: "text-[9px] text-white/55"
-  }, "\u5B89\u9759\u533A"))), /*#__PURE__*/React.createElement("div", {
-    className: "relative mt-4 flex items-center justify-between border-t border-white/[0.07] pt-3.5"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "text-[10px] text-white/35"
-  }, "\u9884\u7EA6\u65F6\u6BB5"), /*#__PURE__*/React.createElement("span", {
-    className: "text-[11px] text-white/70 tabular"
-  }, "13:46 \u2013 14:30 ", /*#__PURE__*/React.createElement("span", {
-    className: "text-white/30"
-  }, "\xB7 45 \u5206\u949F")))))), /*#__PURE__*/React.createElement("footer", {
-    className: "relative z-20 shrink-0 border-t border-white/[0.06] bg-gradient-to-t from-ink-900 via-ink-900/95 to-ink-900/70 px-6 pt-4 backdrop-blur-xl",
-    style: {
-      paddingBottom: 'max(20px, env(safe-area-inset-bottom))'
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "mb-3 flex items-center justify-between text-[10px]"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "text-white/35"
-  }, "\u9884\u8BA1\u5B66\u4E60\u65F6\u957F"), /*#__PURE__*/React.createElement("span", {
-    className: "text-white/70 tabular"
-  }, "45 \u5206\u949F ", /*#__PURE__*/React.createElement("span", {
-    className: "text-white/30"
-  }, "\xB7 13:46\u201314:30"))), /*#__PURE__*/React.createElement("button", {
-    type: "button",
-    onClick: confirmBooking,
-    disabled: !selectedSeat,
-    className: `h-[54px] w-full rounded-full text-[14px] font-semibold transition-transform active:scale-[0.985] ${selectedSeat ? 'bg-accent text-black shadow-glow' : 'bg-white/[0.06] text-white/30'}`
-  }, "\u786E\u8BA4\u9884\u7EA6")));
+  }));
 }
-const TASKS = [{
-  id: 1,
-  title: '预习高数下册',
-  tag: '预习',
-  done: false,
-  minutes: 45
-}, {
-  id: 2,
-  title: '背诵四级单词',
-  tag: '复习',
-  done: true,
-  minutes: 20
-}, {
-  id: 3,
-  title: '复习微观经济学 · 第 3 章',
-  tag: '复习',
-  done: false,
-  minutes: 25
-}, {
-  id: 4,
-  title: '整理课堂笔记',
-  tag: '预习',
-  done: true,
-  minutes: 40
-}, {
-  id: 5,
-  title: '完成课后习题',
-  tag: '练习',
-  done: false,
-  minutes: 20
-}];
 function ProgressRing({
-  done,
-  total
+  value,
+  size = 72
 }) {
-  const size = 76;
   const stroke = 5;
   const radius = (size - stroke) / 2 - 1;
   const circumference = 2 * Math.PI * radius;
-  const offset = circumference * (1 - (total ? done / total : 0));
   return /*#__PURE__*/React.createElement("div", {
-    className: "relative h-[76px] w-[76px] shrink-0",
+    className: "relative shrink-0",
+    style: {
+      width: size,
+      height: size
+    },
     role: "img",
-    "aria-label": `已完成 ${done} / ${total} 项任务`
+    "aria-label": `${value}%`
   }, /*#__PURE__*/React.createElement("svg", {
     width: size,
     height: size,
-    viewBox: `0 0 ${size} ${size}`
-  }, /*#__PURE__*/React.createElement("defs", null, /*#__PURE__*/React.createElement("linearGradient", {
-    id: "task-ring-gradient",
-    x1: "0",
-    y1: "0",
-    x2: "1",
-    y2: "1"
-  }, /*#__PURE__*/React.createElement("stop", {
-    offset: "0%",
-    stopColor: "#FF5C00"
-  }), /*#__PURE__*/React.createElement("stop", {
-    offset: "100%",
-    stopColor: "#FF9A55"
-  }))), /*#__PURE__*/React.createElement("g", {
-    transform: `rotate(-90 ${size / 2} ${size / 2})`
+    className: "-rotate-90"
   }, /*#__PURE__*/React.createElement("circle", {
     cx: size / 2,
     cy: size / 2,
@@ -801,44 +607,449 @@ function ProgressRing({
     cy: size / 2,
     r: radius,
     fill: "none",
-    stroke: "url(#task-ring-gradient)",
+    stroke: "#FF7A00",
     strokeWidth: stroke,
     strokeLinecap: "round",
     strokeDasharray: circumference,
-    strokeDashoffset: offset,
+    strokeDashoffset: circumference * (1 - value / 100),
     style: {
-      transition: 'stroke-dashoffset 450ms cubic-bezier(.2,.8,.2,1)',
-      filter: 'drop-shadow(0 0 6px rgba(255,92,0,0.55))'
+      filter: 'drop-shadow(0 0 6px rgba(255,122,0,0.6))',
+      transition: 'stroke-dashoffset .5s ease'
     }
-  }))), /*#__PURE__*/React.createElement("div", {
-    className: "absolute inset-0 flex flex-col items-center justify-center"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "absolute inset-0 grid place-items-center"
   }, /*#__PURE__*/React.createElement("span", {
-    className: "text-[18px] font-semibold leading-none text-white tabular"
-  }, done, "/", total), /*#__PURE__*/React.createElement("span", {
-    className: "mt-0.5 text-[8px] tracking-wide text-white/30"
+    className: "text-[16px] font-semibold text-white tabular"
+  }, value, "%")));
+}
+function SemiRing({
+  done,
+  total
+}) {
+  const radius = 54;
+  const circumference = Math.PI * radius;
+  const percent = total ? done / total : 0;
+  return /*#__PURE__*/React.createElement("div", {
+    className: "relative mx-auto w-[144px]"
+  }, /*#__PURE__*/React.createElement("svg", {
+    viewBox: "0 0 144 84",
+    className: "w-full"
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M 18 74 A 54 54 0 0 1 126 74",
+    fill: "none",
+    stroke: "rgba(255,255,255,0.08)",
+    strokeWidth: "8",
+    strokeLinecap: "round"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M 18 74 A 54 54 0 0 1 126 74",
+    fill: "none",
+    stroke: "#FF7A00",
+    strokeWidth: "8",
+    strokeLinecap: "round",
+    strokeDasharray: circumference,
+    strokeDashoffset: circumference * (1 - percent),
+    style: {
+      filter: 'drop-shadow(0 0 8px rgba(255,122,0,0.55))',
+      transition: 'stroke-dashoffset .5s ease'
+    }
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "absolute inset-x-0 bottom-1 text-center"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "text-[22px] font-semibold leading-none text-white tabular"
+  }, done, "/", total), /*#__PURE__*/React.createElement("p", {
+    className: "mt-1 text-[9px] text-white/35"
   }, "\u5DF2\u5B8C\u6210")));
 }
-function StudyChecklistPage({
-  onOpenPages
+function EChart({
+  option,
+  className = 'h-full w-full'
 }) {
-  const [tasks, setTasks] = useState(TASKS);
-  const [toast, setToast] = useState(null);
-  const timerRef = useRef(null);
-  const doneCount = tasks.filter(task => task.done).length;
-  const percent = tasks.length ? Math.round(doneCount / tasks.length * 100) : 0;
-  const showToast = useCallback(message => {
-    if (timerRef.current) window.clearTimeout(timerRef.current);
-    setToast({
-      id: Date.now(),
-      ...message
-    });
-    timerRef.current = window.setTimeout(() => setToast(null), 3200);
-  }, []);
+  const ref = useRef(null);
   useEffect(() => {
+    if (!ref.current || !window.echarts) return;
+    const chart = window.echarts.init(ref.current, null, {
+      renderer: 'canvas'
+    });
+    chart.setOption(option);
+    const resize = () => chart.resize();
+    window.addEventListener('resize', resize);
+    const observer = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(resize) : null;
+    if (observer) observer.observe(ref.current);
     return () => {
-      if (timerRef.current) window.clearTimeout(timerRef.current);
+      window.removeEventListener('resize', resize);
+      if (observer) observer.disconnect();
+      chart.dispose();
     };
-  }, []);
+  }, [option]);
+  return /*#__PURE__*/React.createElement("div", {
+    ref: ref,
+    className: className
+  });
+}
+function HomePage({
+  onNavigate
+}) {
+  return /*#__PURE__*/React.createElement("div", {
+    className: "relative flex h-full min-h-0 flex-col"
+  }, /*#__PURE__*/React.createElement(StatusBar, {
+    time: "9:41"
+  }), /*#__PURE__*/React.createElement("header", {
+    className: "relative z-10 flex shrink-0 items-start justify-between px-5 pb-3 pt-2"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("p", {
+    className: "text-[8.5px] uppercase tracking-[0.26em] text-accent/70"
+  }, "AI Learning Butler"), /*#__PURE__*/React.createElement("h1", {
+    className: "mt-1 text-[22px] font-semibold tracking-tight text-white"
+  }, "AI \u5B66\u4E1A\u7BA1\u5BB6")), /*#__PURE__*/React.createElement("div", {
+    className: "flex gap-2"
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    "aria-label": "\u66F4\u591A",
+    className: "grid h-8 w-8 place-items-center rounded-full border border-white/10 bg-white/[0.04] text-white/45"
+  }, /*#__PURE__*/React.createElement(MoreHorizontal, {
+    size: 15,
+    strokeWidth: 1.5
+  })), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    "aria-label": "\u8BBE\u7F6E",
+    className: "grid h-8 w-8 place-items-center rounded-full border border-accent/25 bg-accent/10 text-accent"
+  }, /*#__PURE__*/React.createElement(SlidersHorizontal, {
+    size: 15,
+    strokeWidth: 1.5
+  })))), /*#__PURE__*/React.createElement("main", {
+    className: "screen-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-5 pb-32"
+  }, /*#__PURE__*/React.createElement("section", {
+    className: "animate-rise-in space-y-2.5"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flex items-start gap-2.5"
+  }, /*#__PURE__*/React.createElement(AgentRing, {
+    size: "sm",
+    className: "mt-0.5"
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "max-w-[84%] rounded-[18px] rounded-tl-md border border-white/10 bg-white/[0.05] p-3.5 shadow-glass backdrop-blur-xl"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "text-[11px] leading-5 text-white/75"
+  }, "\u4ECA\u65E5\u5B66\u4E60\u8BA1\u5212\u5DF2\u4E3A\u4F60\u6574\u7406\uFF0C\u5148\u5B8C\u6210\u6570\u5B66\u590D\u76D8\uFF0C\u518D\u8FDB\u5165\u82F1\u8BED\u542C\u529B\u8BAD\u7EC3\u3002"))), /*#__PURE__*/React.createElement("div", {
+    className: "flex justify-end"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "max-w-[76%] rounded-[18px] rounded-br-md border border-white/[0.06] bg-white/[0.08] p-3.5"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "text-[11px] leading-5 text-white/80"
+  }, "\u4F18\u5148\u5B8C\u6210\u6570\u5B66\u590D\u76D8\u4E0E\u82F1\u8BED\u542C\u529B\u8BAD\u7EC3")))), /*#__PURE__*/React.createElement("section", {
+    className: `mt-4 animate-rise-in rounded-[24px] ${CARD} p-4`,
+    style: {
+      animationDelay: '60ms'
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    onClick: () => onNavigate('checklist'),
+    className: "flex w-full items-center justify-between"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "text-[13px] font-medium text-white"
+  }, "\u667A\u80FD\u65E5\u7A0B"), /*#__PURE__*/React.createElement(ChevronRight, {
+    size: 14,
+    className: "text-white/30"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "no-scrollbar mt-3 flex gap-2 overflow-x-auto"
+  }, SCHEDULE.map(item => /*#__PURE__*/React.createElement("div", {
+    key: item.time,
+    className: "min-w-[94px] rounded-2xl border border-white/10 bg-black/25 px-3 py-2.5"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "text-[9px] text-accent tabular"
+  }, item.time), /*#__PURE__*/React.createElement("p", {
+    className: "mt-1 text-[10px] text-white/65"
+  }, item.title))))), /*#__PURE__*/React.createElement("section", {
+    className: `mt-3 animate-rise-in rounded-[24px] ${CARD} p-4`,
+    style: {
+      animationDelay: '110ms'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center justify-between"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "text-[13px] font-medium text-white"
+  }, "\u5B66\u60C5\u5927\u5C4F"), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    onClick: () => onNavigate('analytics'),
+    className: "flex items-center gap-0.5 text-[9px] text-accent/80"
+  }, "\u67E5\u770B ", /*#__PURE__*/React.createElement(ChevronRight, {
+    size: 12
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: "mt-3 flex items-center gap-4"
+  }, /*#__PURE__*/React.createElement(ProgressRing, {
+    value: 92,
+    size: 72
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "min-w-0 flex-1"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center justify-between text-[9px]"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "text-white/35"
+  }, "\u4E13\u6CE8\u5EA6"), /*#__PURE__*/React.createElement("span", {
+    className: "font-semibold text-white tabular"
+  }, "92%")), /*#__PURE__*/React.createElement("div", {
+    className: "mt-1 h-1 overflow-hidden rounded-full bg-white/[0.08]"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "h-full w-[92%] rounded-full bg-accent shadow-[0_0_10px_rgba(255,122,0,0.6)]"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "mt-2.5 flex items-center justify-between text-[9px]"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "text-white/35"
+  }, "\u672C\u5468\u5B8C\u6210\u7387"), /*#__PURE__*/React.createElement("span", {
+    className: "text-white/75 tabular"
+  }, "86%")), /*#__PURE__*/React.createElement("div", {
+    className: "mt-1 h-1 overflow-hidden rounded-full bg-white/[0.08]"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "h-full w-[86%] rounded-full bg-white/35"
+  })))), /*#__PURE__*/React.createElement("div", {
+    className: "mt-3 flex items-end justify-between"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("p", {
+    className: "text-[9px] text-white/30"
+  }, "\u4E13\u6CE8\u8D8B\u52BF"), /*#__PURE__*/React.createElement("p", {
+    className: "mt-0.5 text-[12px] font-semibold text-accent tabular"
+  }, "+18%")), /*#__PURE__*/React.createElement("div", {
+    className: "h-12 w-28"
+  }, /*#__PURE__*/React.createElement(EChart, {
+    option: MINI_BAR_OPTION,
+    className: "h-full w-full"
+  })))), /*#__PURE__*/React.createElement("section", {
+    className: "mt-3 grid grid-cols-2 gap-2.5"
+  }, QUICK_LINKS.map((link, index) => {
+    const Icon = link.icon;
+    return /*#__PURE__*/React.createElement("button", {
+      key: link.id,
+      type: "button",
+      onClick: () => onNavigate(link.id),
+      className: `animate-rise-in rounded-[20px] ${CARD} p-3.5 text-left`,
+      style: {
+        animationDelay: `${150 + index * 45}ms`
+      }
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "grid h-8 w-8 place-items-center rounded-xl border border-accent/25 bg-accent/10 text-accent"
+    }, /*#__PURE__*/React.createElement(Icon, {
+      size: 15,
+      strokeWidth: 1.5
+    })), /*#__PURE__*/React.createElement("p", {
+      className: "mt-2.5 text-[11px] text-white/80"
+    }, link.label), /*#__PURE__*/React.createElement("p", {
+      className: "mt-0.5 text-[8.5px] text-white/30"
+    }, link.note));
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "mt-4 flex gap-2"
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    onClick: () => onNavigate('checklist'),
+    className: "flex h-[52px] flex-1 items-center justify-center gap-2 rounded-full bg-accent text-[13px] font-semibold text-black shadow-glow"
+  }, /*#__PURE__*/React.createElement(Play, {
+    size: 15,
+    fill: "currentColor",
+    "aria-hidden": "true"
+  }), "\u5F00\u59CB\u5B66\u4E60"), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    onClick: () => onNavigate('seat'),
+    className: "h-[52px] w-[84px] rounded-full border border-accent/35 bg-accent/10 text-[12px] text-accent"
+  }, "\u8BA2\u5EA7"))));
+}
+function HubPage({
+  notify
+}) {
+  const [messages, setMessages] = useState(() => [{
+    id: 'u1',
+    role: 'user',
+    text: '安排今晚的复习计划'
+  }, {
+    id: 'a1',
+    role: 'ai',
+    text: '已根据空窗时间、课程资料与附近座位，为你生成 2 小时复习路径。',
+    plan: [{
+      time: '19:00',
+      title: '预习第 4 章'
+    }, {
+      time: '20:00',
+      title: '习题训练'
+    }, {
+      time: '座位',
+      title: '图书馆 3 楼'
+    }],
+    thinking: '读取课表：今晚 19:00–21:00 无课程。\n检索资料：第 4 章掌握度 62%，优先预习概念与例题。\n座位校验：图书馆 3F · A-12 可用。\n路径生成：40 分钟预习 + 60 分钟习题 + 20 分钟复盘。'
+  }]);
+  const [draft, setDraft] = useState('');
+  const [openThinking, setOpenThinking] = useState(false);
+  const [activeDate, setActiveDate] = useState('23');
+  const [activeAgent, setActiveAgent] = useState('Scheduling');
+  const scrollRef = useRef(null);
+  useEffect(() => {
+    const container = scrollRef.current;
+    if (container) container.scrollTop = container.scrollHeight;
+  }, [messages]);
+  const send = () => {
+    const text = draft.trim();
+    if (!text) return;
+    setMessages(prev => [...prev, {
+      id: `u-${Date.now()}`,
+      role: 'user',
+      text
+    }]);
+    setDraft('');
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    className: "relative flex h-full min-h-0 flex-col"
+  }, /*#__PURE__*/React.createElement(StatusBar, {
+    time: "9:41"
+  }), /*#__PURE__*/React.createElement("header", {
+    className: "relative z-10 shrink-0 px-5 pb-2 pt-1"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center gap-3"
+  }, /*#__PURE__*/React.createElement(AgentRing, null), /*#__PURE__*/React.createElement("div", {
+    className: "min-w-0 flex-1"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "text-[8.5px] uppercase tracking-[0.24em] text-accent/60"
+  }, "AI Companion \xB7 Agents \u534F\u540C\u4E2D"), /*#__PURE__*/React.createElement("h1", {
+    className: "mt-1 text-[22px] font-semibold tracking-tight text-white"
+  }, "Planner Hub")), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    "aria-label": "\u66F4\u591A",
+    className: "grid h-8 w-8 place-items-center rounded-full border border-white/10 bg-white/[0.04] text-white/45"
+  }, /*#__PURE__*/React.createElement(MoreHorizontal, {
+    size: 15,
+    strokeWidth: 1.5
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: "no-scrollbar mt-3 flex gap-1.5 overflow-x-auto pb-1"
+  }, DATES.map(item => {
+    const active = item.date === activeDate;
+    return /*#__PURE__*/React.createElement("button", {
+      key: item.date,
+      type: "button",
+      onClick: () => setActiveDate(item.date),
+      className: `flex min-w-[36px] shrink-0 flex-col items-center rounded-2xl border px-2 py-1.5 text-[9px] ${active ? 'border-accent/40 bg-accent text-black' : 'border-white/10 bg-white/[0.04] text-white/40'}`
+    }, /*#__PURE__*/React.createElement("span", null, item.day), /*#__PURE__*/React.createElement("span", {
+      className: "mt-0.5 text-[11px] font-semibold tabular"
+    }, item.date));
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "no-scrollbar mt-2 flex gap-2 overflow-x-auto pb-1"
+  }, AGENT_TAGS.map(tag => {
+    const active = tag === activeAgent;
+    return /*#__PURE__*/React.createElement("button", {
+      key: tag,
+      type: "button",
+      onClick: () => setActiveAgent(tag),
+      className: `inline-flex shrink-0 items-center gap-1.5 rounded-full border px-2.5 py-1 text-[9px] ${active ? 'border-accent/40 bg-accent/12 text-accent' : 'border-white/10 bg-white/[0.04] text-white/40'}`
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "h-1 w-1 rounded-full bg-accent animate-breathe"
+    }), tag);
+  }))), /*#__PURE__*/React.createElement("main", {
+    ref: scrollRef,
+    className: "screen-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-5 pb-44"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "space-y-4"
+  }, messages.map(message => message.role === 'user' ? /*#__PURE__*/React.createElement("div", {
+    key: message.id,
+    className: "flex justify-end"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "max-w-[82%] rounded-[20px] rounded-br-md border border-white/[0.06] bg-[#1C1C1E] px-4 py-3 text-[12px] leading-5 text-white/85"
+  }, message.text)) : /*#__PURE__*/React.createElement("div", {
+    key: message.id,
+    className: "flex items-start gap-2.5"
+  }, /*#__PURE__*/React.createElement(AgentRing, {
+    size: "sm",
+    className: "mt-4"
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "min-w-0 max-w-[88%] flex-1"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "mb-1.5 text-[8px] uppercase tracking-[0.18em] text-accent/55"
+  }, "Planner \xB7 AI"), /*#__PURE__*/React.createElement("div", {
+    className: "rounded-[20px] rounded-tl-md border border-white/10 bg-white/[0.05] p-4 shadow-glass backdrop-blur-xl"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "text-[12px] leading-5 text-white/80"
+  }, message.text), /*#__PURE__*/React.createElement("div", {
+    className: "mt-3.5 overflow-hidden rounded-2xl border border-accent/30 bg-gradient-to-b from-accent/10 to-transparent p-3.5"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center justify-between"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "text-[8px] uppercase tracking-[0.2em] text-accent/75"
+  }, "Review Path"), /*#__PURE__*/React.createElement("span", {
+    className: "rounded-full border border-accent/25 bg-accent/10 px-2 py-0.5 text-[8px] text-accent"
+  }, "2 \u5C0F\u65F6")), /*#__PURE__*/React.createElement("p", {
+    className: "mt-1.5 text-[13px] font-medium text-white"
+  }, "\u4ECA\u665A\u590D\u4E60\u8DEF\u5F84"), /*#__PURE__*/React.createElement("div", {
+    className: "mt-3 space-y-2 border-t border-white/[0.07] pt-3"
+  }, message.plan.map(item => /*#__PURE__*/React.createElement("div", {
+    key: item.time + item.title,
+    className: "flex items-center gap-2.5"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "w-[38px] shrink-0 text-[9px] text-accent tabular"
+  }, item.time), /*#__PURE__*/React.createElement("span", {
+    className: "h-1 w-1 shrink-0 rounded-full bg-accent"
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "min-w-0 flex-1 text-[10px] text-white/70"
+  }, item.title), /*#__PURE__*/React.createElement(ChevronRight, {
+    size: 11,
+    className: "text-white/20"
+  }))))), /*#__PURE__*/React.createElement("div", {
+    className: "mt-2 flex justify-center"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "grid h-7 w-7 animate-float place-items-center rounded-full border border-accent/30 bg-accent/10 text-accent shadow-[0_0_18px_rgba(255,122,0,0.18)]"
+  }, /*#__PURE__*/React.createElement(ArrowDown, {
+    size: 13
+  })))), /*#__PURE__*/React.createElement("div", {
+    className: `mt-2 overflow-hidden rounded-xl border transition-colors ${openThinking ? 'border-accent/35 bg-accent/[0.035]' : 'border-accent/20'}`
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    onClick: () => setOpenThinking(prev => !prev),
+    "aria-expanded": openThinking,
+    className: "flex w-full items-center gap-2 px-3 py-2.5 text-left"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "h-1 w-1 shrink-0 animate-breathe rounded-full bg-accent"
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "text-[10px] tracking-wide text-accent/80"
+  }, "Thought Chain"), /*#__PURE__*/React.createElement(ChevronDown, {
+    size: 12,
+    className: `ml-auto shrink-0 text-accent/50 transition-transform duration-300 ${openThinking ? 'rotate-180' : ''}`
+  })), /*#__PURE__*/React.createElement("div", {
+    className: `grid transition-all duration-300 ${openThinking ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "overflow-hidden"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "whitespace-pre-line px-3 pb-3 text-[10px] leading-5 text-white/30"
+  }, message.thinking))))))))), /*#__PURE__*/React.createElement("div", {
+    className: "absolute inset-x-4 bottom-[92px] z-30"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center gap-2 rounded-[26px] border border-white/10 bg-white/[0.06] p-1.5 pl-2 backdrop-blur-xl transition-colors focus-within:border-accent/35"
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    onClick: () => notify('添加内容', '可上传资料或插入一条学习任务'),
+    "aria-label": "\u6DFB\u52A0\u5185\u5BB9",
+    className: "grid h-10 w-10 shrink-0 place-items-center rounded-full text-white/45 transition-colors hover:bg-white/[0.06]"
+  }, /*#__PURE__*/React.createElement(Plus, {
+    size: 18,
+    strokeWidth: 1.5
+  })), /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    value: draft,
+    onChange: event => setDraft(event.target.value),
+    onKeyDown: event => {
+      if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        send();
+      }
+    },
+    placeholder: "\u8F93\u5165\u5B66\u4E60\u5B89\u6392\u2026",
+    "aria-label": "\u8F93\u5165\u5B66\u4E60\u5B89\u6392",
+    className: "min-w-0 flex-1 bg-transparent py-2 text-[12px] text-white outline-none placeholder:text-white/25"
+  }), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    onClick: send,
+    disabled: !draft.trim(),
+    "aria-label": "\u53D1\u9001",
+    className: "grid h-10 w-10 shrink-0 place-items-center rounded-full bg-accent text-black shadow-glow-sm transition-all active:scale-95 disabled:bg-white/[0.06] disabled:text-white/25 disabled:shadow-none"
+  }, /*#__PURE__*/React.createElement(ArrowUp, {
+    size: 18,
+    strokeWidth: 2
+  })))));
+}
+function ChecklistPage() {
+  const [tasks, setTasks] = useState(TASKS);
+  const doneCount = tasks.filter(task => task.done).length;
+  const visibleTasks = tasks.filter(task => !task.hidden);
+  const percent = Math.round(doneCount / tasks.length * 100);
   const toggleTask = id => {
     setTasks(prev => prev.map(task => task.id === id ? {
       ...task,
@@ -847,74 +1058,64 @@ function StudyChecklistPage({
   };
   return /*#__PURE__*/React.createElement("div", {
     className: "relative flex h-full min-h-0 flex-col"
-  }, /*#__PURE__*/React.createElement(Toast, {
-    key: toast ? toast.id : 'no-toast',
-    message: toast,
-    onClose: () => setToast(null)
-  }), /*#__PURE__*/React.createElement(StatusBar, {
-    time: "13:41"
-  }), /*#__PURE__*/React.createElement("main", {
-    className: "no-scrollbar min-h-0 flex-1 overflow-y-auto px-5 pb-28 pt-1"
+  }, /*#__PURE__*/React.createElement(StatusBar, {
+    time: "9:41"
+  }), /*#__PURE__*/React.createElement("header", {
+    className: "relative z-10 flex shrink-0 items-center justify-between px-5 pb-2 pt-1"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "flex items-center justify-between pb-3 pt-1"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "flex items-center gap-2 text-[11px] text-white/40"
+    className: "flex items-center gap-2 text-[10px] text-white/40"
   }, /*#__PURE__*/React.createElement(CalendarDays, {
-    size: 13,
-    strokeWidth: 1.5,
-    "aria-hidden": "true"
-  }), /*#__PURE__*/React.createElement("span", null, "11\u670812\u65E5 \u5468\u4E09 \xB7 \u7B2C 12 \u5468")), /*#__PURE__*/React.createElement("button", {
+    size: 12,
+    strokeWidth: 1.5
+  }), "11\u670812\u65E5 \u5468\u4E09 \xB7 \u7B2C 12 \u5468"), /*#__PURE__*/React.createElement("button", {
     type: "button",
-    onClick: onOpenPages,
-    "aria-label": "\u5207\u6362\u9875\u9762",
-    className: "grid h-8 w-8 place-items-center rounded-full border border-white/10 bg-white/[0.04] text-white/50 transition-colors active:bg-white/10"
-  }, /*#__PURE__*/React.createElement(LayoutGrid, {
+    "aria-label": "\u66F4\u591A",
+    className: "grid h-8 w-8 place-items-center rounded-full border border-white/10 bg-white/[0.04] text-white/45"
+  }, /*#__PURE__*/React.createElement(MoreHorizontal, {
     size: 15,
-    strokeWidth: 1.5,
-    "aria-hidden": "true"
-  }))), /*#__PURE__*/React.createElement("header", {
-    className: "relative animate-rise-in overflow-hidden rounded-[26px] border border-white/10 bg-white/[0.045] p-5 backdrop-blur-xl"
+    strokeWidth: 1.5
+  }))), /*#__PURE__*/React.createElement("main", {
+    className: "screen-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-5 pb-28"
+  }, /*#__PURE__*/React.createElement("section", {
+    className: `relative animate-rise-in overflow-hidden rounded-[26px] ${CARD} p-5`
   }, /*#__PURE__*/React.createElement("div", {
     "aria-hidden": "true",
-    className: "pointer-events-none absolute -right-12 -top-16 h-44 w-44 rounded-full",
-    style: {
-      background: 'radial-gradient(circle, rgba(255,92,0,0.18), transparent 70%)'
-    }
+    className: "pointer-events-none absolute -right-10 -top-14 h-40 w-40 rounded-full bg-[radial-gradient(circle,rgba(255,122,0,0.18),transparent_70%)]"
   }), /*#__PURE__*/React.createElement("div", {
-    className: "relative flex items-center justify-between gap-4"
+    className: "relative"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "min-w-0"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "flex items-center gap-1.5 text-[9px] uppercase tracking-[0.24em] text-accent/70"
-  }, /*#__PURE__*/React.createElement(ListChecks, {
-    size: 11,
-    strokeWidth: 1.5,
-    "aria-hidden": "true"
-  }), "Study Checklist"), /*#__PURE__*/React.createElement("h1", {
-    className: "mt-1.5 text-[26px] font-semibold leading-none tracking-tight text-white"
-  }, "\u4EFB\u52A1\u5F85\u529E"), /*#__PURE__*/React.createElement("p", {
-    className: "mt-2 text-[11px] text-white/35"
-  }, "\u4ECA\u65E5\u6E05\u5355 \xB7 ", doneCount, " \u9879\u5DF2\u5B8C\u6210"), /*#__PURE__*/React.createElement("div", {
-    className: "mt-3 flex items-center gap-2"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "h-1 w-16 overflow-hidden rounded-full bg-white/[0.07]"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "block h-full rounded-full bg-gradient-to-r from-accent to-accent-soft",
-    style: {
-      width: `${percent}%`
-    }
-  })), /*#__PURE__*/React.createElement("span", {
-    className: "text-[9px] text-white/30 tabular"
-  }, "\u5B8C\u6210\u7387 ", percent, "%"))), /*#__PURE__*/React.createElement(ProgressRing, {
+    className: "flex items-center justify-between"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("p", {
+    className: "text-[8.5px] uppercase tracking-[0.24em] text-accent/65"
+  }, "Study Checklist"), /*#__PURE__*/React.createElement("h1", {
+    className: "mt-1 text-[22px] font-semibold tracking-tight text-white"
+  }, "\u5B66\u4E60\u4EFB\u52A1")), /*#__PURE__*/React.createElement("span", {
+    className: "flex items-center gap-1 text-[9px] text-white/35"
+  }, /*#__PURE__*/React.createElement(Flame, {
+    size: 12,
+    className: "text-accent"
+  }), "\u8FDE\u7EED 7 \u5929")), /*#__PURE__*/React.createElement("div", {
+    className: "mt-4"
+  }, /*#__PURE__*/React.createElement(SemiRing, {
     done: doneCount,
     total: tasks.length
-  }))), /*#__PURE__*/React.createElement("section", {
-    className: "mt-4 space-y-2.5"
-  }, tasks.map((task, index) => /*#__PURE__*/React.createElement("article", {
+  }), /*#__PURE__*/React.createElement("p", {
+    className: "mt-1 text-center text-[9px] text-white/35"
+  }, "\u4ECA\u65E5\u5B8C\u6210\u7387", ' ', /*#__PURE__*/React.createElement("span", {
+    className: "text-accent tabular"
+  }, percent, "%"))))), /*#__PURE__*/React.createElement("div", {
+    className: "mt-4 flex items-center justify-between px-1"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "text-[10px] text-white/45"
+  }, "\u4ECA\u65E5\u4EFB\u52A1"), /*#__PURE__*/React.createElement("span", {
+    className: "text-[8.5px] text-white/25"
+  }, "\u5DF2\u5C55\u793A 3 \u9879 \xB7 \u5171 5 \u9879")), /*#__PURE__*/React.createElement("section", {
+    className: "mt-2.5 space-y-2.5"
+  }, visibleTasks.map((task, index) => /*#__PURE__*/React.createElement("article", {
     key: task.id,
-    className: `group relative flex animate-rise-in items-center gap-3 overflow-hidden rounded-[22px] border border-white/10 p-4 backdrop-blur-xl transition-colors ${task.done ? 'bg-white/[0.025]' : 'bg-white/[0.045]'}`,
+    className: `group flex animate-rise-in items-center gap-3 rounded-[22px] border p-4 shadow-glass backdrop-blur-xl ${task.done ? 'border-white/[0.06] bg-white/[0.03]' : 'border-white/10 bg-white/[0.05]'}`,
     style: {
-      animationDelay: `${80 + index * 45}ms`
+      animationDelay: `${60 + index * 45}ms`
     }
   }, /*#__PURE__*/React.createElement("button", {
     type: "button",
@@ -923,538 +1124,255 @@ function StudyChecklistPage({
     "aria-label": `${task.done ? '取消完成' : '标记完成'}：${task.title}`,
     className: "grid h-9 w-9 shrink-0 place-items-center rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/60"
   }, task.done ? /*#__PURE__*/React.createElement("span", {
-    className: "grid h-[22px] w-[22px] place-items-center rounded-full bg-accent text-black shadow-[0_0_14px_rgba(255,92,0,0.45)]"
+    className: "grid h-[22px] w-[22px] place-items-center rounded-full bg-accent text-black shadow-glow-sm"
   }, /*#__PURE__*/React.createElement(Check, {
     size: 13,
-    strokeWidth: 2.4,
-    "aria-hidden": "true"
+    strokeWidth: 2.4
   })) : /*#__PURE__*/React.createElement("span", {
-    className: "h-[22px] w-[22px] rounded-full border border-white/30 transition-colors group-hover:border-accent/70"
+    className: "h-[22px] w-[22px] rounded-full border border-accent/50 shadow-[0_0_12px_rgba(255,122,0,0.18)] transition-colors group-hover:border-accent"
   })), /*#__PURE__*/React.createElement("div", {
     className: "min-w-0 flex-1"
   }, /*#__PURE__*/React.createElement("p", {
-    className: `truncate text-[14px] leading-5 transition-colors ${task.done ? 'text-white/30 line-through' : 'text-white/90'}`
+    className: `truncate text-[12px] leading-5 transition-colors ${task.done ? 'text-white/30 line-through' : 'text-white/85'}`
   }, task.title), /*#__PURE__*/React.createElement("div", {
     className: "mt-1.5 flex items-center gap-2"
   }, /*#__PURE__*/React.createElement("span", {
-    className: `rounded-full border px-2 py-0.5 text-[9px] transition-opacity ${task.tag === '预习' ? 'border-accent/25 bg-accent/10 text-accent' : 'border-white/10 bg-white/[0.05] text-white/45'} ${task.done ? 'opacity-50' : ''}`
+    className: `rounded-full border px-2 py-0.5 text-[8px] ${task.tag === 'RAG伴学' ? 'border-accent/25 bg-accent/10 text-accent' : 'border-white/10 bg-white/[0.04] text-white/40'}`
   }, task.tag))), /*#__PURE__*/React.createElement("span", {
-    className: `inline-flex shrink-0 items-center gap-1 text-[10px] tabular transition-colors ${task.done ? 'text-white/20' : 'text-white/45'}`
+    className: `inline-flex shrink-0 items-center gap-1 text-[9px] tabular ${task.done ? 'text-white/20' : 'text-white/45'}`
   }, /*#__PURE__*/React.createElement(Clock3, {
-    size: 12,
-    strokeWidth: 1.5,
-    "aria-hidden": "true"
-  }), task.minutes, " \u5206\u949F"))))), /*#__PURE__*/React.createElement("button", {
+    size: 11,
+    strokeWidth: 1.5
+  }), task.minutes, " \u5206\u949F")))), /*#__PURE__*/React.createElement("button", {
     type: "button",
-    onClick: () => showToast({
-      title: '新建任务',
-      detail: '原型演示 · 可接入任务编辑器'
-    }),
-    "aria-label": "\u65B0\u5EFA\u4EFB\u52A1",
-    className: "absolute bottom-6 right-5 z-30 grid h-14 w-14 place-items-center rounded-full bg-accent text-black shadow-[0_10px_30px_rgba(255,92,0,0.45)] transition-transform active:scale-95"
-  }, /*#__PURE__*/React.createElement(Plus, {
-    size: 24,
-    strokeWidth: 2,
-    "aria-hidden": "true"
-  })));
-}
-const HUB_TAGS = ['时空调度已就绪', 'RAG 伴学已就绪', '座位代理已就绪'];
-const INITIAL_MESSAGES = [{
-  id: 'm1',
-  role: 'user',
-  text: '帮我安排今天下午的空窗，并订 A-12 座位。'
-}, {
-  id: 'm2',
-  role: 'ai',
-  text: '已根据第 12 周课表、RAG 笔记与图书馆实时座位，生成一条 45 分钟空窗路径。A-12 已锁定，确认后即可开始。',
-  plan: {
-    title: '今日空窗学习计划',
-    time: '13:46 – 14:30 · 45 分钟',
-    items: [{
-      title: '复习微观经济学 · 第 3 章',
-      meta: '25 分钟 · 图书馆 3F · A-12'
-    }, {
-      title: '完成课后习题',
-      meta: '20 分钟 · 座位原地完成'
-    }]
-  },
-  thinking: '读取课表：13:46–14:30 无课程，空窗 45 分钟。\nRAG 检索：微观经济学第 3 章掌握度 62%，边际效用是薄弱点。\n座位校验：图书馆 3F · A-12 可用，步行 6 分钟。\n路径生成：25 分钟复习 + 20 分钟习题，已同步任务待办。'
-}];
-function PlannerHubPage({
-  onOpenPages
-}) {
-  const [messages, setMessages] = useState(INITIAL_MESSAGES);
-  const [draft, setDraft] = useState('');
-  const [openThinking, setOpenThinking] = useState(null);
-  const [toast, setToast] = useState(null);
-  const scrollRef = useRef(null);
-  const timerRef = useRef(null);
-  const showToast = useCallback(message => {
-    if (timerRef.current) window.clearTimeout(timerRef.current);
-    setToast({
-      id: Date.now(),
-      ...message
-    });
-    timerRef.current = window.setTimeout(() => setToast(null), 3200);
-  }, []);
-  useEffect(() => {
-    return () => {
-      if (timerRef.current) window.clearTimeout(timerRef.current);
-    };
-  }, []);
-  useEffect(() => {
-    const container = scrollRef.current;
-    if (container) container.scrollTop = container.scrollHeight;
-  }, [messages]);
-  const sendMessage = () => {
-    const text = draft.trim();
-    if (!text) return;
-    setMessages(prev => [...prev, {
-      id: `m-${Date.now()}`,
-      role: 'user',
-      text
-    }]);
-    setDraft('');
-  };
-  const toggleThinking = id => {
-    setOpenThinking(prev => prev === id ? null : id);
-  };
-  return /*#__PURE__*/React.createElement("div", {
-    className: "relative flex h-full min-h-0 flex-col"
-  }, /*#__PURE__*/React.createElement(Toast, {
-    key: toast ? toast.id : 'no-toast',
-    message: toast,
-    onClose: () => setToast(null)
-  }), /*#__PURE__*/React.createElement(StatusBar, {
-    time: "13:41"
-  }), /*#__PURE__*/React.createElement("header", {
-    className: "shrink-0 px-5 pb-3 pt-2"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "relative overflow-hidden rounded-[26px] border border-white/10 bg-white/[0.045] p-4 backdrop-blur-xl"
-  }, /*#__PURE__*/React.createElement("div", {
-    "aria-hidden": "true",
-    className: "pointer-events-none absolute -right-10 -top-14 h-40 w-40 rounded-full",
-    style: {
-      background: 'radial-gradient(circle, rgba(255,92,0,0.16), transparent 70%)'
-    }
-  }), /*#__PURE__*/React.createElement("div", {
-    className: "relative flex items-center gap-3"
+    className: `mt-3 flex w-full items-start gap-2.5 rounded-[20px] border border-accent/20 bg-white/[0.04] p-3.5 text-left backdrop-blur-xl shadow-glass`
   }, /*#__PURE__*/React.createElement("span", {
-    className: "relative grid h-10 w-10 shrink-0 place-items-center"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "absolute inset-0 animate-breathe rounded-full border border-accent/35 shadow-[0_0_18px_rgba(255,92,0,0.22)]"
-  }), /*#__PURE__*/React.createElement("span", {
-    className: "absolute inset-[6px] rounded-full border border-accent/25"
-  }), /*#__PURE__*/React.createElement("span", {
-    className: "h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_10px_rgba(255,92,0,0.9)]"
+    className: "grid h-7 w-7 shrink-0 place-items-center rounded-full border border-accent/25 bg-accent/10 text-accent"
+  }, /*#__PURE__*/React.createElement(Sparkles, {
+    size: 13,
+    strokeWidth: 1.5
   })), /*#__PURE__*/React.createElement("div", {
     className: "min-w-0 flex-1"
   }, /*#__PURE__*/React.createElement("p", {
-    className: "text-[8.5px] uppercase tracking-[0.26em] text-accent/60"
-  }, "AI Companion \xB7 Agents \u534F\u540C\u4E2D"), /*#__PURE__*/React.createElement("h1", {
-    className: "mt-1 text-[24px] font-semibold leading-none tracking-tight text-white"
-  }, "Planner Hub")), /*#__PURE__*/React.createElement("button", {
-    type: "button",
-    onClick: onOpenPages,
-    "aria-label": "\u5207\u6362\u9875\u9762",
-    className: "grid h-8 w-8 shrink-0 place-items-center rounded-full border border-white/10 bg-white/[0.04] text-white/50 transition-colors active:bg-white/10"
-  }, /*#__PURE__*/React.createElement(LayoutGrid, {
-    size: 15,
-    strokeWidth: 1.5,
-    "aria-hidden": "true"
-  }))), /*#__PURE__*/React.createElement("div", {
-    className: "no-scrollbar relative mt-3.5 flex gap-2 overflow-x-auto pb-0.5"
-  }, HUB_TAGS.map(tag => /*#__PURE__*/React.createElement("span", {
-    key: tag,
-    className: "inline-flex shrink-0 items-center gap-1.5 rounded-full border border-accent/20 bg-accent/[0.06] px-2.5 py-1 text-[9px] text-accent/80 shadow-[0_0_12px_rgba(255,92,0,0.06)]"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "h-1 w-1 animate-breathe rounded-full bg-accent"
-  }), tag))))), /*#__PURE__*/React.createElement("main", {
-    ref: scrollRef,
-    className: "no-scrollbar min-h-0 flex-1 space-y-4 overflow-y-auto px-5 pb-4"
-  }, messages.map(message => message.role === 'user' ? /*#__PURE__*/React.createElement("div", {
-    key: message.id,
-    className: "flex justify-end"
+    className: "text-[9px] uppercase tracking-[0.2em] text-accent/70"
+  }, "AI \u63D0\u793A"), /*#__PURE__*/React.createElement("p", {
+    className: "mt-1 text-[10px] leading-4 text-white/55"
+  }, "\u60A8\u4E0B\u8BFE\u540E\u6709 30 \u5206\u949F\u7A7A\u7A97\uFF0C\u662F\u5426\u5B8C\u6210\u4E0B\u4E00\u9879\u4EFB\u52A1\uFF1F")), /*#__PURE__*/React.createElement(ChevronRight, {
+    size: 13,
+    className: "mt-1 shrink-0 text-accent/45"
+  }))));
+}
+function GapPage({
+  onNavigate,
+  notify
+}) {
+  const [openThinking, setOpenThinking] = useState(false);
+  return /*#__PURE__*/React.createElement("div", {
+    className: "relative flex h-full min-h-0 flex-col"
+  }, /*#__PURE__*/React.createElement(StatusBar, {
+    time: "9:41"
+  }), /*#__PURE__*/React.createElement("header", {
+    className: "relative z-10 flex shrink-0 items-center justify-between px-5 pb-2 pt-1"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "max-w-[82%] rounded-[20px] rounded-br-md border border-white/[0.06] bg-[#1C1C1E] px-4 py-3 text-[13px] leading-6 text-white/85"
-  }, message.text)) : /*#__PURE__*/React.createElement("div", {
-    key: message.id,
-    className: "flex items-start gap-2.5"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "relative mt-5 grid h-6 w-6 shrink-0 place-items-center"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "absolute inset-0 rounded-full border border-accent/30 bg-accent/10"
-  }), /*#__PURE__*/React.createElement("span", {
-    className: "absolute inset-[5px] rounded-full border border-accent/25"
-  })), /*#__PURE__*/React.createElement("div", {
-    className: "min-w-0 max-w-[88%] flex-1"
+    className: "flex items-center gap-2 text-[10px] text-white/40"
+  }, /*#__PURE__*/React.createElement(CalendarDays, {
+    size: 12,
+    strokeWidth: 1.5
+  }), "11\u670812\u65E5 \u5468\u4E09"), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    "aria-label": "\u66F4\u591A",
+    className: "grid h-8 w-8 place-items-center rounded-full border border-white/10 bg-white/[0.04] text-white/45"
+  }, /*#__PURE__*/React.createElement(MoreHorizontal, {
+    size: 15,
+    strokeWidth: 1.5
+  }))), /*#__PURE__*/React.createElement("main", {
+    className: "screen-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-5 pb-44"
+  }, /*#__PURE__*/React.createElement("section", {
+    className: "animate-rise-in"
   }, /*#__PURE__*/React.createElement("p", {
-    className: "mb-1.5 text-[8.5px] uppercase tracking-[0.18em] text-accent/55"
-  }, "Planner \xB7 AI"), /*#__PURE__*/React.createElement("div", {
-    className: "rounded-[20px] rounded-tl-md border border-white/10 bg-white/[0.045] p-4 backdrop-blur-xl"
-  }, /*#__PURE__*/React.createElement("p", {
-    className: "text-[13px] leading-6 text-white/80"
-  }, message.text), message.plan ? /*#__PURE__*/React.createElement("div", {
-    className: "mt-3.5 overflow-hidden rounded-2xl border border-accent/30 bg-accent/[0.055] p-3.5"
+    className: "text-[8.5px] uppercase tracking-[0.24em] text-accent/65"
+  }, "Idle Gap"), /*#__PURE__*/React.createElement("h1", {
+    className: "mt-1.5 text-[26px] font-semibold leading-tight tracking-tight text-white"
+  }, "\u60A8\u6709 45 \u5206\u949F\u7684", /*#__PURE__*/React.createElement("br", null), "\u7A7A\u7A97\u65F6\u95F4"), /*#__PURE__*/React.createElement("p", {
+    className: "mt-2 text-[10px] text-white/40"
+  }, "AI \u5DF2\u4E3A\u4F60\u5339\u914D\u9644\u8FD1\u5B66\u4E60\u8D44\u6E90")), /*#__PURE__*/React.createElement("section", {
+    className: `mt-4 animate-rise-in rounded-[24px] ${CARD} p-4`,
+    style: {
+      animationDelay: '70ms'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center justify-between text-[9px] text-white/35"
+  }, /*#__PURE__*/React.createElement("span", null, "13:00"), /*#__PURE__*/React.createElement("span", null, "14:30")), /*#__PURE__*/React.createElement("div", {
+    className: "relative mt-2 h-[10px] rounded-full bg-white/[0.07]"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "absolute inset-y-0 left-0 w-[37.5%] rounded-full bg-white/[0.10]"
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "absolute inset-y-0 left-[37.5%] w-[36.7%] animate-breathe rounded-full bg-gradient-to-r from-accent to-accent-soft shadow-[0_0_26px_rgba(255,122,0,0.55)]"
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "absolute -top-[5px] left-[34.2%] h-5 w-[2px] -translate-x-1/2 rounded-full bg-white/55"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "absolute -top-1 left-1/2 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-white"
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: "relative mt-2.5 h-4 text-[9px] text-white/30 tabular"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "absolute left-0"
+  }, "13:00"), /*#__PURE__*/React.createElement("span", {
+    className: "absolute left-[37.5%] -translate-x-1/2"
+  }, "13:45"), /*#__PURE__*/React.createElement("span", {
+    className: "absolute left-[74.2%] -translate-x-1/2"
+  }, "14:30")), /*#__PURE__*/React.createElement("div", {
+    className: "mt-2 flex justify-center"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "rounded-full border border-accent/25 bg-accent/10 px-2.5 py-1 text-[9px] text-accent"
+  }, "\u7A7A\u95F2 45 \u5206\u949F \xB7 13:46\u201314:30"))), /*#__PURE__*/React.createElement("section", {
+    className: `mt-3 animate-rise-in rounded-[24px] border border-accent/30 bg-gradient-to-b from-accent/10 to-transparent p-4 shadow-glass backdrop-blur-xl`,
+    style: {
+      animationDelay: '130ms'
+    }
   }, /*#__PURE__*/React.createElement("div", {
     className: "flex items-center justify-between"
   }, /*#__PURE__*/React.createElement("span", {
-    className: "text-[8.5px] uppercase tracking-[0.2em] text-accent/75"
-  }, "Study Plan"), /*#__PURE__*/React.createElement("span", {
-    className: "rounded-full border border-accent/25 bg-accent/10 px-2 py-0.5 text-[8.5px] text-accent"
-  }, "\u5DF2\u751F\u6210")), /*#__PURE__*/React.createElement("p", {
-    className: "mt-1.5 text-[14px] font-medium text-white"
-  }, message.plan.title), /*#__PURE__*/React.createElement("p", {
-    className: "mt-0.5 text-[10px] text-white/40 tabular"
-  }, message.plan.time), /*#__PURE__*/React.createElement("div", {
-    className: "mt-3 space-y-2 border-t border-white/[0.07] pt-3"
-  }, message.plan.items.map(item => /*#__PURE__*/React.createElement("div", {
-    key: item.title,
-    className: "flex items-start gap-2"
+    className: "text-[8px] uppercase tracking-[0.2em] text-accent/75"
+  }, "AI Plan"), /*#__PURE__*/React.createElement("span", {
+    className: "rounded-full bg-accent/15 px-2 py-0.5 text-[8px] text-accent"
+  }, "\u667A\u80FD\u63A8\u8350")), /*#__PURE__*/React.createElement("p", {
+    className: "mt-1.5 text-[13px] font-medium text-white"
+  }, "\u590D\u4E60\u7B2C 3 \u7AE0 PPT"), /*#__PURE__*/React.createElement("div", {
+    className: "mt-2 flex items-center gap-2 text-[10px] text-white/45"
+  }, /*#__PURE__*/React.createElement(Clock3, {
+    size: 12,
+    className: "text-accent"
+  }), "25 \u5206\u949F \xB7 \u9AD8\u4E13\u6CE8\u4EFB\u52A1")), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: `mt-3 flex w-full animate-rise-in items-center gap-3 rounded-[22px] ${CARD} p-4 text-left`,
+    style: {
+      animationDelay: '190ms'
+    }
   }, /*#__PURE__*/React.createElement("span", {
-    className: "mt-1.5 h-1 w-1 shrink-0 rounded-full bg-accent"
-  }), /*#__PURE__*/React.createElement("div", {
+    className: "grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-accent/25 bg-accent/10 text-accent"
+  }, /*#__PURE__*/React.createElement(Library, {
+    size: 18,
+    strokeWidth: 1.5
+  })), /*#__PURE__*/React.createElement("div", {
     className: "min-w-0 flex-1"
   }, /*#__PURE__*/React.createElement("p", {
-    className: "text-[11px] leading-4 text-white/80"
-  }, item.title), /*#__PURE__*/React.createElement("p", {
+    className: "text-[11px] text-white/80"
+  }, "\u9644\u8FD1\u56FE\u4E66\u9986\u6709\u7A7A\u5EA7"), /*#__PURE__*/React.createElement("p", {
     className: "mt-0.5 text-[9px] text-white/35"
-  }, item.meta)), /*#__PURE__*/React.createElement(Clock3, {
-    size: 11,
-    strokeWidth: 1.5,
-    className: "mt-0.5 shrink-0 text-white/25",
-    "aria-hidden": "true"
-  })))), /*#__PURE__*/React.createElement("div", {
-    className: "mt-3 flex items-center gap-1 text-[9px] text-accent/70"
-  }, /*#__PURE__*/React.createElement(Check, {
-    size: 10,
-    strokeWidth: 2,
-    "aria-hidden": "true"
-  }), "\u5DF2\u540C\u6B65\u81F3\u4EFB\u52A1\u5F85\u529E")) : null), message.thinking ? /*#__PURE__*/React.createElement("div", {
-    className: `mt-2 overflow-hidden rounded-xl border transition-colors ${openThinking === message.id ? 'border-accent/35 bg-accent/[0.035]' : 'border-accent/20'}`
+  }, "\u9884\u8BA1\u6B65\u884C 6 \u5206\u949F \xB7 \u56FE\u4E66\u9986 3 \u697C")), /*#__PURE__*/React.createElement(ChevronRight, {
+    size: 13,
+    className: "shrink-0 text-white/25"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: `mt-3 animate-rise-in overflow-hidden rounded-xl border transition-colors ${openThinking ? 'border-accent/35 bg-accent/[0.035]' : 'border-accent/20'}`
   }, /*#__PURE__*/React.createElement("button", {
     type: "button",
-    onClick: () => toggleThinking(message.id),
-    "aria-expanded": openThinking === message.id,
+    onClick: () => setOpenThinking(prev => !prev),
+    "aria-expanded": openThinking,
     className: "flex w-full items-center gap-2 px-3 py-2.5 text-left"
   }, /*#__PURE__*/React.createElement("span", {
-    className: "h-1 w-1 shrink-0 animate-breathe rounded-full bg-accent"
+    className: "h-1 w-1 animate-breathe rounded-full bg-accent"
   }), /*#__PURE__*/React.createElement("span", {
     className: "text-[10px] tracking-wide text-accent/80"
-  }, "Thinking Process..."), /*#__PURE__*/React.createElement(ChevronDown, {
+  }, "AI \u601D\u8003\u94FE"), /*#__PURE__*/React.createElement(ChevronDown, {
     size: 12,
-    strokeWidth: 1.5,
-    "aria-hidden": "true",
-    className: `ml-auto shrink-0 text-accent/50 transition-transform duration-300 ${openThinking === message.id ? 'rotate-180' : ''}`
+    className: `ml-auto text-accent/50 transition-transform duration-300 ${openThinking ? 'rotate-180' : ''}`
   })), /*#__PURE__*/React.createElement("div", {
-    className: `grid transition-all duration-300 ${openThinking === message.id ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`
+    className: `grid transition-all duration-300 ${openThinking ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`
   }, /*#__PURE__*/React.createElement("div", {
     className: "overflow-hidden"
   }, /*#__PURE__*/React.createElement("p", {
     className: "whitespace-pre-line px-3 pb-3 text-[10px] leading-5 text-white/30"
-  }, message.thinking)))) : null)))), /*#__PURE__*/React.createElement("div", {
-    className: "relative z-20 shrink-0 px-5 pt-2",
-    style: {
-      paddingBottom: 'max(16px, env(safe-area-inset-bottom))'
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "flex items-center gap-2 rounded-[26px] border border-white/10 bg-white/[0.06] p-1.5 pl-2 backdrop-blur-xl transition-colors focus-within:border-accent/35"
+  }, "\u6839\u636E\u8BFE\u8868\u7A7A\u7A97\u3001\u7B2C 3 \u7AE0\u638C\u63E1\u5EA6 62% \u4E0E\u56FE\u4E66\u9986\u5B9E\u65F6\u5EA7\u4F4D\uFF0C\u4F18\u5148\u5B89\u6392\u77ED\u65F6\u9AD8\u4E13\u6CE8\u4EFB\u52A1\u3002"))))), /*#__PURE__*/React.createElement("div", {
+    className: "absolute inset-x-5 bottom-[92px] z-30 flex gap-2"
   }, /*#__PURE__*/React.createElement("button", {
     type: "button",
-    onClick: () => showToast({
-      title: '添加内容',
-      detail: '原型演示 · 可上传资料或插入任务'
-    }),
-    "aria-label": "\u6DFB\u52A0\u5185\u5BB9",
-    className: "grid h-10 w-10 shrink-0 place-items-center rounded-full text-white/45 transition-colors hover:bg-white/[0.06] active:bg-white/10"
-  }, /*#__PURE__*/React.createElement(Plus, {
-    size: 18,
-    strokeWidth: 1.5,
-    "aria-hidden": "true"
-  })), /*#__PURE__*/React.createElement("input", {
-    type: "text",
-    value: draft,
-    onChange: event => setDraft(event.target.value),
-    onKeyDown: event => {
-      if (event.key === 'Enter' && !event.shiftKey) {
-        event.preventDefault();
-        sendMessage();
-      }
-    },
-    placeholder: "\u8F93\u5165\u5B66\u4E60\u5B89\u6392\u2026",
-    "aria-label": "\u8F93\u5165\u5B66\u4E60\u5B89\u6392",
-    className: "min-w-0 flex-1 bg-transparent py-2 text-[13px] text-white outline-none placeholder:text-white/25"
-  }), /*#__PURE__*/React.createElement("button", {
+    onClick: () => notify('自定义规划', '原型演示 · 可调整任务时长与座位偏好'),
+    className: "h-[52px] w-[96px] rounded-full border border-white/15 bg-white/[0.05] text-[11px] text-white/60 backdrop-blur-xl"
+  }, "\u81EA\u5B9A\u4E49"), /*#__PURE__*/React.createElement("button", {
     type: "button",
-    onClick: sendMessage,
-    disabled: !draft.trim(),
-    "aria-label": "\u53D1\u9001",
-    className: "grid h-10 w-10 shrink-0 place-items-center rounded-full bg-accent text-black shadow-[0_0_18px_rgba(255,92,0,0.45)] transition-all active:scale-95 disabled:bg-white/[0.06] disabled:text-white/25 disabled:shadow-none"
-  }, /*#__PURE__*/React.createElement(ArrowUp, {
-    size: 18,
-    strokeWidth: 2,
-    "aria-hidden": "true"
-  })))));
+    onClick: () => onNavigate('seat'),
+    className: "flex h-[52px] flex-1 items-center justify-center gap-2 rounded-full bg-accent text-[12px] font-semibold text-black shadow-glow"
+  }, /*#__PURE__*/React.createElement(Sparkles, {
+    size: 15
+  }), "\u4E00\u952E\u89C4\u5212\u5E76\u8BA2\u5EA7")));
 }
-const RADAR_DATA = [{
-  subject: '专注',
-  value: 82
-}, {
-  subject: '自律',
-  value: 76
-}, {
-  subject: '进度',
-  value: 68
-}, {
-  subject: '理解',
-  value: 74
-}, {
-  subject: '记忆',
-  value: 61
-}, {
-  subject: '节奏',
-  value: 88
-}];
-const WEEKLY_DATA = [{
-  day: '一',
-  hours: 1.0
-}, {
-  day: '二',
-  hours: 1.8
-}, {
-  day: '三',
-  hours: 0.7
-}, {
-  day: '四',
-  hours: 2.2
-}, {
-  day: '五',
-  hours: 1.6
-}, {
-  day: '六',
-  hours: 2.9
-}, {
-  day: '日',
-  hours: 1.8
-}];
-const ANALYTICS_STATS = [{
-  label: '本周总时长',
-  value: '12h',
-  note: '+2.4h'
-}, {
-  label: '本周完成率',
-  value: '85%',
-  note: '+6%'
-}, {
-  label: '连续学习',
-  value: '7天',
-  note: '保持中'
-}];
-function AnalyticsTooltip({
-  active,
-  payload,
-  label
-}) {
-  if (!active || !payload || !payload.length) return null;
-  return /*#__PURE__*/React.createElement("div", {
-    className: "rounded-xl border border-accent/25 bg-[#171310]/95 px-2.5 py-1.5 shadow-[0_10px_30px_rgba(0,0,0,0.6)] backdrop-blur-xl"
-  }, /*#__PURE__*/React.createElement("p", {
-    className: "text-[8.5px] text-white/35"
-  }, "\u5468", label), /*#__PURE__*/React.createElement("p", {
-    className: "mt-0.5 text-[11px] text-accent tabular"
-  }, payload[0].value, " \u5C0F\u65F6"));
-}
-function AnalyticsPage({
-  onOpenPages
-}) {
+function AnalyticsPage() {
   return /*#__PURE__*/React.createElement("div", {
     className: "relative flex h-full min-h-0 flex-col"
   }, /*#__PURE__*/React.createElement(StatusBar, {
-    time: "13:41"
-  }), /*#__PURE__*/React.createElement("main", {
-    className: "no-scrollbar min-h-0 flex-1 overflow-y-auto px-5 pb-6 pt-2"
-  }, /*#__PURE__*/React.createElement("header", {
-    className: "relative animate-rise-in overflow-hidden rounded-[26px] border border-white/10 bg-white/[0.045] p-4 backdrop-blur-xl"
-  }, /*#__PURE__*/React.createElement("div", {
-    "aria-hidden": "true",
-    className: "pointer-events-none absolute -right-10 -top-14 h-40 w-40 rounded-full",
-    style: {
-      background: 'radial-gradient(circle, rgba(255,92,0,0.16), transparent 70%)'
-    }
+    time: "9:41"
+  }), /*#__PURE__*/React.createElement("header", {
+    className: "relative z-10 flex shrink-0 items-center gap-3 px-5 pb-2 pt-1"
+  }, /*#__PURE__*/React.createElement(AgentRing, {
+    size: "lg"
   }), /*#__PURE__*/React.createElement("div", {
-    className: "relative flex items-center justify-between"
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("p", {
-    className: "text-[9px] uppercase tracking-[0.24em] text-accent/65"
-  }, "Learning Analytics"), /*#__PURE__*/React.createElement("h1", {
-    className: "mt-1 text-[26px] font-semibold leading-none tracking-tight text-white"
-  }, "\u5B66\u60C5\u6982\u89C8"), /*#__PURE__*/React.createElement("p", {
-    className: "mt-2 text-[10px] text-white/35"
-  }, "\u672C\u5468 \xB7 11.06 \u2013 11.12 \xB7 \u6548\u7387\u63D0\u5347", ' ', /*#__PURE__*/React.createElement("span", {
-    className: "text-accent"
+    className: "min-w-0 flex-1"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center gap-2"
+  }, /*#__PURE__*/React.createElement("h1", {
+    className: "text-[20px] font-semibold tracking-tight text-white"
+  }, "\u5B66\u60C5\u5206\u6790"), /*#__PURE__*/React.createElement("span", {
+    className: "rounded-full bg-accent/15 px-2 py-0.5 text-[8px] text-accent"
+  }, "AI")), /*#__PURE__*/React.createElement("p", {
+    className: "mt-0.5 text-[9px] text-white/35"
+  }, "\u672C\u5468\u5B66\u4E60\u6548\u7387\u63D0\u5347", ' ', /*#__PURE__*/React.createElement("span", {
+    className: "text-accent tabular"
   }, "18%"))), /*#__PURE__*/React.createElement("button", {
     type: "button",
-    onClick: onOpenPages,
-    "aria-label": "\u5207\u6362\u9875\u9762",
-    className: "grid h-8 w-8 shrink-0 place-items-center rounded-full border border-white/10 bg-white/[0.04] text-white/50 transition-colors active:bg-white/10"
-  }, /*#__PURE__*/React.createElement(LayoutGrid, {
+    "aria-label": "\u66F4\u591A",
+    className: "grid h-8 w-8 place-items-center rounded-full border border-white/10 bg-white/[0.04] text-white/45"
+  }, /*#__PURE__*/React.createElement(MoreHorizontal, {
     size: 15,
-    strokeWidth: 1.5,
-    "aria-hidden": "true"
-  })))), /*#__PURE__*/React.createElement("section", {
-    className: "mt-4 flex gap-2.5"
-  }, ANALYTICS_STATS.map((stat, index) => /*#__PURE__*/React.createElement("div", {
+    strokeWidth: 1.5
+  }))), /*#__PURE__*/React.createElement("main", {
+    className: "screen-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-5 pb-28"
+  }, /*#__PURE__*/React.createElement("section", {
+    className: `animate-rise-in rounded-[26px] ${CARD} p-4`
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center justify-between"
+  }, /*#__PURE__*/React.createElement("h2", {
+    className: "text-[12px] font-medium text-white"
+  }, "\u591A\u7EF4\u753B\u50CF"), /*#__PURE__*/React.createElement("span", {
+    className: "text-[8px] text-white/30"
+  }, "\u8FD1 7 \u5929")), /*#__PURE__*/React.createElement("div", {
+    className: "mt-1 h-[190px] w-full"
+  }, /*#__PURE__*/React.createElement(EChart, {
+    option: RADAR_OPTION
+  }))), /*#__PURE__*/React.createElement("section", {
+    className: "mt-3 grid grid-cols-2 gap-2.5"
+  }, STATS.map((stat, index) => /*#__PURE__*/React.createElement("div", {
     key: stat.label,
-    className: "relative flex-1 animate-rise-in overflow-hidden rounded-[20px] border border-white/10 bg-white/[0.04] p-3.5 backdrop-blur-xl",
+    className: `animate-rise-in rounded-[20px] ${CARD} p-3.5`,
     style: {
       animationDelay: `${60 + index * 40}ms`
     }
   }, /*#__PURE__*/React.createElement("p", {
-    className: "text-[9px] text-white/35"
+    className: "text-[8.5px] text-white/35"
   }, stat.label), /*#__PURE__*/React.createElement("p", {
     className: "mt-1.5 text-[22px] font-semibold leading-none text-white tabular"
   }, stat.value), /*#__PURE__*/React.createElement("p", {
-    className: "mt-1.5 text-[8.5px] text-accent/75"
-  }, stat.note)))), /*#__PURE__*/React.createElement("section", {
-    className: "relative mt-3 animate-rise-in overflow-hidden rounded-[26px] border border-white/10 bg-white/[0.04] p-4 backdrop-blur-xl",
+    className: "mt-1.5 flex items-center gap-0.5 text-[8.5px] text-accent"
+  }, /*#__PURE__*/React.createElement(TrendingUp, {
+    size: 10
+  }), stat.note)))), /*#__PURE__*/React.createElement("section", {
+    className: `mt-3 animate-rise-in rounded-[26px] ${CARD} p-4`,
     style: {
-      animationDelay: '150ms'
+      animationDelay: '180ms'
     }
   }, /*#__PURE__*/React.createElement("div", {
     className: "flex items-center justify-between"
   }, /*#__PURE__*/React.createElement("h2", {
-    className: "text-[13px] font-medium text-white"
-  }, "\u591A\u7EF4\u753B\u50CF"), /*#__PURE__*/React.createElement("span", {
-    className: "text-[9px] text-white/30"
-  }, "\u8FD1 7 \u5929")), /*#__PURE__*/React.createElement("div", {
-    className: "chart-glow mt-2 h-[190px] w-full"
-  }, /*#__PURE__*/React.createElement(ResponsiveContainer, {
-    width: "100%",
-    height: "100%"
-  }, /*#__PURE__*/React.createElement(RadarChart, {
-    data: RADAR_DATA,
-    outerRadius: "68%",
-    margin: {
-      top: 8,
-      right: 12,
-      bottom: 8,
-      left: 12
-    }
-  }, /*#__PURE__*/React.createElement(PolarGrid, {
-    stroke: "rgba(255,255,255,0.07)"
-  }), /*#__PURE__*/React.createElement(PolarAngleAxis, {
-    dataKey: "subject",
-    tick: {
-      fill: 'rgba(255,255,255,0.42)',
-      fontSize: 9
-    }
-  }), /*#__PURE__*/React.createElement(PolarRadiusAxis, {
-    domain: [0, 100],
-    tick: false,
-    axisLine: false
-  }), /*#__PURE__*/React.createElement(Radar, {
-    dataKey: "value",
-    stroke: "#FF5C00",
-    strokeWidth: 1.8,
-    fill: "#FF5C00",
-    fillOpacity: 0.14,
-    dot: {
-      r: 2,
-      fill: '#FF5C00',
-      strokeWidth: 0
-    }
-  })))), /*#__PURE__*/React.createElement("div", {
-    className: "mt-1 flex items-center justify-between text-[9px] text-white/30"
-  }, /*#__PURE__*/React.createElement("span", null, "\u7EFC\u5408\u8BC4\u5206", ' ', /*#__PURE__*/React.createElement("span", {
-    className: "ml-1 text-[13px] font-semibold text-accent tabular"
-  }, "76")), /*#__PURE__*/React.createElement("span", null, "\u8F83\u4E0A\u5468 ", /*#__PURE__*/React.createElement("span", {
-    className: "text-accent"
-  }, "+8")))), /*#__PURE__*/React.createElement("section", {
-    className: "relative mt-3 animate-rise-in overflow-hidden rounded-[26px] border border-white/10 bg-white/[0.04] p-4 backdrop-blur-xl",
-    style: {
-      animationDelay: '210ms'
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "flex items-center justify-between"
-  }, /*#__PURE__*/React.createElement("h2", {
-    className: "text-[13px] font-medium text-white"
+    className: "text-[12px] font-medium text-white"
   }, "\u5B66\u4E60\u8D8B\u52BF"), /*#__PURE__*/React.createElement("span", {
-    className: "text-[9px] text-white/30"
-  }, "\u672C\u5468 12h")), /*#__PURE__*/React.createElement("div", {
-    className: "chart-glow mt-3 h-[170px] w-full"
-  }, /*#__PURE__*/React.createElement(ResponsiveContainer, {
-    width: "100%",
-    height: "100%"
-  }, /*#__PURE__*/React.createElement(AreaChart, {
-    data: WEEKLY_DATA,
-    margin: {
-      top: 6,
-      right: 4,
-      left: -24,
-      bottom: 0
-    }
-  }, /*#__PURE__*/React.createElement("defs", null, /*#__PURE__*/React.createElement("linearGradient", {
-    id: "studyArea",
-    x1: "0",
-    y1: "0",
-    x2: "0",
-    y2: "1"
-  }, /*#__PURE__*/React.createElement("stop", {
-    offset: "0%",
-    stopColor: "#FF5C00",
-    stopOpacity: 0.38
-  }), /*#__PURE__*/React.createElement("stop", {
-    offset: "100%",
-    stopColor: "#FF5C00",
-    stopOpacity: 0
-  }))), /*#__PURE__*/React.createElement(CartesianGrid, {
-    strokeDasharray: "2 6",
-    vertical: false,
-    stroke: "rgba(255,255,255,0.06)"
-  }), /*#__PURE__*/React.createElement(XAxis, {
-    dataKey: "day",
-    axisLine: false,
-    tickLine: false,
-    tick: {
-      fill: 'rgba(255,255,255,0.3)',
-      fontSize: 8
-    },
-    dy: 4
-  }), /*#__PURE__*/React.createElement(YAxis, {
-    axisLine: false,
-    tickLine: false,
-    tick: {
-      fill: 'rgba(255,255,255,0.25)',
-      fontSize: 8
-    },
-    tickFormatter: value => `${value}h`,
-    width: 30
-  }), /*#__PURE__*/React.createElement(Tooltip, {
-    cursor: {
-      stroke: 'rgba(255,92,0,0.35)'
-    },
-    content: /*#__PURE__*/React.createElement(AnalyticsTooltip, null)
-  }), /*#__PURE__*/React.createElement(Area, {
-    type: "monotone",
-    dataKey: "hours",
-    stroke: "#FF5C00",
-    strokeWidth: 2,
-    fill: "url(#studyArea)",
-    dot: {
-      r: 2.5,
-      fill: '#FF5C00',
-      stroke: '#0A0A0A',
-      strokeWidth: 1.5
-    },
-    activeDot: {
-      r: 4,
-      fill: '#FF5C00',
-      stroke: '#0A0A0A',
-      strokeWidth: 2
-    }
-  }))))), /*#__PURE__*/React.createElement("section", {
-    className: "relative mt-3 animate-rise-in overflow-hidden rounded-[24px] border border-accent/40 bg-accent/[0.05] p-4 shadow-[0_0_30px_rgba(255,92,0,0.16)]",
+    className: "text-[8px] text-white/30"
+  }, "\u672C\u5468 28.6h")), /*#__PURE__*/React.createElement("div", {
+    className: "mt-2 h-[170px] w-full"
+  }, /*#__PURE__*/React.createElement(EChart, {
+    option: AREA_OPTION
+  }))), /*#__PURE__*/React.createElement("section", {
+    className: "mt-3 animate-rise-in rounded-[24px] border border-accent/40 bg-accent/[0.06] p-4 shadow-[0_0_30px_rgba(255,122,0,0.16)]",
     style: {
-      animationDelay: '270ms'
+      animationDelay: '240ms'
     }
   }, /*#__PURE__*/React.createElement("div", {
     className: "flex items-start gap-3"
@@ -1462,83 +1380,388 @@ function AnalyticsPage({
     className: "grid h-8 w-8 shrink-0 place-items-center rounded-full border border-accent/30 bg-accent/10 text-accent"
   }, /*#__PURE__*/React.createElement(Sparkles, {
     size: 15,
-    strokeWidth: 1.5,
-    "aria-hidden": "true"
+    strokeWidth: 1.5
   })), /*#__PURE__*/React.createElement("div", {
     className: "min-w-0"
   }, /*#__PURE__*/React.createElement("div", {
     className: "flex items-center gap-2"
   }, /*#__PURE__*/React.createElement("span", {
-    className: "text-[9px] uppercase tracking-[0.22em] text-accent/75"
+    className: "text-[8.5px] uppercase tracking-[0.22em] text-accent/75"
   }, "AI \u9884\u6D4B"), /*#__PURE__*/React.createElement("span", {
     className: "h-1 w-1 animate-breathe rounded-full bg-accent"
   })), /*#__PURE__*/React.createElement("p", {
-    className: "mt-1.5 text-[12px] leading-5 text-white/85"
-  }, "\u4E0B\u5468\u9AD8\u6570\u53EF\u80FD\u9700\u8981\u589E\u52A0\u590D\u4E60\u65F6\u95F4"), /*#__PURE__*/React.createElement("p", {
-    className: "mt-1 text-[10px] leading-4 text-white/40"
-  }, "\u5EFA\u8BAE\u5728\u5468\u4E8C\u3001\u5468\u56DB\u5404\u589E\u52A0 30 \u5206\u949F\uFF0C\u4F18\u5148\u5904\u7406\u6781\u9650\u4E0E\u5BFC\u6570\u9519\u9898\u3002"))))));
+    className: "mt-1.5 text-[12px] text-white/85"
+  }, "\u9884\u6D4B\u4E13\u6CE8\u65F6\u95F4\uFF1A2 \u5C0F\u65F6"), /*#__PURE__*/React.createElement("p", {
+    className: "mt-1 text-[9px] leading-4 text-white/40"
+  }, "\u5EFA\u8BAE\u5B89\u6392\u9AD8\u96BE\u5EA6\u4EFB\u52A1\uFF0C\u4F18\u5148\u5904\u7406\u9AD8\u6570\u9519\u9898\u4E0E\u5FAE\u89C2\u7ECF\u6D4E\u5B66\u7B2C 3 \u7AE0\u3002"))))));
 }
-const LIBRARY_FILTERS = ['全部', '课堂笔记', '课件PPT', '速记备忘'];
-const LIBRARY_FILES = [{
-  id: 'f1',
-  name: '微观经济学_第3章.pptx',
-  ext: 'PPTX',
-  category: '课件PPT',
-  time: '昨天 14:30',
-  size: '8.6 MB',
-  icon: 'ppt',
-  recent: true
-}, {
-  id: 'f2',
-  name: '高数课堂速记.mp3',
-  ext: 'MP3',
-  category: '速记备忘',
-  time: '今天 09:15',
-  size: '12.4 MB',
-  icon: 'audio'
-}, {
-  id: 'f3',
-  name: '宏观经济学 课堂笔记.pdf',
-  ext: 'PDF',
-  category: '课堂笔记',
-  time: '11月10日',
-  size: '2.1 MB',
-  icon: 'pdf'
-}, {
-  id: 'f4',
-  name: '英语听力原文.png',
-  ext: 'PNG',
-  category: '课堂笔记',
-  time: '11月08日',
-  size: '1.8 MB',
-  icon: 'image'
-}, {
-  id: 'f5',
-  name: '作业要求_课程设计.pdf',
-  ext: 'PDF',
-  category: '课堂笔记',
-  time: '11月06日',
-  size: '640 KB',
-  icon: 'pdf'
-}];
-const LIBRARY_ICONS = {
-  ppt: Presentation,
-  audio: Mic,
-  pdf: FileText,
-  image: ImageIcon
-};
 function LibraryPage({
-  onOpenPages
+  notify
 }) {
-  const [filter, setFilter] = useState('全部');
+  const [activeTab, setActiveTab] = useState('全部');
   const [query, setQuery] = useState('');
+  return /*#__PURE__*/React.createElement("div", {
+    className: "relative flex h-full min-h-0 flex-col"
+  }, /*#__PURE__*/React.createElement(StatusBar, {
+    time: "9:41"
+  }), /*#__PURE__*/React.createElement("header", {
+    className: "relative z-10 shrink-0 px-5 pb-2 pt-1"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center justify-between"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("p", {
+    className: "text-[8.5px] uppercase tracking-[0.24em] text-accent/65"
+  }, "Knowledge Base"), /*#__PURE__*/React.createElement("h1", {
+    className: "mt-1 text-[20px] font-semibold tracking-tight text-white"
+  }, "\u8D44\u6599\u77E5\u8BC6\u5E93")), /*#__PURE__*/React.createElement("span", {
+    className: "flex items-center gap-1 rounded-full border border-accent/20 bg-accent/10 px-2 py-1 text-[8px] text-accent"
+  }, /*#__PURE__*/React.createElement(Sparkles, {
+    size: 10
+  }), "RAG")), /*#__PURE__*/React.createElement("div", {
+    className: "mt-3 flex items-center gap-2 rounded-2xl border border-accent/25 bg-white/[0.05] px-3.5 py-3 shadow-[0_0_18px_rgba(255,122,0,0.10)] backdrop-blur-xl transition-all focus-within:border-accent/45"
+  }, /*#__PURE__*/React.createElement(Search, {
+    size: 15,
+    className: "shrink-0 text-accent"
+  }), /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    value: query,
+    onChange: event => setQuery(event.target.value),
+    placeholder: "\u667A\u80FD\u68C0\u7D22\u8BFE\u7A0B\u8D44\u6599\u2026",
+    "aria-label": "\u667A\u80FD\u68C0\u7D22\u8BFE\u7A0B\u8D44\u6599",
+    className: "min-w-0 flex-1 bg-transparent text-[12px] text-white outline-none placeholder:text-white/25"
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "shrink-0 rounded-full border border-accent/20 bg-accent/10 px-2 py-0.5 text-[8px] text-accent"
+  }, "RAG\u8BED\u4E49\u641C\u7D22"))), /*#__PURE__*/React.createElement("main", {
+    className: "screen-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-5 pb-56"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "no-scrollbar mt-3 flex gap-2 overflow-x-auto pb-1"
+  }, ['全部', '课堂笔记', 'PPT', '速记'].map(tab => {
+    const active = activeTab === tab;
+    return /*#__PURE__*/React.createElement("button", {
+      key: tab,
+      type: "button",
+      onClick: () => setActiveTab(tab),
+      className: `shrink-0 rounded-full px-3.5 py-1.5 text-[10px] ${active ? 'bg-accent font-medium text-black shadow-glow-sm' : 'border border-white/10 bg-white/[0.04] text-white/40'}`
+    }, tab);
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "mt-3 columns-2 gap-2.5"
+  }, LIBRARY_FILES.map((file, index) => {
+    const Icon = FILE_ICONS[file.icon];
+    return /*#__PURE__*/React.createElement("article", {
+      key: file.id,
+      className: `mb-2.5 break-inside-avoid animate-rise-in rounded-[20px] border p-3.5 shadow-glass backdrop-blur-xl ${file.hot ? 'border-accent/40 bg-accent/[0.06] shadow-[0_0_24px_rgba(255,122,0,0.14)]' : 'border-white/10 bg-white/[0.05]'}`,
+      style: {
+        animationDelay: `${60 + index * 40}ms`
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "flex items-center justify-between"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: `grid h-8 w-8 place-items-center rounded-lg border ${file.hot ? 'border-accent/30 bg-accent/10 text-accent' : 'border-white/10 bg-white/[0.05] text-white/70'}`
+    }, /*#__PURE__*/React.createElement(Icon, {
+      size: 15,
+      strokeWidth: 1.5
+    })), /*#__PURE__*/React.createElement("span", {
+      className: "rounded border border-white/10 bg-black/20 px-1.5 py-0.5 text-[7px] text-white/35"
+    }, file.type)), /*#__PURE__*/React.createElement("p", {
+      className: "mt-2.5 text-[11px] leading-4 text-white/80"
+    }, file.title), /*#__PURE__*/React.createElement("div", {
+      className: "mt-2 space-y-1"
+    }, Array.from({
+      length: file.lines
+    }).map((_, line) => /*#__PURE__*/React.createElement("span", {
+      key: line,
+      className: "block h-1 rounded-full bg-white/[0.06]",
+      style: {
+        width: `${88 - line * 18}%`
+      }
+    }))), /*#__PURE__*/React.createElement("p", {
+      className: "mt-2 text-[8px] text-white/30 tabular"
+    }, file.date));
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: "absolute inset-x-4 bottom-[152px] z-30 flex items-center gap-2.5 rounded-full border border-accent/25 bg-[#141210]/85 px-3.5 py-2.5 shadow-[0_12px_30px_rgba(0,0,0,0.55)] backdrop-blur-xl"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "grid h-7 w-7 shrink-0 place-items-center rounded-full border border-accent/25 bg-accent/10 text-accent"
+  }, /*#__PURE__*/React.createElement(Sparkles, {
+    size: 13
+  })), /*#__PURE__*/React.createElement("p", {
+    className: "min-w-0 flex-1 text-[9px] leading-4 text-white/60"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "text-accent"
+  }, "AI \u6458\u8981\uFF1A"), "\u9700\u6C42\u66F2\u7EBF\u4E0E\u8FB9\u9645\u6548\u7528\u5DF2\u6574\u7406\u4E3A\u590D\u4E60\u7D22\u5F15"), /*#__PURE__*/React.createElement(ChevronRight, {
+    size: 12,
+    className: "shrink-0 text-accent/45"
+  })), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    onClick: () => notify('上传资料', '支持图片、文档或直接语音速记'),
+    "aria-label": "\u4E0A\u4F20\u8D44\u6599",
+    className: "absolute bottom-[92px] left-1/2 z-30 grid h-14 w-14 -translate-x-1/2 place-items-center rounded-full bg-accent text-black shadow-glow active:scale-95"
+  }, /*#__PURE__*/React.createElement(Plus, {
+    size: 24,
+    strokeWidth: 2
+  })));
+}
+function SeatPage({
+  notify
+}) {
+  const [filters, setFilters] = useState(['安静区']);
+  const toggleFilter = filter => {
+    setFilters(prev => prev.includes(filter) ? prev.filter(item => item !== filter) : [...prev, filter]);
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    className: "relative flex h-full min-h-0 flex-col"
+  }, /*#__PURE__*/React.createElement(StatusBar, {
+    time: "9:41"
+  }), /*#__PURE__*/React.createElement("header", {
+    className: "relative z-10 flex shrink-0 items-start justify-between px-5 pb-2 pt-1"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("p", {
+    className: "text-[8.5px] uppercase tracking-[0.24em] text-accent/65"
+  }, "Seat Agent"), /*#__PURE__*/React.createElement("h1", {
+    className: "mt-1 text-[20px] font-semibold tracking-tight text-white"
+  }, "\u56FE\u4E66\u9986 3\u697C")), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    "aria-label": "\u66F4\u591A",
+    className: "grid h-8 w-8 place-items-center rounded-full border border-white/10 bg-white/[0.04] text-white/45"
+  }, /*#__PURE__*/React.createElement(MoreHorizontal, {
+    size: 15,
+    strokeWidth: 1.5
+  }))), /*#__PURE__*/React.createElement("main", {
+    className: "screen-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-5 pb-44"
+  }, /*#__PURE__*/React.createElement("section", {
+    className: `relative animate-rise-in overflow-hidden rounded-[26px] ${CARD} p-3`
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "relative h-[230px] w-full"
+  }, /*#__PURE__*/React.createElement("svg", {
+    viewBox: "0 0 320 220",
+    className: "h-full w-full"
+  }, /*#__PURE__*/React.createElement("g", {
+    fill: "none",
+    stroke: "rgba(255,255,255,0.12)",
+    strokeWidth: "1"
+  }, /*#__PURE__*/React.createElement("rect", {
+    x: "8",
+    y: "8",
+    width: "304",
+    height: "204",
+    rx: "16"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M8 58 H312"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M8 162 H312"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M104 58 V162"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M216 58 V162"
+  }), /*#__PURE__*/React.createElement("rect", {
+    x: "126",
+    y: "76",
+    width: "68",
+    height: "58",
+    rx: "6"
+  }), /*#__PURE__*/React.createElement("rect", {
+    x: "228",
+    y: "76",
+    width: "52",
+    height: "58",
+    rx: "6"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M20 40 H92"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M228 40 H298"
+  })), /*#__PURE__*/React.createElement("g", {
+    fill: "rgba(255,255,255,0.24)"
+  }, SEAT_DOTS.map((dot, index) => /*#__PURE__*/React.createElement("circle", {
+    key: index,
+    cx: dot.x,
+    cy: dot.y,
+    r: "2.2"
+  }))), /*#__PURE__*/React.createElement("text", {
+    x: "20",
+    y: "52",
+    fill: "rgba(255,255,255,0.28)",
+    fontSize: "7"
+  }, "\u9760\u7A97\u533A"), /*#__PURE__*/React.createElement("text", {
+    x: "126",
+    y: "72",
+    fill: "rgba(255,255,255,0.28)",
+    fontSize: "7"
+  }, "\u5B89\u9759\u81EA\u4E60\u533A"), /*#__PURE__*/React.createElement("text", {
+    x: "228",
+    y: "72",
+    fill: "rgba(255,255,255,0.28)",
+    fontSize: "7"
+  }, "\u8BA8\u8BBA\u533A"), /*#__PURE__*/React.createElement("circle", {
+    cx: "190",
+    cy: "96",
+    r: "18",
+    fill: "rgba(255,122,0,0.14)",
+    className: "animate-breathe"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "190",
+    cy: "96",
+    r: "10",
+    fill: "rgba(255,122,0,0.20)",
+    className: "animate-pulse-ring",
+    style: {
+      transformOrigin: '190px 96px'
+    }
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "190",
+    cy: "96",
+    r: "5",
+    fill: "#FF7A00",
+    style: {
+      filter: 'drop-shadow(0 0 8px rgba(255,122,0,0.9))'
+    }
+  })), /*#__PURE__*/React.createElement("span", {
+    className: "absolute left-[54%] top-[34%] -translate-x-1/2 rounded-full border border-accent/30 bg-accent/15 px-2 py-1 text-[8px] text-accent backdrop-blur-md"
+  }, "\u63A8\u8350\u5EA7\u4F4D"))), /*#__PURE__*/React.createElement("div", {
+    className: "mt-3 flex gap-2"
+  }, ['靠窗', '有插座', '安静区'].map(filter => {
+    const active = filters.includes(filter);
+    return /*#__PURE__*/React.createElement("button", {
+      key: filter,
+      type: "button",
+      onClick: () => toggleFilter(filter),
+      className: `rounded-full border px-3.5 py-2 text-[10px] ${active ? 'border-accent/45 bg-accent/12 text-accent' : 'border-white/10 bg-white/[0.04] text-white/40'}`
+    }, filter);
+  })), /*#__PURE__*/React.createElement("section", {
+    className: `mt-3 rounded-[24px] ${CARD} p-4`
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flex items-start justify-between"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("p", {
+    className: "text-[8px] uppercase tracking-[0.22em] text-accent/70"
+  }, "Seat"), /*#__PURE__*/React.createElement("p", {
+    className: "mt-1 text-[26px] font-semibold leading-none tracking-tight text-white"
+  }, "3-A12", /*#__PURE__*/React.createElement("span", {
+    className: "ml-1.5 text-[10px] font-normal text-white/35"
+  }, "\u5EA7\u4F4D")), /*#__PURE__*/React.createElement("p", {
+    className: "mt-1.5 text-[9px] text-white/35"
+  }, "\u56FE\u4E66\u9986 3 \u697C \xB7 \u9760\u7A97\u5B89\u9759\u533A")), /*#__PURE__*/React.createElement(AgentRing, {
+    size: "lg"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "mt-3 grid grid-cols-3 gap-2 border-t border-white/[0.07] pt-3"
+  }, [{
+    icon: Sun,
+    label: '靠窗'
+  }, {
+    icon: Plug,
+    label: '插座'
+  }, {
+    icon: Wifi,
+    label: 'WiFi'
+  }].map(item => {
+    const Icon = item.icon;
+    return /*#__PURE__*/React.createElement("div", {
+      key: item.label,
+      className: "flex flex-col items-center gap-1 rounded-xl border border-white/[0.06] bg-black/20 py-2"
+    }, /*#__PURE__*/React.createElement(Icon, {
+      size: 13,
+      className: "text-accent"
+    }), /*#__PURE__*/React.createElement("span", {
+      className: "text-[8px] text-white/45"
+    }, item.label));
+  })))), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    onClick: () => notify('预约成功', '3-A12 · 图书馆 3楼 · 13:46–14:30'),
+    className: "absolute inset-x-5 bottom-[92px] z-30 h-[52px] rounded-full bg-accent text-[12px] font-semibold text-black shadow-glow active:scale-[0.985]"
+  }, "\u786E\u8BA4\u8BA2\u5EA7"));
+}
+function ProfilePage({
+  notify
+}) {
+  return /*#__PURE__*/React.createElement("div", {
+    className: "relative flex h-full min-h-0 flex-col"
+  }, /*#__PURE__*/React.createElement(StatusBar, {
+    time: "9:41"
+  }), /*#__PURE__*/React.createElement("header", {
+    className: "relative z-10 flex shrink-0 items-center justify-between px-5 pb-2 pt-1"
+  }, /*#__PURE__*/React.createElement("h1", {
+    className: "text-[20px] font-semibold tracking-tight text-white"
+  }, "\u6211\u7684"), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    "aria-label": "\u8BBE\u7F6E",
+    className: "grid h-8 w-8 place-items-center rounded-full border border-white/10 bg-white/[0.04] text-white/45"
+  }, /*#__PURE__*/React.createElement(SlidersHorizontal, {
+    size: 15,
+    strokeWidth: 1.5
+  }))), /*#__PURE__*/React.createElement("main", {
+    className: "screen-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-5 pb-28"
+  }, /*#__PURE__*/React.createElement("section", {
+    className: `animate-rise-in rounded-[26px] ${CARD} p-5`
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center gap-4"
+  }, /*#__PURE__*/React.createElement(AgentRing, {
+    size: "lg"
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "min-w-0 flex-1"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "text-[16px] font-semibold text-white"
+  }, "\u6797\u540C\u5B66"), /*#__PURE__*/React.createElement("p", {
+    className: "mt-1 flex items-center gap-1 text-[9px] text-white/35"
+  }, /*#__PURE__*/React.createElement(GraduationCap, {
+    size: 12
+  }), "\u8BA1\u7B97\u673A\u5B66\u9662 \xB7 \u5927\u4E09")), /*#__PURE__*/React.createElement("span", {
+    className: "rounded-full border border-accent/25 bg-accent/10 px-2 py-1 text-[8px] text-accent"
+  }, "\u5B66\u4F34 Lv.6")), /*#__PURE__*/React.createElement("div", {
+    className: "mt-4 grid grid-cols-3 gap-2 border-t border-white/[0.07] pt-4"
+  }, [{
+    value: '12h',
+    label: '本周时长'
+  }, {
+    value: '85%',
+    label: '完成率'
+  }, {
+    value: '7天',
+    label: '连续学习'
+  }].map(item => /*#__PURE__*/React.createElement("div", {
+    key: item.label,
+    className: "text-center"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "text-[18px] font-semibold text-white tabular"
+  }, item.value), /*#__PURE__*/React.createElement("p", {
+    className: "mt-0.5 text-[8px] text-white/30"
+  }, item.label))))), /*#__PURE__*/React.createElement("section", {
+    className: `mt-3 overflow-hidden rounded-[24px] ${CARD}`
+  }, PROFILE_ITEMS.map((item, index) => {
+    const Icon = item.icon;
+    return /*#__PURE__*/React.createElement("button", {
+      key: item.label,
+      type: "button",
+      onClick: () => notify('原型演示', `${item.label} 页面未接入`),
+      className: `flex w-full items-center gap-3 px-4 py-3.5 text-left ${index !== 0 ? 'border-t border-white/[0.06]' : ''}`
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "grid h-8 w-8 place-items-center rounded-lg border border-white/10 bg-white/[0.04] text-white/55"
+    }, /*#__PURE__*/React.createElement(Icon, {
+      size: 14,
+      strokeWidth: 1.5
+    })), /*#__PURE__*/React.createElement("span", {
+      className: "flex-1 text-[11px] text-white/70"
+    }, item.label), /*#__PURE__*/React.createElement(ChevronRight, {
+      size: 13,
+      className: "text-white/20"
+    }));
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "mt-3 flex items-center justify-between px-1 text-[8.5px] text-white/25"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "flex items-center gap-1"
+  }, /*#__PURE__*/React.createElement(Sparkles, {
+    size: 11,
+    className: "text-accent/60"
+  }), "\u77E5\u884C\u5B66\u4F34 \xB7 \u6697\u9ED1\u539F\u578B"), /*#__PURE__*/React.createElement("span", null, "v0.2"))));
+}
+const PAGE_IDS = ['home', 'hub', 'checklist', 'gap', 'seat', 'analytics', 'library', 'profile'];
+function App() {
+  const [page, setPage] = useState(() => {
+    const hash = window.location.hash.replace('#', '');
+    return PAGE_IDS.includes(hash) ? hash : 'home';
+  });
   const [toast, setToast] = useState(null);
   const timerRef = useRef(null);
-  const showToast = useCallback(message => {
+  const notify = useCallback((title, detail) => {
     if (timerRef.current) window.clearTimeout(timerRef.current);
     setToast({
       id: Date.now(),
-      ...message
+      title,
+      detail
     });
     timerRef.current = window.setTimeout(() => setToast(null), 3200);
   }, []);
@@ -1547,199 +1770,44 @@ function LibraryPage({
       if (timerRef.current) window.clearTimeout(timerRef.current);
     };
   }, []);
-  return /*#__PURE__*/React.createElement("div", {
-    className: "relative flex h-full min-h-0 flex-col"
-  }, /*#__PURE__*/React.createElement(Toast, {
-    key: toast ? toast.id : 'no-toast',
+  const navActive = ['hub', 'checklist', 'gap', 'library'].includes(page) ? 'home' : page;
+  let content = null;
+  if (page === 'home') {
+    content = /*#__PURE__*/React.createElement(HomePage, {
+      onNavigate: setPage
+    });
+  } else if (page === 'hub') {
+    content = /*#__PURE__*/React.createElement(HubPage, {
+      notify: notify
+    });
+  } else if (page === 'checklist') {
+    content = /*#__PURE__*/React.createElement(ChecklistPage, null);
+  } else if (page === 'gap') {
+    content = /*#__PURE__*/React.createElement(GapPage, {
+      onNavigate: setPage,
+      notify: notify
+    });
+  } else if (page === 'seat') {
+    content = /*#__PURE__*/React.createElement(SeatPage, {
+      notify: notify
+    });
+  } else if (page === 'analytics') {
+    content = /*#__PURE__*/React.createElement(AnalyticsPage, null);
+  } else if (page === 'library') {
+    content = /*#__PURE__*/React.createElement(LibraryPage, {
+      notify: notify
+    });
+  } else {
+    content = /*#__PURE__*/React.createElement(ProfilePage, {
+      notify: notify
+    });
+  }
+  return /*#__PURE__*/React.createElement(PhoneShell, null, content, /*#__PURE__*/React.createElement(BottomNav, {
+    active: navActive,
+    onChange: setPage
+  }), /*#__PURE__*/React.createElement(Toast, {
     message: toast,
     onClose: () => setToast(null)
-  }), /*#__PURE__*/React.createElement(StatusBar, {
-    time: "13:41"
-  }), /*#__PURE__*/React.createElement("main", {
-    className: "no-scrollbar min-h-0 flex-1 overflow-y-auto px-5 pb-28 pt-2"
-  }, /*#__PURE__*/React.createElement("header", {
-    className: "relative animate-rise-in overflow-hidden rounded-[26px] border border-white/10 bg-white/[0.045] p-4 backdrop-blur-xl"
-  }, /*#__PURE__*/React.createElement("div", {
-    "aria-hidden": "true",
-    className: "pointer-events-none absolute -right-10 -top-14 h-40 w-40 rounded-full",
-    style: {
-      background: 'radial-gradient(circle, rgba(255,92,0,0.16), transparent 70%)'
-    }
-  }), /*#__PURE__*/React.createElement("div", {
-    className: "relative flex items-center justify-between"
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("p", {
-    className: "text-[9px] uppercase tracking-[0.24em] text-accent/65"
-  }, "Knowledge Base"), /*#__PURE__*/React.createElement("h1", {
-    className: "mt-1 text-[24px] font-semibold leading-none tracking-tight text-white"
-  }, "\u4E2A\u4EBA\u77E5\u8BC6\u5E93"), /*#__PURE__*/React.createElement("p", {
-    className: "mt-1.5 text-[10px] text-white/35"
-  }, "5 \u4EFD\u8D44\u6599 \xB7 RAG \u5DF2\u7D22\u5F15")), /*#__PURE__*/React.createElement("button", {
-    type: "button",
-    onClick: onOpenPages,
-    "aria-label": "\u5207\u6362\u9875\u9762",
-    className: "grid h-8 w-8 shrink-0 place-items-center rounded-full border border-white/10 bg-white/[0.04] text-white/50 transition-colors active:bg-white/10"
-  }, /*#__PURE__*/React.createElement(LayoutGrid, {
-    size: 15,
-    strokeWidth: 1.5,
-    "aria-hidden": "true"
-  }))), /*#__PURE__*/React.createElement("div", {
-    className: "relative mt-3.5 flex items-center gap-2 rounded-2xl border border-accent/25 bg-black/20 px-3.5 py-3 shadow-[0_0_18px_rgba(255,92,0,0.10)] transition-all focus-within:border-accent/45 focus-within:shadow-[0_0_24px_rgba(255,92,0,0.16)]"
-  }, /*#__PURE__*/React.createElement(Search, {
-    size: 15,
-    strokeWidth: 1.5,
-    className: "shrink-0 text-accent",
-    "aria-hidden": "true"
-  }), /*#__PURE__*/React.createElement("input", {
-    type: "text",
-    value: query,
-    onChange: event => setQuery(event.target.value),
-    placeholder: "\u667A\u80FD\u68C0\u7D22\u8BFE\u7A0B\u8D44\u6599\u2026",
-    "aria-label": "\u667A\u80FD\u68C0\u7D22\u8BFE\u7A0B\u8D44\u6599",
-    className: "min-w-0 flex-1 bg-transparent text-[12px] text-white outline-none placeholder:text-white/30"
-  }), /*#__PURE__*/React.createElement("span", {
-    className: "shrink-0 rounded-full border border-accent/20 bg-accent/10 px-2 py-0.5 text-[8px] tracking-wide text-accent"
-  }, "RAG"))), /*#__PURE__*/React.createElement("div", {
-    className: "no-scrollbar mt-4 flex gap-2 overflow-x-auto pb-1"
-  }, LIBRARY_FILTERS.map(item => {
-    const active = filter === item;
-    return /*#__PURE__*/React.createElement("button", {
-      key: item,
-      type: "button",
-      onClick: () => setFilter(item),
-      "aria-pressed": active,
-      className: `shrink-0 rounded-full px-3.5 py-2 text-[11px] transition-colors ${active ? 'bg-accent font-medium text-black shadow-[0_0_16px_rgba(255,92,0,0.25)]' : 'border border-white/10 bg-white/[0.03] text-white/45'}`
-    }, item);
-  })), /*#__PURE__*/React.createElement("div", {
-    className: "relative mt-3 flex items-start gap-2.5 overflow-hidden rounded-2xl border border-accent/20 bg-[#141210]/85 px-3.5 py-3 shadow-[0_12px_30px_rgba(0,0,0,0.45)] backdrop-blur-xl"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "grid h-7 w-7 shrink-0 place-items-center rounded-full border border-accent/25 bg-accent/10 text-accent"
-  }, /*#__PURE__*/React.createElement(Sparkles, {
-    size: 13,
-    strokeWidth: 1.5,
-    "aria-hidden": "true"
-  })), /*#__PURE__*/React.createElement("div", {
-    className: "min-w-0 flex-1"
-  }, /*#__PURE__*/React.createElement("p", {
-    className: "text-[10px] leading-4 text-white/65"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "text-accent"
-  }, "AI \u53D1\u73B0\uFF1A"), "\u60A8\u6709\u4E00\u4EFD\u672A\u5F52\u6863\u7684\u7B14\u8BB0\u4E0E\u4ECA\u65E5\u8BFE\u7A0B\u76F8\u5173"), /*#__PURE__*/React.createElement("p", {
-    className: "mt-0.5 text-[9px] text-white/30"
-  }, "\u9AD8\u6570\u8BFE\u5802\u901F\u8BB0 \xB7 \u5EFA\u8BAE\u5F52\u6863\u81F3\u300C\u8BFE\u5802\u7B14\u8BB0\u300D")), /*#__PURE__*/React.createElement(ChevronRight, {
-    size: 13,
-    strokeWidth: 1.5,
-    className: "mt-1 shrink-0 text-accent/45",
-    "aria-hidden": "true"
-  })), /*#__PURE__*/React.createElement("section", {
-    className: "mt-3 space-y-2.5"
-  }, LIBRARY_FILES.map((file, index) => {
-    const FileIcon = LIBRARY_ICONS[file.icon];
-    return /*#__PURE__*/React.createElement("article", {
-      key: file.id,
-      className: `group relative flex animate-rise-in items-start gap-3 overflow-hidden rounded-[22px] border p-4 backdrop-blur-xl ${file.recent ? 'border-accent/40 bg-accent/[0.055] shadow-[0_0_24px_rgba(255,92,0,0.14)]' : 'border-white/10 bg-white/[0.04]'}`,
-      style: {
-        animationDelay: `${80 + index * 45}ms`
-      }
-    }, /*#__PURE__*/React.createElement("span", {
-      className: `grid h-10 w-10 shrink-0 place-items-center rounded-xl border ${file.recent ? 'border-accent/30 bg-accent/10 text-white/90' : 'border-white/10 bg-white/[0.05] text-white/80'}`
-    }, /*#__PURE__*/React.createElement(FileIcon, {
-      size: 18,
-      strokeWidth: 1.5,
-      "aria-hidden": "true"
-    })), /*#__PURE__*/React.createElement("div", {
-      className: "min-w-0 flex-1"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "flex items-center gap-2"
-    }, /*#__PURE__*/React.createElement("p", {
-      className: "truncate text-[13px] leading-5 text-white/85"
-    }, file.name), file.recent ? /*#__PURE__*/React.createElement("span", {
-      className: "shrink-0 rounded-full border border-accent/25 bg-accent/10 px-1.5 py-0.5 text-[8px] text-accent"
-    }, "\u6700\u8FD1") : null), /*#__PURE__*/React.createElement("div", {
-      className: "mt-1.5 flex items-center gap-1.5 text-[9px] text-white/30 tabular"
-    }, /*#__PURE__*/React.createElement("span", {
-      className: "rounded border border-white/10 bg-white/[0.03] px-1.5 py-0.5 text-[8px] text-white/35"
-    }, file.ext), /*#__PURE__*/React.createElement("span", null, file.time), /*#__PURE__*/React.createElement("span", {
-      className: "h-0.5 w-0.5 rounded-full bg-white/20"
-    }), /*#__PURE__*/React.createElement("span", null, file.size))), /*#__PURE__*/React.createElement(ChevronRight, {
-      size: 14,
-      strokeWidth: 1.5,
-      className: "mt-3 shrink-0 text-white/20 transition-transform group-hover:translate-x-0.5",
-      "aria-hidden": "true"
-    }));
-  }))), /*#__PURE__*/React.createElement("button", {
-    type: "button",
-    onClick: () => showToast({
-      title: '支持上传图片、文档或直接语音速记',
-      detail: '原型演示 · 上传入口未接入'
-    }),
-    "aria-label": "\u4E0A\u4F20\u8D44\u6599",
-    className: "absolute bottom-6 right-5 z-30 grid h-14 w-14 place-items-center rounded-full bg-accent text-black shadow-[0_10px_30px_rgba(255,92,0,0.45)] transition-transform active:scale-95"
-  }, /*#__PURE__*/React.createElement(Plus, {
-    size: 24,
-    strokeWidth: 2,
-    "aria-hidden": "true"
-  })));
-}
-function PageSwitcher({
-  open,
-  current,
-  onSelect,
-  onClose
-}) {
-  if (!open) return null;
-  return /*#__PURE__*/React.createElement("div", {
-    className: "absolute inset-0 z-40",
-    onClick: onClose
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "absolute right-5 top-[88px] w-[216px] animate-toast-in rounded-2xl border border-white/10 bg-[#141110]/95 p-1.5 shadow-[0_24px_60px_rgba(0,0,0,0.75)] backdrop-blur-2xl",
-    onClick: event => event.stopPropagation()
-  }, /*#__PURE__*/React.createElement("p", {
-    className: "px-3 pb-1 pt-2 text-[8px] uppercase tracking-[0.28em] text-white/25"
-  }, "Prototype Pages"), PROTOTYPE_PAGES.map(page => {
-    const active = page.id === current;
-    return /*#__PURE__*/React.createElement("button", {
-      key: page.id,
-      type: "button",
-      onClick: () => {
-        onSelect(page.id);
-        onClose();
-      },
-      className: `flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-left transition-colors ${active ? 'bg-accent/10 text-white' : 'text-white/55 hover:bg-white/[0.05]'}`
-    }, /*#__PURE__*/React.createElement("span", {
-      className: `h-1.5 w-1.5 rounded-full ${active ? 'bg-accent shadow-[0_0_8px_rgba(255,92,0,0.8)]' : 'bg-white/20'}`
-    }), /*#__PURE__*/React.createElement("span", {
-      className: "text-[12px]"
-    }, page.label), /*#__PURE__*/React.createElement("span", {
-      className: "ml-auto text-[8px] tracking-wide text-white/25"
-    }, page.en));
-  })));
-}
-const PAGE_IDS = ['gap', 'seat', 'tasks', 'hub', 'analytics', 'library'];
-function App() {
-  const [page, setPage] = useState(() => {
-    const hash = window.location.hash.replace('#', '');
-    return PAGE_IDS.includes(hash) ? hash : 'gap';
-  });
-  const [pagesOpen, setPagesOpen] = useState(false);
-  const openPages = () => setPagesOpen(open => !open);
-  return /*#__PURE__*/React.createElement(PhoneShell, null, page === 'gap' ? /*#__PURE__*/React.createElement(IdleGapPage, {
-    onOpenPages: openPages,
-    onBookSeat: () => setPage('seat')
-  }) : page === 'seat' ? /*#__PURE__*/React.createElement(SeatBookingPage, {
-    onOpenPages: openPages
-  }) : page === 'tasks' ? /*#__PURE__*/React.createElement(StudyChecklistPage, {
-    onOpenPages: openPages
-  }) : page === 'hub' ? /*#__PURE__*/React.createElement(PlannerHubPage, {
-    onOpenPages: openPages
-  }) : page === 'analytics' ? /*#__PURE__*/React.createElement(AnalyticsPage, {
-    onOpenPages: openPages
-  }) : /*#__PURE__*/React.createElement(LibraryPage, {
-    onOpenPages: openPages
-  }), /*#__PURE__*/React.createElement(PageSwitcher, {
-    open: pagesOpen,
-    current: page,
-    onSelect: setPage,
-    onClose: () => setPagesOpen(false)
   }));
 }
 ReactDOM.createRoot(document.getElementById('root')).render(/*#__PURE__*/React.createElement(App, null));
