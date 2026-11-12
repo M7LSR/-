@@ -103,7 +103,7 @@ function PhoneShell({
   children
 }) {
   return /*#__PURE__*/React.createElement("div", {
-    className: "relative flex min-h-screen w-full items-start justify-center overflow-x-hidden overflow-y-auto bg-ink-900 sm:items-center sm:px-6 sm:py-8"
+    className: "relative flex min-h-screen w-full items-start justify-center overflow-x-hidden overflow-y-auto bg-ink-900 sm:px-6 sm:py-8"
   }, /*#__PURE__*/React.createElement("div", {
     "aria-hidden": "true",
     className: "pointer-events-none absolute inset-0 hidden sm:block",
@@ -116,7 +116,7 @@ function PhoneShell({
   }), /*#__PURE__*/React.createElement("div", {
     className: "relative z-10 w-full max-w-[390px]"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "relative mx-auto flex h-screen w-full flex-col overflow-hidden bg-ink-900 sm:h-[844px] sm:max-h-[calc(100vh_-_4rem)] sm:rounded-[46px] sm:border sm:border-white/10 sm:shadow-shell"
+    className: "relative mx-auto flex h-screen w-full flex-col overflow-hidden bg-ink-900 sm:h-[844px] sm:rounded-[46px] sm:border sm:border-white/10 sm:shadow-shell"
   }, /*#__PURE__*/React.createElement("div", {
     "aria-hidden": "true",
     className: "pointer-events-none absolute -top-28 left-1/2 h-72 w-[130%] -translate-x-1/2",

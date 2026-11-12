@@ -88,7 +88,7 @@ const { useState, useEffect, useRef, useCallback } = React
 
       function PhoneShell({ children }) {
         return (
-          <div className="relative flex min-h-screen w-full items-start justify-center overflow-x-hidden overflow-y-auto bg-ink-900 sm:items-center sm:px-6 sm:py-8">
+          <div className="relative flex min-h-screen w-full items-start justify-center overflow-x-hidden overflow-y-auto bg-ink-900 sm:px-6 sm:py-8">
             <div
               aria-hidden="true"
               className="pointer-events-none absolute inset-0 hidden sm:block"
@@ -104,7 +104,7 @@ const { useState, useEffect, useRef, useCallback } = React
             />
 
             <div className="relative z-10 w-full max-w-[390px]">
-              <div className="relative mx-auto flex h-screen w-full flex-col overflow-hidden bg-ink-900 sm:h-[844px] sm:max-h-[calc(100vh_-_4rem)] sm:rounded-[46px] sm:border sm:border-white/10 sm:shadow-shell">
+              <div className="relative mx-auto flex h-screen w-full flex-col overflow-hidden bg-ink-900 sm:h-[844px] sm:rounded-[46px] sm:border sm:border-white/10 sm:shadow-shell">
                 <div
                   aria-hidden="true"
                   className="pointer-events-none absolute -top-28 left-1/2 h-72 w-[130%] -translate-x-1/2"
