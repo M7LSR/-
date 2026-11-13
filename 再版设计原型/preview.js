@@ -540,7 +540,7 @@ function PhoneShell({
   }, /*#__PURE__*/React.createElement("div", {
     className: "relative z-10 w-full max-w-[390px]"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "relative mx-auto flex h-screen w-full flex-col overflow-hidden bg-night-900 sm:h-[844px] sm:rounded-[46px] sm:border sm:border-white/10 sm:shadow-shell"
+    className: "phone-shell relative mx-auto flex w-full flex-col overflow-hidden bg-night-900 sm:rounded-[46px] sm:border sm:border-white/10 sm:shadow-shell"
   }, /*#__PURE__*/React.createElement("div", {
     className: "absolute inset-0 bg-gradient-to-b from-[#2A2A2A] via-[#121212] to-[#0A0A0A]"
   }), /*#__PURE__*/React.createElement(MistLayer, null), /*#__PURE__*/React.createElement("div", {
@@ -556,7 +556,7 @@ function BottomNav({
   onChange
 }) {
   return /*#__PURE__*/React.createElement("nav", {
-    className: "absolute inset-x-4 bottom-4 z-40 flex items-center gap-1 rounded-[24px] border border-white/10 bg-black/45 px-2 py-2 shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur-2xl"
+    className: "relative mx-4 mb-3 mt-1 flex shrink-0 items-center gap-1 rounded-[24px] border border-white/10 bg-black/45 px-2 py-2 shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur-2xl"
   }, NAV_ITEMS.map(item => {
     const Icon = item.icon;
     const isActive = active === item.id;
@@ -714,7 +714,7 @@ function HomePage({
     size: 15,
     strokeWidth: 1.5
   })))), /*#__PURE__*/React.createElement("main", {
-    className: "screen-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-5 pb-32"
+    className: "screen-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-5 pb-4"
   }, /*#__PURE__*/React.createElement("section", {
     className: "animate-rise-in space-y-2.5"
   }, /*#__PURE__*/React.createElement("div", {
@@ -933,7 +933,7 @@ function HubPage({
     }), tag);
   }))), /*#__PURE__*/React.createElement("main", {
     ref: scrollRef,
-    className: "screen-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-5 pb-44"
+    className: "screen-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-5 pb-4"
   }, /*#__PURE__*/React.createElement("div", {
     className: "space-y-4"
   }, messages.map(message => message.role === 'user' ? /*#__PURE__*/React.createElement("div", {
@@ -1006,7 +1006,7 @@ function HubPage({
   }, /*#__PURE__*/React.createElement("p", {
     className: "whitespace-pre-line px-3 pb-3 text-[10px] leading-5 text-white/30"
   }, message.thinking))))))))), /*#__PURE__*/React.createElement("div", {
-    className: "absolute inset-x-4 bottom-[92px] z-30"
+    className: "shrink-0 px-4 pb-1 pt-2"
   }, /*#__PURE__*/React.createElement("div", {
     className: "flex items-center gap-2 rounded-[26px] border border-white/10 bg-white/[0.06] p-1.5 pl-2 backdrop-blur-xl transition-colors focus-within:border-accent/35"
   }, /*#__PURE__*/React.createElement("button", {
@@ -1071,7 +1071,7 @@ function ChecklistPage() {
     size: 15,
     strokeWidth: 1.5
   }))), /*#__PURE__*/React.createElement("main", {
-    className: "screen-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-5 pb-28"
+    className: "screen-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-5 pb-4"
   }, /*#__PURE__*/React.createElement("section", {
     className: `relative animate-rise-in overflow-hidden rounded-[26px] ${CARD} p-5`
   }, /*#__PURE__*/React.createElement("div", {
@@ -1180,7 +1180,7 @@ function GapPage({
     size: 15,
     strokeWidth: 1.5
   }))), /*#__PURE__*/React.createElement("main", {
-    className: "screen-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-5 pb-44"
+    className: "screen-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-5 pb-4"
   }, /*#__PURE__*/React.createElement("section", {
     className: "animate-rise-in"
   }, /*#__PURE__*/React.createElement("h1", {
@@ -1275,7 +1275,7 @@ function GapPage({
   }, /*#__PURE__*/React.createElement("p", {
     className: "whitespace-pre-line px-3 pb-3 text-[10px] leading-5 text-white/30"
   }, "\u6839\u636E\u8BFE\u8868\u7A7A\u7A97\u3001\u7B2C 3 \u7AE0\u638C\u63E1\u5EA6 62% \u4E0E\u56FE\u4E66\u9986\u5B9E\u65F6\u5EA7\u4F4D\uFF0C\u4F18\u5148\u5B89\u6392\u77ED\u65F6\u9AD8\u4E13\u6CE8\u4EFB\u52A1\u3002"))))), /*#__PURE__*/React.createElement("div", {
-    className: "absolute inset-x-5 bottom-[92px] z-30 flex gap-2"
+    className: "shrink-0 flex gap-2 px-5 pb-1 pt-2"
   }, /*#__PURE__*/React.createElement("button", {
     type: "button",
     onClick: () => notify('自定义规划', '原型演示 · 可调整任务时长与座位偏好'),
@@ -1317,7 +1317,7 @@ function AnalyticsPage() {
     size: 15,
     strokeWidth: 1.5
   }))), /*#__PURE__*/React.createElement("main", {
-    className: "screen-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-5 pb-28"
+    className: "screen-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-5 pb-4"
   }, /*#__PURE__*/React.createElement("section", {
     className: `animate-rise-in rounded-[26px] ${CARD} p-4`
   }, /*#__PURE__*/React.createElement("div", {
@@ -1421,7 +1421,7 @@ function LibraryPage({
   }), /*#__PURE__*/React.createElement("span", {
     className: "shrink-0 rounded-full border border-accent/20 bg-accent/10 px-2 py-0.5 text-[8px] text-accent"
   }, "RAG\u8BED\u4E49\u641C\u7D22"))), /*#__PURE__*/React.createElement("main", {
-    className: "screen-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-5 pb-56"
+    className: "screen-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-5 pb-4"
   }, /*#__PURE__*/React.createElement("div", {
     className: "no-scrollbar mt-3 flex gap-2 overflow-x-auto pb-1"
   }, ['全部', '课堂笔记', 'PPT', '速记'].map(tab => {
@@ -1467,7 +1467,9 @@ function LibraryPage({
       className: "mt-2 text-[8px] text-white/30 tabular"
     }, file.date));
   }))), /*#__PURE__*/React.createElement("div", {
-    className: "absolute inset-x-4 bottom-[152px] z-30 flex items-center gap-2.5 rounded-full border border-accent/25 bg-[#141210]/85 px-3.5 py-2.5 shadow-[0_12px_30px_rgba(0,0,0,0.55)] backdrop-blur-xl"
+    className: "shrink-0 space-y-2 px-4 pb-1 pt-2"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center gap-2.5 rounded-full border border-accent/25 bg-[#141210]/85 px-3.5 py-2.5 shadow-[0_12px_30px_rgba(0,0,0,0.55)] backdrop-blur-xl"
   }, /*#__PURE__*/React.createElement("span", {
     className: "grid h-7 w-7 shrink-0 place-items-center rounded-full border border-accent/25 bg-accent/10 text-accent"
   }, /*#__PURE__*/React.createElement(Sparkles, {
@@ -1479,15 +1481,17 @@ function LibraryPage({
   }, "AI \u6458\u8981\uFF1A"), "\u9700\u6C42\u66F2\u7EBF\u4E0E\u8FB9\u9645\u6548\u7528\u5DF2\u6574\u7406\u4E3A\u590D\u4E60\u7D22\u5F15"), /*#__PURE__*/React.createElement(ChevronRight, {
     size: 12,
     className: "shrink-0 text-accent/45"
-  })), /*#__PURE__*/React.createElement("button", {
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "flex justify-center"
+  }, /*#__PURE__*/React.createElement("button", {
     type: "button",
     onClick: () => notify('上传资料', '支持图片、文档或直接语音速记'),
     "aria-label": "\u4E0A\u4F20\u8D44\u6599",
-    className: "absolute bottom-[92px] left-1/2 z-30 grid h-14 w-14 -translate-x-1/2 place-items-center rounded-full bg-accent text-black shadow-glow active:scale-95"
+    className: "grid h-14 w-14 place-items-center rounded-full bg-accent text-black shadow-glow active:scale-95"
   }, /*#__PURE__*/React.createElement(Plus, {
     size: 24,
     strokeWidth: 2
-  })));
+  })))));
 }
 function SeatPage({
   notify
@@ -1512,7 +1516,7 @@ function SeatPage({
     size: 15,
     strokeWidth: 1.5
   }))), /*#__PURE__*/React.createElement("main", {
-    className: "screen-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-5 pb-44"
+    className: "screen-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-5 pb-4"
   }, /*#__PURE__*/React.createElement("section", {
     className: `relative animate-rise-in overflow-hidden rounded-[26px] ${CARD} p-3`
   }, /*#__PURE__*/React.createElement("div", {
@@ -1647,11 +1651,13 @@ function SeatPage({
     }), /*#__PURE__*/React.createElement("span", {
       className: "text-[8px] text-white/45"
     }, item.label));
-  })))), /*#__PURE__*/React.createElement("button", {
+  })))), /*#__PURE__*/React.createElement("div", {
+    className: "shrink-0 px-5 pb-1 pt-2"
+  }, /*#__PURE__*/React.createElement("button", {
     type: "button",
     onClick: () => notify('预约成功', '3-A12 · 图书馆 3楼 · 13:46–14:30'),
-    className: "absolute inset-x-5 bottom-[92px] z-30 h-[52px] rounded-full bg-accent text-[12px] font-semibold text-black shadow-glow active:scale-[0.985]"
-  }, "\u786E\u8BA4\u8BA2\u5EA7"));
+    className: "h-[52px] w-full rounded-full bg-accent text-[12px] font-semibold text-black shadow-glow active:scale-[0.985]"
+  }, "\u786E\u8BA4\u8BA2\u5EA7")));
 }
 function ProfilePage({
   notify
@@ -1672,7 +1678,7 @@ function ProfilePage({
     size: 15,
     strokeWidth: 1.5
   }))), /*#__PURE__*/React.createElement("main", {
-    className: "screen-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-5 pb-28"
+    className: "screen-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-5 pb-4"
   }, /*#__PURE__*/React.createElement("section", {
     className: `animate-rise-in rounded-[26px] ${CARD} p-5`
   }, /*#__PURE__*/React.createElement("div", {
@@ -1790,7 +1796,9 @@ function App() {
       notify: notify
     });
   }
-  return /*#__PURE__*/React.createElement(PhoneShell, null, content, /*#__PURE__*/React.createElement(BottomNav, {
+  return /*#__PURE__*/React.createElement(PhoneShell, null, /*#__PURE__*/React.createElement("div", {
+    className: "relative flex min-h-0 flex-1 flex-col"
+  }, content), /*#__PURE__*/React.createElement(BottomNav, {
     active: navActive,
     onChange: setPage
   }), /*#__PURE__*/React.createElement(Toast, {

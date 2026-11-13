@@ -440,7 +440,7 @@ function PhoneShell({ children }) {
   return (
     <div className="relative flex min-h-screen w-full items-start justify-center overflow-x-hidden overflow-y-auto bg-night-950 sm:px-6 sm:py-8">
       <div className="relative z-10 w-full max-w-[390px]">
-        <div className="relative mx-auto flex h-screen w-full flex-col overflow-hidden bg-night-900 sm:h-[844px] sm:rounded-[46px] sm:border sm:border-white/10 sm:shadow-shell">
+        <div className="phone-shell relative mx-auto flex w-full flex-col overflow-hidden bg-night-900 sm:rounded-[46px] sm:border sm:border-white/10 sm:shadow-shell">
           <div className="absolute inset-0 bg-gradient-to-b from-[#2A2A2A] via-[#121212] to-[#0A0A0A]" />
           <MistLayer />
           <div className="absolute inset-x-0 bottom-0 h-56 bg-[radial-gradient(ellipse_at_bottom,rgba(255,122,0,0.08),transparent_70%)]" />
@@ -458,7 +458,7 @@ function PhoneShell({ children }) {
 
 function BottomNav({ active, onChange }) {
   return (
-    <nav className="absolute inset-x-4 bottom-4 z-40 flex items-center gap-1 rounded-[24px] border border-white/10 bg-black/45 px-2 py-2 shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur-2xl">
+    <nav className="relative mx-4 mb-3 mt-1 flex shrink-0 items-center gap-1 rounded-[24px] border border-white/10 bg-black/45 px-2 py-2 shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur-2xl">
       {NAV_ITEMS.map((item) => {
         const Icon = item.icon
         const isActive = active === item.id
@@ -629,7 +629,7 @@ function HomePage({ onNavigate }) {
         </div>
       </header>
 
-      <main className="screen-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-5 pb-32">
+      <main className="screen-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-5 pb-4">
         <section className="animate-rise-in space-y-2.5">
           <div className="flex items-start gap-2.5">
             <AgentRing size="sm" className="mt-0.5" />
@@ -874,7 +874,7 @@ function HubPage({ notify }) {
 
       <main
         ref={scrollRef}
-        className="screen-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-5 pb-44"
+        className="screen-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-5 pb-4"
       >
         <div className="space-y-4">
           {messages.map((message) =>
@@ -982,7 +982,7 @@ function HubPage({ notify }) {
         </div>
       </main>
 
-      <div className="absolute inset-x-4 bottom-[92px] z-30">
+      <div className="shrink-0 px-4 pb-1 pt-2">
         <div className="flex items-center gap-2 rounded-[26px] border border-white/10 bg-white/[0.06] p-1.5 pl-2 backdrop-blur-xl transition-colors focus-within:border-accent/35">
           <button
             type="button"
@@ -1055,7 +1055,7 @@ function ChecklistPage() {
         </button>
       </header>
 
-      <main className="screen-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-5 pb-28">
+      <main className="screen-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-5 pb-4">
         <section className={`relative animate-rise-in overflow-hidden rounded-[26px] ${CARD} p-5`}>
           <div
             aria-hidden="true"
@@ -1196,7 +1196,7 @@ function GapPage({ onNavigate, notify }) {
         </button>
       </header>
 
-      <main className="screen-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-5 pb-44">
+      <main className="screen-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-5 pb-4">
         <section className="animate-rise-in">
           <h1 className="mt-1.5 text-[26px] font-semibold leading-tight tracking-tight text-white">
             您有 45 分钟的
@@ -1311,7 +1311,7 @@ function GapPage({ onNavigate, notify }) {
         </div>
       </main>
 
-      <div className="absolute inset-x-5 bottom-[92px] z-30 flex gap-2">
+      <div className="shrink-0 flex gap-2 px-5 pb-1 pt-2">
         <button
           type="button"
           onClick={() =>
@@ -1364,7 +1364,7 @@ function AnalyticsPage() {
         </button>
       </header>
 
-      <main className="screen-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-5 pb-28">
+      <main className="screen-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-5 pb-4">
         <section className={`animate-rise-in rounded-[26px] ${CARD} p-4`}>
           <div className="flex items-center justify-between">
             <h2 className="text-[12px] font-medium text-white">多维画像</h2>
@@ -1470,7 +1470,7 @@ function LibraryPage({ notify }) {
         </div>
       </header>
 
-      <main className="screen-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-5 pb-56">
+      <main className="screen-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-5 pb-4">
         <div className="no-scrollbar mt-3 flex gap-2 overflow-x-auto pb-1">
           {['全部', '课堂笔记', 'PPT', '速记'].map((tab) => {
             const active = activeTab === tab
@@ -1542,27 +1542,31 @@ function LibraryPage({ notify }) {
         </div>
       </main>
 
-      <div className="absolute inset-x-4 bottom-[152px] z-30 flex items-center gap-2.5 rounded-full border border-accent/25 bg-[#141210]/85 px-3.5 py-2.5 shadow-[0_12px_30px_rgba(0,0,0,0.55)] backdrop-blur-xl">
-        <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full border border-accent/25 bg-accent/10 text-accent">
-          <Sparkles size={13} />
-        </span>
-        <p className="min-w-0 flex-1 text-[9px] leading-4 text-white/60">
-          <span className="text-accent">AI 摘要：</span>
-          需求曲线与边际效用已整理为复习索引
-        </p>
-        <ChevronRight size={12} className="shrink-0 text-accent/45" />
-      </div>
+      <div className="shrink-0 space-y-2 px-4 pb-1 pt-2">
+        <div className="flex items-center gap-2.5 rounded-full border border-accent/25 bg-[#141210]/85 px-3.5 py-2.5 shadow-[0_12px_30px_rgba(0,0,0,0.55)] backdrop-blur-xl">
+          <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full border border-accent/25 bg-accent/10 text-accent">
+            <Sparkles size={13} />
+          </span>
+          <p className="min-w-0 flex-1 text-[9px] leading-4 text-white/60">
+            <span className="text-accent">AI 摘要：</span>
+            需求曲线与边际效用已整理为复习索引
+          </p>
+          <ChevronRight size={12} className="shrink-0 text-accent/45" />
+        </div>
 
-      <button
-        type="button"
-        onClick={() =>
-          notify('上传资料', '支持图片、文档或直接语音速记')
-        }
-        aria-label="上传资料"
-        className="absolute bottom-[92px] left-1/2 z-30 grid h-14 w-14 -translate-x-1/2 place-items-center rounded-full bg-accent text-black shadow-glow active:scale-95"
-      >
-        <Plus size={24} strokeWidth={2} />
-      </button>
+        <div className="flex justify-center">
+          <button
+            type="button"
+            onClick={() =>
+              notify('上传资料', '支持图片、文档或直接语音速记')
+            }
+            aria-label="上传资料"
+            className="grid h-14 w-14 place-items-center rounded-full bg-accent text-black shadow-glow active:scale-95"
+          >
+            <Plus size={24} strokeWidth={2} />
+          </button>
+        </div>
+      </div>
     </div>
   )
 }
@@ -1597,7 +1601,7 @@ function SeatPage({ notify }) {
         </button>
       </header>
 
-      <main className="screen-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-5 pb-44">
+      <main className="screen-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-5 pb-4">
         <section className={`relative animate-rise-in overflow-hidden rounded-[26px] ${CARD} p-3`}>
           <div className="relative h-[230px] w-full">
             <svg viewBox="0 0 320 220" className="h-full w-full">
@@ -1728,15 +1732,17 @@ function SeatPage({ notify }) {
         </section>
       </main>
 
-      <button
-        type="button"
-        onClick={() =>
-          notify('预约成功', '3-A12 · 图书馆 3楼 · 13:46–14:30')
-        }
-        className="absolute inset-x-5 bottom-[92px] z-30 h-[52px] rounded-full bg-accent text-[12px] font-semibold text-black shadow-glow active:scale-[0.985]"
-      >
-        确认订座
-      </button>
+      <div className="shrink-0 px-5 pb-1 pt-2">
+        <button
+          type="button"
+          onClick={() =>
+            notify('预约成功', '3-A12 · 图书馆 3楼 · 13:46–14:30')
+          }
+          className="h-[52px] w-full rounded-full bg-accent text-[12px] font-semibold text-black shadow-glow active:scale-[0.985]"
+        >
+          确认订座
+        </button>
+      </div>
     </div>
   )
 }
@@ -1759,7 +1765,7 @@ function ProfilePage({ notify }) {
         </button>
       </header>
 
-      <main className="screen-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-5 pb-28">
+      <main className="screen-scroll relative z-10 min-h-0 flex-1 overflow-y-auto px-5 pb-4">
         <section className={`animate-rise-in rounded-[26px] ${CARD} p-5`}>
           <div className="flex items-center gap-4">
             <AgentRing size="lg" />
@@ -1884,7 +1890,7 @@ function App() {
 
   return (
     <PhoneShell>
-      {content}
+      <div className="relative flex min-h-0 flex-1 flex-col">{content}</div>
       <BottomNav active={navActive} onChange={setPage} />
       <Toast message={toast} onClose={() => setToast(null)} />
     </PhoneShell>

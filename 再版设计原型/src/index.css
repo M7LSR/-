@@ -53,6 +53,22 @@
   }
 }
 
+.phone-shell {
+  height: 100vh;
+}
+
+@supports (height: 100svh) {
+  .phone-shell {
+    height: 100svh;
+  }
+}
+
+@media (min-width: 640px) {
+  .phone-shell {
+    height: 844px;
+  }
+}
+
 .screen-scroll {
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.16) transparent;
